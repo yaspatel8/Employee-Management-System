@@ -1,14 +1,8 @@
 <!--<c-header class="mb-4 d-print-none" position="sticky">-->
 <ng-container>
   <c-container [fluid]="true" class="border-bottom px-4">
-    <button
-      [cSidebarToggle]="sidebarId()"
-      cHeaderToggler
-      class="btn"
-      toggle="visible"
-      style="margin-inline-start: -14px;"
-      aria-label="Toggle sidebar navigation"
-    >
+    <button [cSidebarToggle]="sidebarId()" cHeaderToggler class="btn" toggle="visible"
+      style="margin-inline-start: -14px;" aria-label="Toggle sidebar navigation">
       <svg cIcon name="cilMenu" size="lg"></svg>
     </button>
     <c-header-nav class="d-none d-md-flex">
@@ -24,7 +18,7 @@
     </c-header-nav>
 
     <c-header-nav class="d-none d-md-flex ms-auto ">
-      <a cNavLink>
+      <!-- <a cNavLink>
         <svg cIcon class="my-1" name="cilBell" size="lg"></svg>
       </a>
       <a cNavLink>
@@ -32,9 +26,9 @@
       </a>
       <a cNavLink>
         <svg cIcon class="my-1" name="cilEnvelopeOpen" size="lg"></svg>
-      </a>
+      </a> -->
     </c-header-nav>
-
+<!-- 
     <c-header-nav class="ms-auto ms-md-0">
       <div class="nav-item py-1">
         <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
@@ -43,7 +37,7 @@
       <div class="nav-item py-1">
         <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
       </div>
-    </c-header-nav>
+    </c-header-nav> -->
 
     <c-header-nav class="mx-0">
       <ng-container *ngTemplateOutlet="userDropdown" />
@@ -59,14 +53,10 @@
 <ng-template #userDropdown>
   <c-dropdown [popperOptions]="{ placement: 'bottom-start' }" variant="nav-item">
     <button [caret]="false" cDropdownToggle class="py-0 pe-0" aria-label="Open user menu">
-      <c-avatar
-        shape="rounded-1"
-        size="md"
-        src="./assets/images/avatars/8.jpg"
-        status="success"
-        textColor="primary"
-        alt="User avatar"
-      />
+      <c-avatar shape="rounded-1" size="md" [src]="authService.currentUser()?.profileImage ? 'https://localhost:7177/Documents/ProfileImage/' + authService.currentUser()?.profileImage 
+                            : defaultImage" status=" success" textColor="primary" alt="User avatar" /> 
+                            <span class="ms-2 d-none d-md-inline fs-6 fw-medium">{{ authService.currentUser()?.fullName }}</span>
+                              
     </button>
     <ul cDropdownMenu class="pt-0 w-auto">
       <li>
@@ -111,7 +101,7 @@
       </li>
       <li></li>
       <li>
-        <a cDropdownItem routerLink="">
+        <a cDropdownItem routerLink="profile">
           <svg cIcon class="me-2" name="cilUser"></svg>
           Profile
         </a>
@@ -151,8 +141,10 @@
       </li>
       <li>
         <a cDropdownItem routerLink="">
-          <svg cIcon class="me-2" name="cilAccountLogout"></svg>
-          Logout
+          <button cButton class="btn btn-link text-decoration-none p-0 text-black" (click)="logout()">
+            <svg cIcon class="me-2" name="cilAccountLogout"></svg>
+            Logout
+          </button>
         </a>
       </li>
     </ul>
@@ -166,15 +158,11 @@
     </button>
     <div cDropdownMenu>
       @for (mode of colorModes; track mode.name) {
-        <button
-          (click)="colorMode.set(mode.name)"
-          [active]="colorMode()===mode.name"
-          cDropdownItem
-          class="d-flex align-items-center"
-        >
-          <svg cIcon class="me-2" [name]="mode.icon" size="lg"></svg>
-          {{ mode.text }}
-        </button>
+      <button (click)="colorMode.set(mode.name)" [active]="colorMode()===mode.name" cDropdownItem
+        class="d-flex align-items-center">
+        <svg cIcon class="me-2" [name]="mode.icon" size="lg"></svg>
+        {{ mode.text }}
+      </button>
       }
     </div>
   </c-dropdown>

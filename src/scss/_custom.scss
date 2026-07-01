@@ -15,3 +15,141 @@
 .select-week .calendar-row.current {
   cursor: pointer;
 }
+
+/* =========================================
+   Global Data Table Styles (.neon-table)
+   ========================================= */
+
+/* Card Wrapper Styling */
+.card.accordion {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  background-color: #ffffff;
+
+  .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid #eef2f5;
+    padding: 1.25rem 1.5rem;
+
+    h5 {
+      margin: 0;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+    
+    /* Search input subtle styling */
+    .form-control {
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      border: 1px solid #ced4da;
+      &:focus {
+        box-shadow: none;
+        border-color: #80bdff;
+      }
+    }
+  }
+
+  .card-body {
+    padding: 0; /* Table ko edge-to-edge karne ke liye */
+  }
+}
+
+/* Main Table Styling */
+.neon-table {
+  width: 100%;
+  margin-bottom: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  thead {
+    background-color: #f8f9fc;
+
+    th {
+      padding: 14px 20px;
+      font-weight: 600;
+      color: #4a5568;
+      border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+
+      /* Angular Material Sort Header Alignment */
+      ::ng-deep .mat-sort-header-container {
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #f1f5f9;
+      }
+
+      td {
+        padding: 14px 20px;
+        vertical-align: middle;
+        color: #334155;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  /* Badge Customization (Soft colors for modern UI) */
+  .badge {
+    padding: 0.5em 0.8em;
+    font-weight: 500;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+    font-size: 0.8rem;
+
+    &.bg-success {
+      background-color: #d1fae5 !important;
+      color: #065f46 !important;
+    }
+
+    &.bg-danger {
+      background-color: #fee2e2 !important;
+      color: #991b1b !important;
+    }
+  }
+
+  /* Action Buttons */
+  .btn-sm {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &.ms-2 {
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+/* Angular Material Paginator Overrides */
+::ng-deep .mat-mdc-paginator {
+  background-color: #ffffff !important;
+  border-top: 1px solid #e2e8f0;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Empty State Styling */
+.alert-info {
+  margin: 2rem;
+  border-radius: 8px;
+  background-color: #ebf8ff;
+  border-color: #bee3f8;
+  color: #2b6cb0;
+  
+  h3 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+}

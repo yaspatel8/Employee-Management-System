@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">{{ employee()?.fullName }}</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <!-- Profile Image
+                            first defalut image is shown and then if the user has uploaded a profile image, it will be shown instead of default image. -->
+
+                        <div class="col-md-4 text-center mb-4">
+                            <img [src]="employee()?.profileImage ? 'https://localhost:7177/Documents/ProfileImage/' + employee()?.profileImage 
+                            : defaultImage" [alt]="employee()?.fullName || 'Profile Image'" class="img-fluid rounded-circle border"
+                                width="150" height="150" />
+                        </div>
+
+                        <!-- Profile Details -->
+                        <div class="col-md-8">
+                            <div class="row">
+
+                                <div class="col-sm-6 mb-3">
+                                    <label class="fw-bold">Employee ID</label>
+                                    <p>{{ employee()?.employeeId }}</p>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label class="fw-bold">Email</label>
+                                    <p>{{ employee()?.email }}</p>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label class="fw-bold">Phone</label>
+                                    <p>{{ employee()?.phoneNumber }}</p>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label class="fw-bold">Department</label>
+                                    <p>{{ employee()?.departmentName }}</p>
+                                </div>
+
+                                <!-- <div class="col-sm-6 mb-3">
+                                    <label class="fw-bold">Gender</label>
+                                    <p>{{ employee()?.gender }}</p>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label class="fw-bold">Date of Birth</label>
+                                    <p>{{ employee()?.dob | date:'dd/MM/yyyy' }}</p>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label class="fw-bold">Address</label>
+                                    <p>{{ employee()?.address }}</p>
+                                </div> -->
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer text-end">
+                    <button class="btn btn-primary" [routerLink]="['/profile/edit-profile', employee()?.employeeId]">
+                        Edit Profile
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

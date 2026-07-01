@@ -1,0 +1,147 @@
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit($event)" autocomplete="off">
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4>
+                {{ title }}
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Name</label>
+                <input type="text" id="fullName" class="form-control" formControlName="fullName" required>
+
+                @if(employeeForm.get('fullName')
+                ?.touched &&
+                employeeForm.get('fullName')
+                ?.invalid){
+                <div class="text-danger mt-1">
+                    Name is required.
+                </div>
+                }
+
+            </div>
+            @if(!hasRole('employee')){
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" formControlName="email" required>
+
+                @if(employeeForm.get('email')
+                ?.touched &&
+                employeeForm.get('email')
+                ?.invalid){
+                <div class="text-danger mt-1">
+                    Email is required.
+                </div>
+                }
+
+            </div>
+            }
+            <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber" required>
+
+                @if(employeeForm.get('phoneNumber')?.touched && employeeForm.get('phoneNumber')?.invalid){
+                <div class="text-danger mt-1">
+                    Phone Number must be Valid.
+                </div>
+                }
+
+            </div>
+
+
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3 text-center">
+                    <img [src]="imagePreview() ? imagePreview() : defaultImage" class="img-thumbnail" width="150" height="150">
+                </div>
+
+                <div class="col-md-9 d-flex flex-column justify-content-center">
+                    <label class="form-label">Profile Image</label>
+
+                    <input type="file" class="form-control" accept=".jpg,.jpeg,.png" (change)="onFileSelected($event)  ">
+
+                    <small class="text-muted">
+                        Allowed: JPG, JPEG, PNG
+                    </small>
+                </div>
+            </div>
+
+
+            @if(hasRole('admin', 'manager')) {
+            <div class="mb-3">
+                <label for="salary" class="form-label">Salary</label>
+                <input type="number" id="salary" class="form-control" formControlName="salary" required>
+
+                @if(employeeForm.get('salary')
+                ?.touched && employeeForm.get('salary')
+                ?.invalid){
+
+                <div class="text-danger mt-1">
+                    Salary must be a positive number.
+                </div>
+                }
+            </div>
+            }
+            @if(hasRole('admin','manager')){
+            <div class="mb-3">
+                <label for="department" class="form-label">
+                    Department
+                </label>
+
+                <select id="department" class="form-select" formControlName="departmentId">
+
+                    <option value="" selected disabled>
+                        Select Department
+                    </option>
+                    @for(dept of departments ?? [] ;track dept.departmentId) {
+                    <option [value]="dept.departmentId">
+                        {{ dept.departmentName | titlecase }}
+                    </option>
+                    }
+                </select>
+
+                @if(employeeForm.get('departmentId')?.touched &&
+                employeeForm.get('departmentId')?.invalid){
+
+                <div class="text-danger mt-1">
+                    Department is required.
+                </div>
+                }
+            </div>
+            }
+            @if(hasRole('admin','manager')){
+            <div class="mb-3">
+                <label for="department" class="form-label">
+                    Role
+                </label>
+
+                <select id="role" class="form-select" formControlName="roleId">
+
+                    <option value="" selected disabled>
+                        Select Role
+                    </option>
+                    @for(role of roles ?? [] ;track role.roleId) {
+                    <option [value]="role.roleId">
+                        {{ role.roleName | titlecase }}
+                    </option>
+
+                    }
+                </select>
+
+                @if(employeeForm.get('roleId')?.touched &&
+                employeeForm.get('roleId')?.invalid){
+
+                <div class="text-danger mt-1">
+                    Role is required.
+                </div>
+                }
+            </div>
+            }
+        </div>
+
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success" [disabled]="employeeForm.invalid"> {{ title }} </button>
+            <button type="reset" class="btn btn-danger ms-2" (click)="resetForm()">Reset</button>
+        </div>
+    </div>
+</form>

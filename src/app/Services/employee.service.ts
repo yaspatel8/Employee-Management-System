@@ -1,0 +1,45 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class EmployeeService {
+  apiUrl = "https://localhost:7177/GetAllEmployees";
+
+  constructor(private http: HttpClient) { }
+
+  getEmployees(searchText: string = '', pageNumber: number = 0, pageSize: number = 0, SortColumn: string = '', SortOrder: string = '') {
+    return this.http.post(
+      this.apiUrl,
+      {
+        searchText,
+        pageNumber,
+        pageSize,
+        SortColumn,
+        SortOrder
+      }
+    );
+}
+
+getEmployeeWithDepartment() {
+  return this.http.get("https://localhost:7177/GetEmployeesWithDepartment");
+}
+
+// addEmployee(employee: Employee) {
+//   return this.http.post("https://localhost:7177/CreateEmployee", employee);
+// }
+deleteEmployee(id: number) {
+  return this.http.delete(`https://localhost:7177/DeleteEmployee/${id}`);
+}
+
+saveEmployee(employee: FormData) {
+  return this.http.post("https://localhost:7177/SaveEmployee", employee);
+}
+
+  // getEmployeeById(id: number) {
+  //   return this.http.get(`https://localhost:7177/GetEmployeeById/${id}`);
+  // }
+
+  
+}

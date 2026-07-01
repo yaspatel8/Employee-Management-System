@@ -10,6 +10,9 @@ import {
 } from '@angular/router';
 import { IconSetService } from '@coreui/icons-angular';
 import { routes } from './app.routes';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from '../app/interceptor/auth.interceptor';
+import { lodderInterceptor } from '../app/interceptor/lodder.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +27,9 @@ export const appConfig: ApplicationConfig = {
       withEnabledBlockingInitialNavigation(),
       withViewTransitions(),
       withHashLocation()
+    ),
+    provideHttpClient(
+      withInterceptors([authInterceptor,lodderInterceptor])
     ),
     IconSetService,
     provideAnimationsAsync()

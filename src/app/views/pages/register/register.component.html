@@ -4,35 +4,116 @@
       <c-col lg="7" md="9" xl="6">
         <c-card class="mx-4">
           <c-card-body class="p-4">
-            <form cForm>
+            <form cForm [formGroup]="RegisterForm" (ngSubmit)="onSubmit()">
               <h1>Register</h1>
               <p class="text-body-secondary">Create your account</p>
-              <c-input-group class="mb-3">
+              <c-input-group>
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
                 </span>
-                <input autoComplete="name" cFormControl placeholder="Username" />
+                <input autoComplete="name" cFormControl placeholder="Full Name" formControlName="Fullname" />
               </c-input-group>
-              <c-input-group class="mb-3">
+              @if(isSubmitted && RegisterForm.get('Fullname')?.errors?.['required'])
+              {
+              <div class="text-danger">Full Name is required</div>
+              }
+              @if(isSubmitted && RegisterForm.get('Fullname')?.errors?.['minlength'])
+              {
+              <div class="text-danger">Full Name must be at least 3 characters long</div>
+              }
+              @if(isSubmitted && RegisterForm.get('Fullname')?.errors?.['maxlength'])
+              {
+              <div class="text-danger">Full Name must be at most 50 characters long</div>
+              }
+              <c-input-group class="mt-3">
                 <span cInputGroupText>&#64;</span>
-                <input autoComplete="email" cFormControl placeholder="Email" />
+                <input autoComplete="email" cFormControl placeholder="Email" formControlName="Email" />
               </c-input-group>
-              <c-input-group class="mb-3">
+              @if (isSubmitted && RegisterForm.get('Email')?.errors?.['required']) {
+              <div class="text-danger">
+                Email is required
+              </div>
+              }
+
+              @if (isSubmitted && RegisterForm.get('Email')?.errors?.['email']) {
+              <div class="text-danger">
+                Please enter a valid email address
+              </div>
+              }
+
+              @if (isSubmitted && RegisterForm.get('Email')?.errors?.['duplicate']) {
+              <div class="text-danger">
+                Email already exists
+              </div>
+              }
+              <c-input-group class="mt-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>
                 </span>
-                <input autoComplete="new-password" cFormControl placeholder="Password" type="password" />
+                <input autoComplete="new-password" cFormControl placeholder="Password" type="password"
+                  formControlName="PasswordHash" />
               </c-input-group>
-              <c-input-group class="mb-4">
+
+              @if (isSubmitted && RegisterForm.get('PasswordHash')?.errors?.['required']) {
+              <div class="text-danger">Password is required</div>
+              }
+              @if (isSubmitted && RegisterForm.get('PasswordHash')?.dirty &&
+              RegisterForm.get('PasswordHash')?.errors?.['passwordStrength']; as passwordErrors) {
+
+              @if (!passwordErrors.hasMinLength) {
+              <div class="text-danger">
+                Password must be at least 6 characters long.
+              </div>
+              }
+
+              @if (!passwordErrors.hasUpperCase) {
+              <div class="text-danger">
+                Password must contain an uppercase letter.
+              </div>
+              }
+
+              @if (!passwordErrors.hasLowerCase) {
+              <div class="text-danger">
+                Password must contain a lowercase letter.
+              </div>
+              }
+
+              @if (!passwordErrors.hasNumber) {
+              <div class="text-danger">
+                Password must contain a number.
+              </div>
+              }
+
+              @if (!passwordErrors.hasSpecialChar) {
+              <div class="text-danger">
+                Password must contain a special character.
+              </div>
+              }
+
+              }
+
+
+              <c-input-group class="mt-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>
                 </span>
-                <input autoComplete="new-password" cFormControl placeholder="Repeat password" type="password" />
+                <input autoComplete="new-password" cFormControl placeholder="Confirm Password" type="password"
+                  formControlName="ConfirmPassword" />
               </c-input-group>
-              <div class="d-grid">
-                <button cButton color="success">Create Account</button>
+              @if (isSubmitted && RegisterForm.get('ConfirmPassword')?.errors?.['required'] ) {
+              <div class="text-danger">Please confirm your password</div>
+              }
+              @if (RegisterForm.get('ConfirmPassword')?.errors?.['mismatch'] &&
+              RegisterForm.get('ConfirmPassword')?.dirty) {
+              <div class="text-danger">
+                Passwords do not match
+              </div>
+              }
+              <div class="d-grid mt-3">
+                <button type="submit" cButton color="success">Create Account</button>
               </div>
             </form>
+            <p class="text-body-secondary mt-2">You already have an account? <a routerLink="/login">Login here</a></p>
           </c-card-body>
         </c-card>
       </c-col>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NgScrollbar } from 'ngx-scrollbar';
 
@@ -16,7 +16,8 @@ import {
 } from '@coreui/angular';
 
 import { DefaultFooterComponent, DefaultHeaderComponent } from './';
-import { navItems } from './_nav';
+import { navItems, AppNavItem } from './_nav';
+import { AuthService } from '../../Services/auth.service';
 
 function isOverflown(element: HTMLElement) {
   return (
@@ -48,5 +49,27 @@ function isOverflown(element: HTMLElement) {
   ]
 })
 export class DefaultLayoutComponent {
-  public navItems = [...navItems];
+  //public navItems = [...navItems];
+
+  public navItems: AppNavItem[] = [];
+
+  constructor(private authService: AuthService) {
+
+    effect(() => {
+
+      const role = this.authService.userRole();
+
+      this.navItems = navItems
+        .filter(item => !item.roles || item.roles.includes(role!))
+        .map(item => ({
+          ...item,
+          children: item.children?.filter(child => {
+            const childRoles = (child as AppNavItem).roles;
+            return !childRoles || childRoles.includes(role!);
+          })
+        }));
+
+    });
+
+  }
 }

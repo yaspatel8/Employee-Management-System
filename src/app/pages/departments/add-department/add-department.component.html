@@ -1,0 +1,72 @@
+
+<form [formGroup]="departmentForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <div class="card mt-4">
+
+        <h4 class="card-header">
+            {{ editMode ? 'Edit Department' : 'Add New Department' }}
+        </h4>
+
+        <div class="card-body glass-card">
+
+            <div class="mb-3">
+
+                <label for="departmentName" class="form-label">
+                    Department Name
+                </label>
+
+                <input type="text" id="departmentName" class="form-control custom-input" formControlName="departmentName">
+
+                @if (
+                departmentForm.get('departmentName')?.invalid &&
+                (departmentForm.get('departmentName')?.dirty ||
+                departmentForm.get('departmentName')?.touched)
+                ) {
+
+                <div class="text-danger mt-1">
+
+                    @if (departmentForm.get('departmentName')?.errors?.['required']) {
+                    <div>
+                        Department Name is required.
+                    </div>
+                    }
+
+                    @if (departmentForm.get('departmentName')?.errors?.['minlength']) {
+                    <div>
+                        Department Name must be at least 2 characters long.
+                    </div>
+                    }
+
+                    @if (departmentForm.get('departmentName')?.errors?.['maxlength']) {
+                    <div>
+                        Department Name cannot exceed 50 characters.
+                    </div>
+                    }
+
+                </div>
+
+                }
+
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+
+            <button type="submit" class="btn btn-success" [disabled]="departmentForm.invalid">
+
+                {{ editMode ? 'Update' : 'Add' }}
+
+            </button>
+
+            <button type="button" class="btn btn-danger ms-2" (click)="departmentForm.reset()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </div>
+
+</form>

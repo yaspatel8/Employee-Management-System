@@ -1,0 +1,11 @@
+<!-- <div class="loader-backdrop" *ngIf="loading$ | async">
+    <div class="text-center">
+        <i class="spinner-grow text-primary"></i>
+        <div class="mt-2">Loading...</div>
+    </div>
+</div> -->
+
+<div class="fade show" style="text-align: center; padding-top: calc(100vh / 2); height: 100vh" *ngIf="loading$ | async">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Loading...</span>
+</div>

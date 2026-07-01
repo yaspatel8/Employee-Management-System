@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -15,43 +16,88 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
+        data: {
+          Role: ['admin', 'manager', 'employee']
+        },
+        canActivate: [authGuard],
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
       },
+      // {
+      //   path: 'theme',
+      //   canActivate: [authGuard],
+      //   loadChildren: () => import('./views/theme/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'base',
+      //   canActivate: [authGuard],
+      //   loadChildren: () => import('./views/base/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'buttons',
+      //   canActivate: [authGuard],
+      //   loadChildren: () => import('./views/buttons/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'forms',
+      //   canActivate: [authGuard],
+      //   loadChildren: () => import('./views/forms/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'icons',
+      //   canActivate: [authGuard],
+      //   loadChildren: () => import('./views/icons/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'notifications',
+      //   canActivate: [authGuard],
+      //   loadChildren: () => import('./views/notifications/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'widgets',
+      //   canActivate: [authGuard],
+      //   loadChildren: () => import('./views/widgets/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'charts',
+      //   canActivate: [authGuard],
+      //   loadChildren: () => import('./views/charts/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'pages',
+      //   canActivate: [authGuard],
+      //   loadChildren: () => import('./views/pages/routes').then((m) => m.routes)
+      // },
       {
-        path: 'theme',
-        loadChildren: () => import('./views/theme/routes').then((m) => m.routes)
+        path: 'departments',
+        canActivate: [authGuard],
+        data: {
+          Role: ['admin', 'manager', 'employee']
+        },
+        loadChildren: () => import('./pages/departments/routes').then((m) => m.routes)
       },
       {
-        path: 'base',
-        loadChildren: () => import('./views/base/routes').then((m) => m.routes)
+        path: 'employees',
+        canActivate: [authGuard],
+        data: {
+          Role: ['admin', 'manager', 'employee']
+        },
+        loadChildren: () => import('./pages/employees/routes').then((m) => m.routes)
       },
       {
-        path: 'buttons',
-        loadChildren: () => import('./views/buttons/routes').then((m) => m.routes)
+        path: 'profile',
+        canActivate: [authGuard],
+        data: {
+          Role: ['admin', 'manager', 'employee']
+        },
+        loadComponent: () => import('./pages/profile/profile.component').then((m) => m.ProfileComponent)
       },
       {
-        path: 'forms',
-        loadChildren: () => import('./views/forms/routes').then((m) => m.routes)
-      },
-      {
-        path: 'icons',
-        loadChildren: () => import('./views/icons/routes').then((m) => m.routes)
-      },
-      {
-        path: 'notifications',
-        loadChildren: () => import('./views/notifications/routes').then((m) => m.routes)
-      },
-      {
-        path: 'widgets',
-        loadChildren: () => import('./views/widgets/routes').then((m) => m.routes)
-      },
-      {
-        path: 'charts',
-        loadChildren: () => import('./views/charts/routes').then((m) => m.routes)
-      },
-      {
-        path: 'pages',
-        loadChildren: () => import('./views/pages/routes').then((m) => m.routes)
+        path: 'profile/edit-profile/:id',
+        canActivate: [authGuard],
+        data: {
+          Role: ['admin', 'manager', 'employee']
+        },
+        loadComponent: () => import('./pages/employees/add-employee/add-employee.component').then((m) => m.AddEmployeeComponent)
       }
     ]
   },
@@ -83,5 +129,5 @@ export const routes: Routes = [
       title: 'Register Page'
     }
   },
-  { path: '**', redirectTo: 'dashboard' }
+  { path: '**', redirectTo: '404' }
 ];
