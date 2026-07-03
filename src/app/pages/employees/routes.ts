@@ -49,6 +49,15 @@ export const routes: Routes = [
                     Role: ['admin', 'manager']
                 },
                 loadComponent: () => import('./add-employee/add-employee.component').then(m => m.AddEmployeeComponent),
+            },
+            {
+                path: 'bulk-employees',
+                canActivate: [authGuard],
+                data: {
+                    title: 'Bulk Employees',
+                    Role: ['admin']
+                },
+                loadComponent: () => import('./bulk-employees/bulk-employees.component').then(m => m.BulkEmployeesComponent),
             }
         ]
     }

@@ -21,6 +21,8 @@ export class AddDepartmentComponent {
     this.departmentForm = this.fb.group({
       departmentId: [0],
       departmentName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      updatedby: [null],
+      createdBy: Number(authService.getUserId())
     });
   }
 
@@ -45,7 +47,8 @@ export class AddDepartmentComponent {
           const dept = response.data[0];
           this.departmentForm.patchValue({
             departmentId: dept.departmentId,
-            departmentName: dept.departmentName
+            departmentName: dept.departmentName,
+            updatedby: Number(this.authService.getUserId())
           });
         }
       });
@@ -62,7 +65,6 @@ export class AddDepartmentComponent {
         next: (response: any) => {
           if (response.success) {
             Swal.fire('Success', response.message, 'success');
-            this.authService.currentUser.set(response.data);
             this.router.navigate(['/departments/department-list']);
           } else {
             Swal.fire('Error', response.message, 'error');
@@ -76,6 +78,6 @@ export class AddDepartmentComponent {
           );
         }
       });
-    
+
   }
 }

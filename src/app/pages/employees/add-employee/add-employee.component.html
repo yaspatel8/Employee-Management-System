@@ -89,7 +89,7 @@
 
                 <select id="department" class="form-select" formControlName="departmentId">
 
-                    <option value="" selected disabled>
+                    <option value="" selected>
                         Select Department
                     </option>
                     @for(dept of departments ?? [] ;track dept.departmentId) {
@@ -98,14 +98,6 @@
                     </option>
                     }
                 </select>
-
-                @if(employeeForm.get('departmentId')?.touched &&
-                employeeForm.get('departmentId')?.invalid){
-
-                <div class="text-danger mt-1">
-                    Department is required.
-                </div>
-                }
             </div>
             }
             @if(hasRole('admin','manager')){

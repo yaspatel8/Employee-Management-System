@@ -36,10 +36,12 @@ export class AddEmployeeComponent {
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^(?:\+91|91|0)?[6-9]\d{9}$/)]],
       salary: ['', Validators.required],
-      departmentId: ['', Validators.required],
+      departmentId: [''],
       roleId: ['', Validators.required],
       userId: [0],
-      ProfileImage: ['']
+      ProfileImage: [''],
+      updatedby: [null],
+      createdBy: Number(authService.getUserId())
     });
   }
 
@@ -264,22 +266,17 @@ export class AddEmployeeComponent {
             salary: emps.salary,
             departmentId: emps.departmentId,
             roleId: emps.roleId,
-            ProfileImage: emps.profileImage
-
+            ProfileImage: emps.profileImage,
+            updatedby: Number(this.authService.getUserId())
           });
-
           if (emps.profileImage) {
             const imageUrl = `https://localhost:7177/Documents/ProfileImage/${emps.profileImage}`;
-
             this.imagePreview.set(imageUrl);
-
             this.employeeForm.patchValue({
               ProfileImage: emps.profileImage
             });
           }
-
         }
-
       });
   }
 }

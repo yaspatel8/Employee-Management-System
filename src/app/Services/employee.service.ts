@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Employee } from '../models/employee';
 
 @Injectable({
   providedIn: 'root',
@@ -41,5 +42,8 @@ saveEmployee(employee: FormData) {
   //   return this.http.get(`https://localhost:7177/GetEmployeeById/${id}`);
   // }
 
+  BulkUploadEmployees(employees: Employee[]) {
+    return this.http.post("https://localhost:7177/BulkSaveEmployees", employees);
+  }
   
 }

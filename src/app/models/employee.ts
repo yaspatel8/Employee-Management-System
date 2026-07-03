@@ -15,4 +15,6 @@ export interface Employee {
     departmentId?: number;
     roleId?: number;
     roleName: string;
+    updatedby?: number;
+    createdBy?: number;
 }

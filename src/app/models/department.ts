@@ -4,4 +4,6 @@ export interface Department {
     createdAt?: Date;
     isActive?: boolean;
     updatedAt?: Date;
+    updatedby?: number;
+    createdBy?: number;
 }
