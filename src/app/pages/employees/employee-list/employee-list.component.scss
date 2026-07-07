@@ -1,0 +1,22 @@
+.table td,
+.table th {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+td:last-child {
+    min-width: 170px;
+}
+
+td:last-child .btn {
+    margin-right: 5px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.neon-table {
+    min-width: 1300px;
+}

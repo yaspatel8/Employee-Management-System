@@ -19,7 +19,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         Swal.fire({
           icon: 'warning',
           title: 'Session Expired',
-          text: 'Your session has expired. Please login again.',
+          text: error.error?.message|| 'Your session has expired. Please login again.',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
           confirmButtonText: 'OK'
         }).then(() => {
           router.navigate(['/login']);

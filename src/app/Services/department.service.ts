@@ -36,4 +36,8 @@ export class DepartmentService {
   getAllDepartments() {
     return this.http.get("https://localhost:7177/GetDepartment");
   }
+  updateDepartmentStatus(departmentId: number, isActive: boolean, updatedBy: number) {
+    return this.http.post(`https://localhost:7177/UpdateDepartmentStatus?departmentId=${departmentId}&isActive=${isActive}&updatedBy=${updatedBy}`, {});
+    
+  }
 }

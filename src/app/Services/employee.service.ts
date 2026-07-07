@@ -46,4 +46,12 @@ saveEmployee(employee: FormData) {
     return this.http.post("https://localhost:7177/BulkSaveEmployees", employees);
   }
   
+  BulkDeleteEmployees(employeeIds: number[],deletedBy: number ) {
+    return this.http.post("https://localhost:7177/BulkDeleteEmployees", { employeeIds, deletedBy });
+  }
+
+  ChangeEmployeeStatus(employeeId: number, isActive: boolean, updatedBy: number) {
+    return this.http.post(`https://localhost:7177/ChangeEmployeeStatus?employeeId=${employeeId}&isActive=${isActive}&updatedBy=${updatedBy}`,
+  {});
+  }
 }

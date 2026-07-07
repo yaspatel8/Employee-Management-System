@@ -18,8 +18,7 @@ import { AuthService } from '../../../Services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
-import { ProfileService } from 'src/app/Services/profile.service';
-import { Profile } from 'src/app/models/Profile';
+import { ProfileService } from '../../../Services/profile.service';
 
 @Component({
   selector: 'app-login',
@@ -42,6 +41,7 @@ export class LoginComponent {
   // userRole = signal<string | null>(null);
 
   onSubmit() {
+
     this.isSubmitted = true;
 
     this.loginForm.markAllAsTouched();

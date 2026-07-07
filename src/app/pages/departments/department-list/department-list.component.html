@@ -38,10 +38,21 @@
                         <td>{{ department.createdAt | date }}</td>
 
                         <td>
-                            @if (department.isActive) {
-                            <span class="badge bg-success">Active</span>
+                            @if (hasRole('admin', 'manager')) {
+
+                            <button class="btn btn-sm" [ngClass]="department.isActive ? 'btn-success' : 'btn-danger'"
+                                (click)="changeStatus(department.departmentId, !department.isActive)">
+
+                                {{ department.isActive ? 'Active' : 'Inactive' }}
+
+                            </button>
+
                             } @else {
-                            <span class="badge bg-danger">Inactive</span>
+
+                            <span class="badge" [ngClass]="department.isActive ? 'bg-success' : 'bg-danger'">
+                                {{ department.isActive ? 'Active' : 'Inactive' }}
+                            </span>
+
                             }
                         </td>
 

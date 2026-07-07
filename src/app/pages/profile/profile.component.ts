@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Profile } from 'src/app/models/Profile';
-import { AuthService } from 'src/app/Services/auth.service';
-import { ProfileService } from 'src/app/Services/profile.service';
+import { Profile } from '../../models/Profile';
+import { AuthService } from '../../Services/auth.service';
+import { ProfileService } from '../../Services/profile.service';
 
 @Component({
   selector: 'app-profile',

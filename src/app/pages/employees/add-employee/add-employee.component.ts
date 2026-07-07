@@ -35,7 +35,7 @@ export class AddEmployeeComponent {
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^(?:\+91|91|0)?[6-9]\d{9}$/)]],
-      salary: ['', Validators.required],
+      salary: [''],
       departmentId: [''],
       roleId: ['', Validators.required],
       userId: [0],

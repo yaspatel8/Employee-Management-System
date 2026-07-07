@@ -107,6 +107,28 @@ export class DepartmentListComponent {
 
   }
 
+  changeStatus(departmentId: number, isActive: boolean) {
+
+    const updatedBy = Number(this.authService.getUserId());
+
+    this.departmentService.updateDepartmentStatus(departmentId, isActive, updatedBy).subscribe({
+      next: (response: any) => {
+        Swal.fire({
+          icon: 'success',
+          title: response.message
+        });
+        this.getDepartments();
+      },
+      error: (err: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: err.error?.message || 'Something went wrong.'
+        });
+      }
+    });
+
+  }
+
   deleteDepartment(id: number) {
     Swal.fire({
 
