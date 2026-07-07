@@ -52,9 +52,15 @@ export class LoginComponent {
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (res: any) => {
+
         if (res.success && res.token) {
           this.authService.savetoken(res.token);
-          
+          if (res.isFistLogin) {
+            console.log(res.tokenLogin);
+            this.router.navigate(['/reset-password'], { queryParams: { isFistLogin: res.isFistLogin, token: res.tokenLogin } });
+
+            return;
+          }
           //this.userRole.set(this.authService.getUserRole());
           // localStorage.setItem('userRole', userRole ?? '');
 

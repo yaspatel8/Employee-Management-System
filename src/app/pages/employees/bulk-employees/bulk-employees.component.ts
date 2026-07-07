@@ -130,7 +130,16 @@ export class BulkEmployeesComponent {
       }
 
       const employees = this.bulkForm.value.employees as Employee[];
-      console.log('Employees to be saved:', employees);
+      
+      Swal.fire({
+        title: 'Saving...',
+        text: 'Please wait',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       this.employeeService.BulkUploadEmployees(employees).subscribe({
 
         next: (res: any) => {

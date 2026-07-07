@@ -24,6 +24,8 @@ export class AuthService {
 
   loginURL = "https://localhost:7177/Login";
   registerURL = "https://localhost:7177/RegisterUser";
+  forgotPasswordURL = "https://localhost:7177/api/Login/ForgotPassword";
+  resetPasswordURL = "https://localhost:7177/api/Login/ResetPassword";
 
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 
@@ -106,5 +108,13 @@ export class AuthService {
         }
       }
     });
+  }
+
+  forgotPassword(data: any) {
+    return this.http.post(this.forgotPasswordURL, data);
+  }
+
+  resetPassword(data: any) {
+    return this.http.post(this.resetPasswordURL, data);
   }
 }

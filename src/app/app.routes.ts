@@ -27,46 +27,6 @@ export const routes: Routes = [
       //   canActivate: [authGuard],
       //   loadChildren: () => import('./views/theme/routes').then((m) => m.routes)
       // },
-      // {
-      //   path: 'base',
-      //   canActivate: [authGuard],
-      //   loadChildren: () => import('./views/base/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'buttons',
-      //   canActivate: [authGuard],
-      //   loadChildren: () => import('./views/buttons/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'forms',
-      //   canActivate: [authGuard],
-      //   loadChildren: () => import('./views/forms/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'icons',
-      //   canActivate: [authGuard],
-      //   loadChildren: () => import('./views/icons/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'notifications',
-      //   canActivate: [authGuard],
-      //   loadChildren: () => import('./views/notifications/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'widgets',
-      //   canActivate: [authGuard],
-      //   loadChildren: () => import('./views/widgets/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'charts',
-      //   canActivate: [authGuard],
-      //   loadChildren: () => import('./views/charts/routes').then((m) => m.routes)
-      // },
-      // {
-      //   path: 'pages',
-      //   canActivate: [authGuard],
-      //   loadChildren: () => import('./views/pages/routes').then((m) => m.routes)
-      // },
       {
         path: 'departments',
         canActivate: [authGuard],
@@ -98,7 +58,8 @@ export const routes: Routes = [
           Role: ['admin', 'manager', 'employee']
         },
         loadComponent: () => import('./pages/employees/add-employee/add-employee.component').then((m) => m.AddEmployeeComponent)
-      }
+      },
+
     ]
   },
   {
@@ -127,6 +88,20 @@ export const routes: Routes = [
     loadComponent: () => import('./views/pages/register/register.component').then(m => m.RegisterComponent),
     data: {
       title: 'Register Page'
+    }
+  },
+  {
+    path: 'forgot-password',
+    loadComponent: () => import('./pages/password/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
+    data: {
+      title: 'Forgot Password'
+    }
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () => import('./pages/password/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
+    data: {
+      title: 'Reset Password'
     }
   },
   { path: '**', redirectTo: '404' }

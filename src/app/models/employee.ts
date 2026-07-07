@@ -17,4 +17,5 @@ export interface Employee {
     roleName: string;
     updatedby?: number;
     createdBy?: number;
+    isFistLogin?: boolean;
 }

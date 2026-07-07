@@ -201,10 +201,19 @@ export class AddEmployeeComponent {
       );
     }
 
+    Swal.fire({
+      title: 'Saving...',
+      text: 'Please wait',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
     this.employeeService.saveEmployee(formData)
       .subscribe({
         next: (response: any) => {
-          
+
           if (response.success) {
             // this.authService.currentUser.set(response.data);
             Swal.fire({

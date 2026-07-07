@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
       }),
       withEnabledBlockingInitialNavigation(),
       withViewTransitions(),
-      withHashLocation()
+      //withHashLocation()
     ),
     provideHttpClient(
       withInterceptors([authInterceptor,lodderInterceptor])
