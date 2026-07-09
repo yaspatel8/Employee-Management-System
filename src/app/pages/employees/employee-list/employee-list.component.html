@@ -1,5 +1,6 @@
 <div class="container-fluid">
-    <div class="animated fadeIn mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+    <div
+        class="animated fadeIn mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
 
         <h1 class="card-title mb-0">Employee List</h1>
 
@@ -19,6 +20,15 @@
             <button class="btn btn-danger" (click)="bulkDelete()" [disabled]="selectedEmployeeIds.length==0">
                 Delete Selected ({{selectedEmployeeIds.length}})
             </button>
+
+            }
+            @if(hasRole('admin','manager')) {
+            <button class="btn btn-success" [disabled]="selectedEmployeeIds.length==0" (click)="bulkUpdate()">
+                Save Selected ({{selectedEmployeeIds.length}})
+            </button>
+            <button class="btn btn-secondary" (click)="exportSelected()">
+                Import Excel ({{selectedEmployeeIds.length}})
+            </button>
             }
         </div>
 
@@ -37,90 +47,155 @@
 
     <div class="card-body">
         @if(Employees().length > 0) {
-
-        <div class="table-responsive">
-            <table class="table table-striped neon-table" matSort (matSortChange)="sortData($event)">
-                <thead>
-                    <tr>
-                        @if (hasRole('admin')) {
-                        <th width="50">
-                            <input type="checkbox" (change)="toggleSelectAll($event)"
-                                [checked]="selectedEmployeeIds.length === Employees().length && Employees().length > 0">
-                        </th>
-                        }
-                        <th mat-sort-header="employeeId">ID</th>
-                        <th mat-sort-header="fullName">Name</th>
-                        <th mat-sort-header="email">Email</th>
-                        <th mat-sort-header="phoneNumber">Phone</th>
-                        <th mat-sort-header="salary">Salary</th>
-                        <th mat-sort-header="departmentId">Department</th>
-                        <th mat-sort-header="createdAt">Created At</th>
-                        <th>Available</th>
-                        @if (hasRole('admin','manager','employee')) {
-                        <th>Action</th>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let employee of Employees(); let i = index">
-                        @if (hasRole('admin')) {
-                        <td>
-
-                            <input type="checkbox" [checked]="isSelected(employee.employeeId)"
-                                (change)="toggleSelection(employee.employeeId,$event)">
-
-                        </td>
-                        }
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ employee.fullName | titlecase }}</td>
-                        <td>{{ employee.email | lowercase }}</td>
-                        <td>{{ employee.phoneNumber || '-' }}</td>
-                        <td>@if(employee.salary !== null && employee.salary !== undefined) {
-                            {{ employee.salary | currency:'INR':'symbol':'1.0-0' }}
-                            } @else { - }
-                        </td>
-                        <td>@if(employee.departmentName) {
-                            {{ employee.departmentName | titlecase }}
-                            } @else { - }
-                        </td>
-                        <td>{{ employee.createdAt | date }}</td>
-
-                        <td>
-                            @if (hasRole('admin', 'manager')) {
-
-                            <button class="btn btn-sm" [ngClass]="employee.isActive ? 'btn-success' : 'btn-danger'"
-                                (click)="changeStatus(employee.employeeId, !employee.isActive)">
-
-                                {{ employee.isActive ? 'Active' : 'Inactive' }}
-
-                            </button>
-
-                            } @else {
-
-                            <span class="badge" [ngClass]="employee.isActive ? 'bg-success' : 'bg-danger'">
-                                {{ employee.isActive ? 'Active' : 'Inactive' }}
-                            </span>
-
+        <form [formGroup]="employeeForm">
+            <div class="table-responsive">
+                <table class="table table-striped neon-table" matSort (matSortChange)="sortData($event)"
+                    formArrayName="employees">
+                    <thead>
+                        <tr>
+                            @if (hasRole('admin','manager')) {
+                            <th width="50">
+                                <input type="checkbox" (change)="toggleSelectAll($event)"
+                                    [checked]="selectedEmployeeIds.length === Employees().length && Employees().length > 0">
+                            </th>
                             }
-                        </td>
+                            <th mat-sort-header="employeeId">ID</th>
+                            <th mat-sort-header="fullName">Name</th>
+                            <th mat-sort-header="email">Email</th>
+                            <th mat-sort-header="phoneNumber">Phone</th>
+                            <th mat-sort-header="salary">Salary</th>
+                            <th mat-sort-header="departmentId">Department</th>
+                            <th mat-sort-header="createdAt">Created At</th>
+                            <th>Available</th>
+                            @if (hasRole('admin','manager','employee')) {
+                            <th>Action</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let employee of Employees(); let i = index" [formGroupName]="i">
+                            @if (hasRole('admin','manager')) {
+                            <td>
 
-                        @if (hasRole('admin','manager','employee')) {
-                        <td>
-                            <div class="d-flex gap-2 flex-nowrap">
-                                <button class="btn btn-sm btn-outline-primary"
-                                    [routerLink]="['/employees/edit-employee', employee.employeeId]">Edit</button>
+                                <input type="checkbox" [checked]="isSelected(employee.employeeId)"
+                                    (change)="toggleSelection(employee.employeeId,$event)">
 
-                                @if(hasRole('admin','manager')){
-                                <button class="btn btn-sm btn-outline-danger ms-2"
-                                    (click)="deleteEmployee(employee.employeeId)">Delete</button>
+                            </td>
+                            }
+                            <td>{{ i + 1 }}</td>
+                            <td>
+                                @if(isRowEditable(employee.employeeId)){
+
+                                <input class="form-control" formControlName="fullName">
+
+                                }@else{
+
+                                {{employee.fullName}}
                                 }
-                            </div>
-                        </td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+
+                            </td>
+                            <td>
+
+                                @if(isRowEditable(employee.employeeId) && hasRole('admin')){
+
+                                <input type="email" class="form-control" formControlName="email">
+
+                                @if(employeeArray.at(i).get('email')?.invalid &&
+                                employeeArray.at(i).get('email')?.touched){
+
+                                <small class="text-danger">
+
+                                    Invalid Email
+
+                                </small>
+
+                                }
+
+                                }@else{
+
+                                {{employee.email}}
+
+                                }
+
+                            </td>
+                            <td>
+                                {{employee.phoneNumber || '-'}}
+                            </td>
+                            <td> @if(isRowEditable(employee.employeeId) && hasRole('admin')){
+
+                                <input type="number" class="form-control" formControlName="salary">
+
+                                }@else{@if(employee.salary !== null && employee.salary !== undefined) {
+                                {{ employee.salary | currency:'INR':'symbol':'1.0-0' }}
+                                } @else { - } }
+                            </td>
+
+                            <td>@if(isRowEditable(employee.employeeId)){
+                                <select class="form-select" formControlName="departmentId">
+                                    <option [ngValue]="null">Select Department</option>
+
+                                    <option *ngFor="let dept of Departments()" [ngValue]="dept.departmentId">
+                                        {{ dept.departmentName | titlecase }}
+                                    </option>
+                                </select> } @else {
+                                @if(employee.departmentName) {
+                                {{ employee.departmentName | titlecase }}
+                                } @else { - } }
+                            </td>
+                            <td>{{ employee.createdAt | date }}</td>
+
+                            <td>
+                                @if(isRowEditable(employee.employeeId)){
+
+                                <select class="form-select" formControlName="isActive">
+
+                                    <option [ngValue]="true">Active</option>
+
+                                    <option [ngValue]="false">Inactive</option>
+
+                                </select>
+
+                                }@else{
+                                @if (hasRole('admin', 'manager')) {
+
+                                <button class="btn btn-sm" [ngClass]="employee.isActive ? 'btn-success' : 'btn-danger'"
+                                    (click)="changeStatus(employee.employeeId, !employee.isActive)"
+                                    [disabled]="isBulkEditMode()">
+
+                                    {{ employee.isActive ? 'Active' : 'Inactive' }}
+
+                                </button>
+
+                                } @else {
+
+                                <span class="badge" [ngClass]="employee.isActive ? 'bg-success' : 'bg-danger'">
+                                    {{ employee.isActive ? 'Active' : 'Inactive' }}
+                                </span>
+
+                                } }
+                            </td>
+
+                            @if (hasRole('admin','manager','employee')) {
+                            <td>
+                                <div class="d-flex gap-2 flex-nowrap">
+                                    <button class="btn btn-sm btn-outline-primary"
+                                        [routerLink]="['/employees/edit-employee', employee.employeeId]"
+                                        [disabled]="isBulkEditMode()">Edit</button>
+
+                                    @if(hasRole('admin','manager')){
+                                    <button class="btn btn-sm btn-outline-danger ms-2"
+                                        (click)="deleteEmployee(employee.employeeId)"
+                                        [disabled]="isBulkEditMode()">Delete</button>
+                                    }
+                                </div>
+                            </td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
         <mat-paginator [length]="totalRecords" [pageSize]="pageSize" [pageSizeOptions]="[3,5,10,20]"
             showFirstLastButtons (page)="pageChanged($event)"></mat-paginator>
 

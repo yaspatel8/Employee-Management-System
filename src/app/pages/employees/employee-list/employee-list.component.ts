@@ -9,10 +9,12 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../Services/auth.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { DepartmentService } from '../../../Services/department.service';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-list',
-  imports: [CommonModule, RouterLink, FormsModule, MatPaginatorModule, MatSortModule],
+  imports: [CommonModule, RouterLink, FormsModule, MatPaginatorModule, MatSortModule, ReactiveFormsModule,],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
 })
@@ -20,11 +22,12 @@ export class EmployeeListComponent {
   private searchSubject = new Subject<string>();
   selectedEmployeeIds: number[] = [];
 
-  constructor(private employeeService: EmployeeService, private authService: AuthService) { }
+  constructor(private employeeService: EmployeeService, private authService: AuthService, private departmentService: DepartmentService, private fb: FormBuilder,) { }
 
   Employees = signal<Employee[]>([]);
-
+  Departments = signal<any[]>([]);
   message!: string;
+  employeeForm!: FormGroup;
 
   searchText = '';
   pageNumber = 1;
@@ -35,6 +38,10 @@ export class EmployeeListComponent {
 
   ngOnInit() {
     this.getEmployees();
+    this.loadDepartments();
+    this.employeeForm = this.fb.group({
+      employees: this.fb.array([])
+    });
 
     this.searchSubject
       .pipe(
@@ -51,13 +58,22 @@ export class EmployeeListComponent {
 
   }
 
+  loadDepartments() {
+    this.departmentService.getAllDepartments().subscribe((d: any) => {
+      this.Departments.set(d.data);
+    });
+  }
+
+
   hasRole(...roles: string[]): boolean {
     const userRole = this.authService.getUserRole();
     return roles.includes(userRole ?? '');
   }
 
   getEmployees() {
+
     this.selectedEmployeeIds = [];
+
     this.employeeService.getEmployees(
       this.searchText,
       this.pageNumber,
@@ -65,13 +81,62 @@ export class EmployeeListComponent {
       this.SortColumn,
       this.SortOrder
     ).subscribe((d: any) => {
-      this.Employees.set(d.data ?? []);
+
+      const employees = d.data ?? [];
+
+      this.Employees.set(employees);
+
       this.selectedEmployeeIds = [];
+
+      // Clear previous FormArray
+      this.employeeArray.clear();
+
+      // Populate FormArray
+      employees.forEach((emp: Employee) => {
+
+        this.employeeArray.push(
+          this.fb.group({
+
+            employeeId: [emp.employeeId],
+
+            fullName: [
+              emp.fullName,
+            ],
+
+            email: [
+              emp.email,
+              [
+                Validators.required,
+                Validators.email
+              ]
+            ],
+
+            salary: [
+              emp.salary,
+            ],
+
+            departmentId: [
+              emp.departmentId,
+            ],
+
+            isActive: [
+              emp.isActive
+            ],
+            updatedby: [
+              Number(this.authService.getUserId())
+            ]
+          })
+        );
+
+      });
+
       this.totalRecords =
-        d.data?.length > 0
-          ? d.data[0].totalRecords
+        employees.length > 0
+          ? employees[0].totalRecords
           : 0;
+
     });
+
   }
 
   onSearch() {
@@ -104,6 +169,29 @@ export class EmployeeListComponent {
     }
 
   }
+//here no employee select so download all employee data other wise download selected employee data
+exportSelected() {  
+  if (this.selectedEmployeeIds.length === 0) {
+    this.employeeService.ExportEmployees([]).subscribe((blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'employees.xlsx';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  } else {
+    this.employeeService.ExportEmployees(this.selectedEmployeeIds).subscribe((blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'selected_employees.xlsx';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+}
 
   toggleSelectAll(event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
@@ -120,6 +208,65 @@ export class EmployeeListComponent {
     return this.selectedEmployeeIds.includes(employeeId);
 
   }
+
+  //edit bulk
+  get employeeArray(): FormArray {
+    return this.employeeForm.get('employees') as FormArray;
+  }
+  isBulkEditMode(): boolean {
+    return this.selectedEmployeeIds.length > 0;
+  }
+  isRowEditable(employeeId: number): boolean {
+    return this.selectedEmployeeIds.includes(employeeId);
+  }
+
+  bulkUpdate() {
+
+    const selectedControls = this.employeeArray.controls.filter(control =>
+      this.selectedEmployeeIds.includes(control.value.employeeId)
+    );
+
+    for (const control of selectedControls) {
+
+      control.markAllAsTouched();
+
+      if (control.invalid) {
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Validation Error',
+          text: 'Please correct all selected employee details.'
+        });
+
+        return;
+      }
+    }
+
+    const data = selectedControls.map(control => control.value);
+
+    console.log(data);
+
+    // Bulk Update API
+    this.employeeService
+      .BulkUpdateEmployees(data)
+      .subscribe({
+        next: (response: any) => {
+          Swal.fire({
+            icon: 'success',
+            title: response.message
+          });
+          this.getEmployees();
+        },
+        error: (err: any) => {
+          Swal.fire({
+            icon: 'error',
+            title: err.error?.message || 'Something went wrong.'
+          });
+        }
+      });
+
+  }
+
   bulkDelete() {
     Swal.fire({
       title: 'Are you sure?',

@@ -13,7 +13,7 @@ import {
 } from "@coreui/angular";
 import { IconDirective } from '@coreui/icons-angular';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from 'src/app/Services/auth.service';
+import { AuthService } from '../../../Services/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -24,7 +24,8 @@ import Swal from 'sweetalert2';
   styleUrl: './forgot-password.component.scss',
 })
 export class ForgotPasswordComponent {
-  constructor(private router: Router, private authService: AuthService, private formBuilder: FormBuilder) { }
+  constructor(private router: Router, private authService: AuthService, private formBuilder: FormBuilder
+  ) { }
 
   forgotPasswordForm = this.formBuilder.group({
     Email: ['', [Validators.required, Validators.email]]
@@ -40,7 +41,7 @@ export class ForgotPasswordComponent {
     }
 
     Swal.fire({
-      title: 'Saving...',
+      title: 'Sending...',
       text: 'Please wait',
       allowOutsideClick: false,
       didOpen: () => {

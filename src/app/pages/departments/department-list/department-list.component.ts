@@ -20,6 +20,7 @@ import { AuthService } from '../../../Services/auth.service';
 export class DepartmentListComponent {
 
   private searchSubject = new Subject<string>();
+  SelectedDepartmentIds: number[] = []
 
   constructor(private departmentService: DepartmentService, private router: Router, private authService: AuthService) { }
 
@@ -62,6 +63,56 @@ export class DepartmentListComponent {
     return roles.includes(userRole ?? '');
   }
 
+  toggleSelection(departmentId: number, event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+    if (checked) {
+
+      if (!this.SelectedDepartmentIds.includes(departmentId)) {
+        this.SelectedDepartmentIds.push(departmentId);
+      }
+    } else {
+      this.SelectedDepartmentIds = this.SelectedDepartmentIds.filter(id => id !== departmentId);
+    }
+
+  }
+
+  toggleSelectAll(event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+    if (checked) {
+      this.SelectedDepartmentIds =
+        this.Departments().map(x => x.departmentId);
+    } else {
+      this.SelectedDepartmentIds = [];
+    }
+  }
+
+  isSelected(departmentId: number): boolean {
+
+    return this.SelectedDepartmentIds.includes(departmentId);
+
+  }
+
+  exportSelected() {
+    if (this.SelectedDepartmentIds.length === 0) {
+      this.departmentService.ExportDepartments([]).subscribe((blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'departments.xlsx';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
+    } else {
+      this.departmentService.ExportDepartments(this.SelectedDepartmentIds).subscribe((blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'selected_departments.xlsx';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
+    }
+  }
 
 
   getDepartments() {
@@ -151,13 +202,13 @@ export class DepartmentListComponent {
           .deleteDepartment(id)
           .subscribe({
 
-            next: (response:any) => {
+            next: (response: any) => {
 
               Swal.fire({
 
                 icon: 'success',
 
-                title:response.message
+                title: response.message
 
               });
 
@@ -165,7 +216,7 @@ export class DepartmentListComponent {
 
             },
 
-            error: (err:any) => {
+            error: (err: any) => {
 
               Swal.fire({
 

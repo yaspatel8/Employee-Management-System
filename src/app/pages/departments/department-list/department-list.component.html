@@ -3,6 +3,9 @@
         <h1 class="card-title">Department List</h1>
         @if (hasRole('admin','manager')) {
         <button class="btn btn-primary" routerLink="/departments/add-department">Add Department</button>
+        <button class="btn btn-secondary" (click)="exportSelected()">
+            Export Excel ({{SelectedDepartmentIds.length}})
+        </button>
         }
     </div>
 </div>
@@ -22,6 +25,12 @@
             <table class="table table-striped neon-table" matSort (matSortChange)="sortData($event)">
                 <thead>
                     <tr>
+                        @if (hasRole('admin','manager')) {
+                        <th width="50">
+                            <input type="checkbox" (change)="toggleSelectAll($event)"
+                                [checked]="SelectedDepartmentIds.length === Departments().length && Departments().length > 0">
+                        </th>
+                        }
                         <th mat-sort-header="departmentId">ID</th>
                         <th mat-sort-header="departmentName">Name</th>
                         <th mat-sort-header="createdAt">Created At</th>
@@ -33,6 +42,14 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let department of Departments(); let i = index">
+                        @if (hasRole('admin','manager')) {
+                        <td>
+
+                            <input type="checkbox" [checked]="isSelected(department.departmentId)"
+                                (change)="toggleSelection(department.departmentId,$event)">
+
+                        </td>
+                        }
                         <td>{{ i + 1 }}</td>
                         <td>{{ department.departmentName | titlecase }}</td>
                         <td>{{ department.createdAt | date }}</td>

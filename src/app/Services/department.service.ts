@@ -40,4 +40,7 @@ export class DepartmentService {
     return this.http.post(`https://localhost:7177/UpdateDepartmentStatus?departmentId=${departmentId}&isActive=${isActive}&updatedBy=${updatedBy}`, {});
     
   }
+  ExportDepartments(ids: number[]) {
+    return this.http.post("https://localhost:7177/ExportDepartment",  ids, { responseType: 'blob' });
+  }
 }
