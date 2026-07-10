@@ -63,5 +63,8 @@ export class EmployeeService {
   ExportEmployees(ids: number[]) {
     return this.http.post("https://localhost:7177/ExportEmployees", ids, { responseType: 'blob' });
   }
+  getManagers(departmentId: number, positionId: number) {
+    return this.http.get(`https://localhost:7177/Managers?departmentId=${departmentId}&positionId=${positionId}`);
+  }
 
 }

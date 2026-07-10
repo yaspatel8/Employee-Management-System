@@ -14,17 +14,35 @@ export const navItems: AppNavItem[] = [
   {
     name: 'Departments',
     title: true,
-    roles: ['admin','manager','employee']
+    roles: ['admin', 'manager', 'employee']
   },
   {
     name: 'Department',
     url: '/departments',
     iconComponent: { name: 'cil-list' },
-    roles: ['admin','manager','employee'],
+    roles: ['admin', 'manager', 'employee'],
     children: [
       {
         name: 'Department List',
         url: '/departments/department-list',
+        icon: 'nav-icon-bullet'
+      }
+    ]
+  },
+  {
+    name: 'Positions',
+    title: true,
+    roles: ['admin', 'manager']
+  },
+  {
+    name: 'Positions',
+    url: '/positions',
+    iconComponent: { name: 'cil-list' },
+    roles: ['admin', 'manager'],
+    children: [
+      {
+        name: 'Position List',
+        url: '/positions/positions-list',
         icon: 'nav-icon-bullet'
       }
     ]
@@ -48,7 +66,7 @@ export const navItems: AppNavItem[] = [
         name: 'Employee With Department',
         url: '/employees/employee-with-department',
         icon: 'nav-icon-bullet',
-        roles: ['admin', 'manager','employee']
+        roles: ['admin', 'manager', 'employee']
       }
     ]
   }

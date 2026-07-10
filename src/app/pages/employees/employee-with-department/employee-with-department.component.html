@@ -60,6 +60,13 @@
                         {{ emp.departmentName || '-' | titlecase }}
                     </td>
                 </ng-container>
+                <!-- Position -->
+                <ng-container matColumnDef="positionName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Position</th>
+                    <td mat-cell *matCellDef="let emp">
+                        {{ emp.positionName || '-' | titlecase }}
+                    </td>
+                </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 

@@ -5,7 +5,7 @@ import { Employee } from '../../../models/employee';
 import { EmployeeService } from '../../../Services/employee.service';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { AuthService } from 'src/app/Services/auth.service';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-employee-with-department',
@@ -44,6 +44,7 @@ export class EmployeeWithDepartmentComponent implements OnInit, AfterViewInit {
       'email',
       'phoneNumber',
       'departmentName',
+      'positionName',
     ];
 
     if (this.hasRole('admin')) {

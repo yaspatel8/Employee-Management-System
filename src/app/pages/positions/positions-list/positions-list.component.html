@@ -1,0 +1,79 @@
+<div class="container-fluid">
+    <div class="animated fadeIn mb-4 d-flex justify-content-between align-items-center">
+        <h1 class="card-title">Position List</h1>
+        @if (hasRole('admin','manager')) {
+        <button class="btn btn-primary" routerLink="/positions/add-positions">Add Position</button>
+        }
+    </div>
+</div>
+
+<div class="card mb-4 accordion mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Position List</h5>
+        <div class="float-end">
+            <input type="text" class="form-control" placeholder="Search Position" [(ngModel)]="searchText"
+                (input)="onSearch()">
+        </div>
+    </div>
+
+    <div class="card-body">
+        @if(Positions().length > 0) {
+        <div class="table-responsive">
+            <table class="table table-striped neon-table" matSort (matSortChange)="sortData($event)">
+                <thead>
+                    <tr>
+                        <th mat-sort-header="positionId">ID</th>
+                        <th mat-sort-header="positionName">Name</th>
+                        <th mat-sort-header="Level">Level</th>
+                        <th mat-sort-header="createdAt">Created At</th>
+                        <th>Available</th>
+                        @if (hasRole('admin','manager')) {
+                        <th>Action</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let position of Positions(); let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ position.positionName | titlecase }}</td>
+                        <td>{{ position.level }}</td>
+                        <td>{{ position.createdAt | date }}</td>
+
+                        <td>
+                            @if (hasRole('admin', 'manager')) {
+
+                            <button class="btn btn-sm" [ngClass]="position.isActive ? 'btn-success' : 'btn-danger'"
+                                (click)="changeStatus(position.positionId, !position.isActive)">
+
+                                {{ position.isActive ? 'Active' : 'Inactive' }}
+
+                            </button>
+
+                            }
+                        </td>
+
+                        @if (hasRole('admin','manager')) {
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary"
+                                [routerLink]="['/positions/edit-positions', position.positionId]">Edit</button>
+                            <button class="btn btn-sm btn-outline-danger ms-2"
+                                (click)="deletePosition(position.positionId)">Delete</button>
+                        </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <mat-paginator [length]="totalRecords" [pageSize]="pageSize" [pageSizeOptions]="[3,5,10,20]"
+            showFirstLastButtons (page)="pageChanged($event)">
+        </mat-paginator>
+
+        } @else {
+        <div class="alert alert-info text-center m-4" role="alert">
+            <h3>No Positions Found</h3>
+            <p>There are no position records available.</p>
+        </div>
+        }
+    </div>
+</div>

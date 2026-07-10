@@ -8,6 +8,8 @@ import { EmployeeService } from '../../../Services/employee.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../../Services/auth.service';
 import { RoleService } from '../../../Services/role.service';
+import { PositionService } from '../../../Services/position.service';
+import { Position } from '../../../models/position';
 
 @Component({
   selector: 'app-add-employee',
@@ -27,8 +29,12 @@ export class AddEmployeeComponent {
 
   departments?: Department[] = [];
   roles?: any[] = [];
+  positions?: Position[] = [];
+  departmentId?: number;
 
-  constructor(private fb: FormBuilder, private employeeService: EmployeeService, private departmentService: DepartmentService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private authService: AuthService, private roleService: RoleService
+  managers?: any[] = [];
+
+  constructor(private fb: FormBuilder, private employeeService: EmployeeService, private departmentService: DepartmentService, private positionService: PositionService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private authService: AuthService, private roleService: RoleService
   ) {
     this.employeeForm = this.fb.group({
       employeeId: [0],
@@ -41,6 +47,8 @@ export class AddEmployeeComponent {
       userId: [0],
       ProfileImage: [''],
       updatedby: [null],
+      positionId: [''],
+      managerId: [''],
       createdBy: Number(authService.getUserId())
     });
   }
@@ -48,6 +56,8 @@ export class AddEmployeeComponent {
   ngOnInit() {
     this.loadDepartments();
     this.loadRoles();
+    this.loadPositions();
+    this.loadManagers();
 
     const id = this.route.snapshot.paramMap.get('id');
 
@@ -76,6 +86,32 @@ export class AddEmployeeComponent {
   loadDepartments() {
     this.departmentService.getAllDepartments().subscribe((d: any) => {
       this.departments = d.data;
+      this.cdr.detectChanges();
+    });
+  }
+
+
+  loadManagers() {
+
+    const departmentId = this.employeeForm.value.departmentId;
+
+    const positionId = this.employeeForm.value.positionId;
+
+    if (!departmentId || !positionId)
+      return;
+
+    this.employeeService
+      .getManagers(departmentId, positionId)
+      .subscribe((res: any) => {
+
+        this.managers = res.data;
+
+      });
+
+  }
+  loadPositions() {
+    this.positionService.getAllActivePositions().subscribe((d: any) => {
+      this.positions = d.data;
       this.cdr.detectChanges();
     });
   }
@@ -265,7 +301,7 @@ export class AddEmployeeComponent {
         if (employee.data && employee.data.length > 0) {
 
           const emps = employee.data[0];
-
+          console.log('Employee Data:', emps);
           this.employeeForm.patchValue({
             employeeId: emps.employeeId,
             userId: emps.userId,
@@ -275,7 +311,9 @@ export class AddEmployeeComponent {
             salary: emps.salary,
             departmentId: emps.departmentId,
             roleId: emps.roleId,
+            positionId: emps.positionId,
             ProfileImage: emps.profileImage,
+            managerId: emps.managerId,
             updatedby: Number(this.authService.getUserId())
           });
           if (emps.profileImage) {

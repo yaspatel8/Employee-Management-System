@@ -22,11 +22,6 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
       },
-      // {
-      //   path: 'theme',
-      //   canActivate: [authGuard],
-      //   loadChildren: () => import('./views/theme/routes').then((m) => m.routes)
-      // },
       {
         path: 'departments',
         canActivate: [authGuard],
@@ -34,6 +29,14 @@ export const routes: Routes = [
           Role: ['admin', 'manager', 'employee']
         },
         loadChildren: () => import('./pages/departments/routes').then((m) => m.routes)
+      },
+      {
+        path: 'positions',
+        canActivate: [authGuard],
+        data: {
+          Role: ['admin', 'manager']
+        },
+        loadChildren: () => import('./pages/positions/routes').then((m) => m.routes)
       },
       {
         path: 'employees',

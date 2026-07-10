@@ -1,0 +1,112 @@
+
+<form [formGroup]="positionForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+    <div class="card mt-4">
+
+        <h4 class="card-header">
+            {{ editMode ? 'Edit Position' : 'Add New Position' }}
+        </h4>
+
+        <div class="card-body glass-card">
+
+            <div class="mb-3">
+
+                <label for="positionName" class="form-label">
+                    Position Name
+                </label>
+
+                <input type="text" id="positionName" class="form-control custom-input" formControlName="positionName">
+
+                @if (
+                positionForm.get('positionName')?.invalid &&
+                (positionForm.get('positionName')?.dirty ||
+                positionForm.get('positionName')?.touched)
+                ) {
+
+                <div class="text-danger mt-1">
+
+                    @if (positionForm.get('positionName')?.errors?.['required']) {
+                    <div>
+                        Position Name is required.
+                    </div>
+                    }
+
+                    @if (positionForm.get('positionName')?.errors?.['minlength']) {
+                    <div>
+                        Position Name must be at least 2 characters long.
+                    </div>
+                    }
+
+                    @if (positionForm.get('positionName')?.errors?.['maxlength']) {
+                    <div>
+                        Position Name cannot exceed 50 characters.
+                    </div>
+                    }
+
+                </div>
+
+                }
+
+            </div>
+
+            <div class="mb-3">
+
+                <label for="level" class="form-label">
+                    Level
+                </label>
+
+                <input type="number" id="level" class="form-control custom-input" formControlName="level">
+
+                @if (
+                positionForm.get('level')?.invalid &&
+                (positionForm.get('level')?.dirty ||
+                positionForm.get('level')?.touched)
+                ) {
+
+                <div class="text-danger mt-1">
+
+                    @if (positionForm.get('level')?.errors?.['required']) {
+                    <div>
+                        Level is required.
+                    </div>
+                    }
+
+                    @if (positionForm.get('level')?.errors?.['min']) {
+                    <div>
+                        Level must be a positive number.
+                    </div>
+                    }
+
+                    @if (positionForm.get('level')?.errors?.['max']) {
+                    <div>
+                        Level cannot exceed 20.
+                    </div>
+                    }
+
+                </div>
+
+                }
+
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+
+            <button type="submit" class="btn btn-success" [disabled]="positionForm.invalid">
+
+                {{ editMode ? 'Update' : 'Add' }}
+
+            </button>
+
+            <button type="button" class="btn btn-danger ms-2" (click)="positionForm.reset()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </div>
+
+</form>

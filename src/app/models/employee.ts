@@ -18,4 +18,7 @@ export interface Employee {
     updatedby?: number;
     createdBy?: number;
     isFistLogin?: boolean;
+    positionId?: number;
+    positionName?: string;
+    level?: number;
 }

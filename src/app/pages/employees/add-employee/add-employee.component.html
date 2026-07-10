@@ -51,13 +51,15 @@
 
             <div class="row align-items-center mb-3">
                 <div class="col-md-3 text-center">
-                    <img [src]="imagePreview() ? imagePreview() : defaultImage" class="img-thumbnail" width="150" height="150">
+                    <img [src]="imagePreview() ? imagePreview() : defaultImage" class="img-thumbnail" width="150"
+                        height="150">
                 </div>
 
                 <div class="col-md-9 d-flex flex-column justify-content-center">
                     <label class="form-label">Profile Image</label>
 
-                    <input type="file" class="form-control" accept=".jpg,.jpeg,.png" (change)="onFileSelected($event)  ">
+                    <input type="file" class="form-control" accept=".jpg,.jpeg,.png"
+                        (change)="onFileSelected($event)  ">
 
                     <small class="text-muted">
                         Allowed: JPG, JPEG, PNG
@@ -87,7 +89,7 @@
                     Department
                 </label>
 
-                <select id="department" class="form-select" formControlName="departmentId">
+                <select id="department" class="form-select" formControlName="departmentId" (ngModelChange)="loadManagers()">
 
                     <option value="" selected>
                         Select Department
@@ -127,8 +129,45 @@
                 </div>
                 }
             </div>
+            <div class="mb-3">
+                <label for="position" class="form-label">
+                    Position
+                </label>
+
+                <select id="position" class="form-select" formControlName="positionId" (ngModelChange)="loadManagers()">
+
+                    <option value="" selected>
+                        Select Position
+                    </option>
+                    @for(position of positions ?? [] ;track position.positionId) {
+                    <option [value]="position.positionId">
+                        {{ position.positionName | titlecase }}
+                    </option>
+
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="manager" class="form-label">
+                    Manager
+                </label>
+
+                <select id="manager" class="form-select" formControlName="managerId">
+
+                    <option value="" selected>
+                        Select Manager
+                    </option>
+                    @for(manager of managers ?? [] ;track manager.employeeId) {
+                    <option [value]="manager.employeeId">
+                        {{ manager.fullName | titlecase }} - {{ manager.email }}  ({{manager.positionName | titlecase}}) ({{manager.departmentName | titlecase}})
+                    </option>
+                    }
+                </select>
+            </div>
             }
         </div>
+
+
 
 
         <div class="card-footer">
