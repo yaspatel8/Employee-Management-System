@@ -148,18 +148,18 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="manager" class="form-label">
+                <label for="ReportsToEmployeePositionId" class="form-label">
                     Manager
                 </label>
 
-                <select id="manager" class="form-select" formControlName="managerId">
+                <select id="ReportsToEmployeePositionId" class="form-select" formControlName="ReportsToEmployeePositionId">
 
                     <option value="" selected>
                         Select Manager
                     </option>
-                    @for(manager of managers ?? [] ;track manager.employeeId) {
-                    <option [value]="manager.employeeId">
-                        {{ manager.fullName | titlecase }} - {{ manager.email }}  ({{manager.positionName | titlecase}}) ({{manager.departmentName | titlecase}})
+                    @for(manager of managers ?? [] ;track manager.employeePositionId) {
+                    <option [value]="manager.employeePositionId">
+                        {{ manager.fullName | titlecase }} - {{ manager.email }}  ({{manager.positionName | titlecase}}) 
                     </option>
                     }
                 </select>

@@ -67,6 +67,7 @@
                             <th mat-sort-header="departmentId">Department</th>
                             <th mat-sort-header="createdAt">Created At</th>
                             <th mat-sort-header="positionId">Position</th>
+                            <th mat-sort-header="ReportsToEmployeePositionId">Manager Email</th>
                             <th>Available</th>
                             @if (hasRole('admin','manager','employee')) {
                             <th>Action</th>
@@ -146,6 +147,7 @@
                             </td>
                             <td>{{ employee.createdAt | date }}</td>
                             <td>{{ employee.positionName | titlecase }}</td>
+                            <td>{{ employee.managerEmail }}</td>
 
                             <td>
                                 @if(isRowEditable(employee.employeeId)){

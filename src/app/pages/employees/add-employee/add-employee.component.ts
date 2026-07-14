@@ -48,7 +48,7 @@ export class AddEmployeeComponent {
       ProfileImage: [''],
       updatedby: [null],
       positionId: [''],
-      managerId: [''],
+      ReportsToEmployeePositionId: [''],
       createdBy: Number(authService.getUserId())
     });
   }
@@ -76,6 +76,7 @@ export class AddEmployeeComponent {
 
       this.loadEmployeeById(this.employeeId);
     }
+
   }
 
   hasRole(...roles: string[]): boolean {
@@ -105,7 +106,7 @@ export class AddEmployeeComponent {
       .subscribe((res: any) => {
 
         this.managers = res.data;
-
+       
       });
 
   }
@@ -113,6 +114,7 @@ export class AddEmployeeComponent {
     this.positionService.getAllActivePositions().subscribe((d: any) => {
       this.positions = d.data;
       this.cdr.detectChanges();
+     
     });
   }
 
@@ -251,6 +253,7 @@ export class AddEmployeeComponent {
         next: (response: any) => {
 
           if (response.success) {
+          
             // this.authService.currentUser.set(response.data);
             Swal.fire({
               icon: 'success',
@@ -301,7 +304,7 @@ export class AddEmployeeComponent {
         if (employee.data && employee.data.length > 0) {
 
           const emps = employee.data[0];
-          console.log('Employee Data:', emps);
+         
           this.employeeForm.patchValue({
             employeeId: emps.employeeId,
             userId: emps.userId,
@@ -313,9 +316,10 @@ export class AddEmployeeComponent {
             roleId: emps.roleId,
             positionId: emps.positionId,
             ProfileImage: emps.profileImage,
-            managerId: emps.managerId,
+            ReportsToEmployeePositionId: emps.ReportsToEmployeePositionId,
             updatedby: Number(this.authService.getUserId())
           });
+        
           if (emps.profileImage) {
             const imageUrl = `https://localhost:7177/Documents/ProfileImage/${emps.profileImage}`;
             this.imagePreview.set(imageUrl);
@@ -324,6 +328,8 @@ export class AddEmployeeComponent {
             });
           }
         }
+        this.loadManagers();
+       
       });
   }
 }

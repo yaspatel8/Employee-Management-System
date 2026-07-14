@@ -21,4 +21,7 @@ export interface Employee {
     positionId?: number;
     positionName?: string;
     level?: number;
+    managerEmail?: string;
+    ReportsToEmployeePositionId?: number;
+    ProfileImage?: string;
 }

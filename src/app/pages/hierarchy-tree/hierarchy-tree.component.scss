@@ -1,0 +1,32 @@
+.node {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 8px;
+
+    border-radius: 8px;
+
+    background: #f5f5f5;
+
+    margin: 4px;
+
+}
+
+.hidden {
+
+    display: none;
+
+}
+
+mat-nested-tree-node div[hidden] {
+    display: none;
+}
+
+mat-nested-tree-node .mat-tree-node,
+mat-nested-tree-node>div>ng-container {
+    padding-left: 40px;
+}

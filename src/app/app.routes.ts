@@ -62,6 +62,14 @@ export const routes: Routes = [
         },
         loadComponent: () => import('./pages/employees/add-employee/add-employee.component').then((m) => m.AddEmployeeComponent)
       },
+      {
+        path:"hierarchy-tree",
+        canActivate: [authGuard],
+        data: {
+          Role: ['admin', 'manager', 'employee']
+        },
+        loadComponent: () => import('./pages/hierarchy-tree/hierarchy-tree.component').then((m) => m.HierarchyTreeComponent)
+      },
 
     ]
   },
