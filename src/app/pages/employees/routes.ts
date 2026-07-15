@@ -18,7 +18,7 @@ export const routes: Routes = [
                 canActivate: [authGuard],
                 data: {
                     title: 'Employee List',
-                    Role: ['admin', 'manager']
+                    Role: ['admin', 'manager','employee']
                 },
                 loadComponent: () => import('./employee-list/employee-list.component').then(m => m.EmployeeListComponent),
             },

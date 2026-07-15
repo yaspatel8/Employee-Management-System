@@ -60,7 +60,7 @@ export const navItems: AppNavItem[] = [
         name: 'Employee List',
         url: '/employees/employee-list',
         icon: 'nav-icon-bullet',
-        roles: ['admin', 'manager']
+        roles: ['admin', 'manager','employee']
       },
       {
         name: 'Employee With Department',

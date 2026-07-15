@@ -4,7 +4,7 @@
 
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">{{ employee()?.fullName }}</h4>
+                    <h4 class="mb-0">{{ employee()?.fullName | titlecase }}</h4>
                 </div>
 
                 <div class="card-body">
@@ -40,7 +40,22 @@
 
                                 <div class="col-sm-6 mb-3">
                                     <label class="fw-bold">Department</label>
-                                    <p>{{ employee()?.departmentName }}</p>
+                                    <p>{{ employee()?.departmentName | titlecase }}</p>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label class="fw-bold">Position</label>
+                                    <p>{{ employee()?.positionName | titlecase }}</p>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label class="fw-bold">Salary</label>
+                                    <p>{{ employee()?.salary | currency:'INR':'symbol':'1.0-0'  }}</p>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label class="fw-bold">Manager Email</label>
+                                    <p>{{ employee()?.managerEmail || 'N/A' }}</p>
                                 </div>
 
                                 <!-- <div class="col-sm-6 mb-3">

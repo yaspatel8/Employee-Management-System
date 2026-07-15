@@ -85,7 +85,7 @@ export class EmployeeListComponent {
       const employees = d.data ?? [];
 
       this.Employees.set(employees);
-
+      console.log('Employees:', employees);
       this.selectedEmployeeIds = [];
 
       // Clear previous FormArray

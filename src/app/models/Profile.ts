@@ -10,4 +10,7 @@ export interface Profile {
     createdAt: Date;
     updatedAt: Date;
     profileImage?: string;
+    positionName?: string;
+    roleId?: number;
+    managerEmail?: string;
 }

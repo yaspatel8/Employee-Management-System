@@ -69,7 +69,7 @@
                             <th mat-sort-header="positionId">Position</th>
                             <th mat-sort-header="ReportsToEmployeePositionId">Manager Email</th>
                             <th>Available</th>
-                            @if (hasRole('admin','manager','employee')) {
+                            @if (hasRole('admin','manager')) {
                             <th>Action</th>
                             }
                         </tr>
@@ -147,7 +147,7 @@
                             </td>
                             <td>{{ employee.createdAt | date }}</td>
                             <td>{{ employee.positionName | titlecase }}</td>
-                            <td>{{ employee.managerEmail }}</td>
+                            <td>{{ employee.managerEmail || 'N/A' }}</td>
 
                             <td>
                                 @if(isRowEditable(employee.employeeId)){
@@ -180,7 +180,7 @@
                                 } }
                             </td>
 
-                            @if (hasRole('admin','manager','employee')) {
+                            @if (hasRole('admin','manager')) {
                             <td>
                                 <div class="d-flex gap-2 flex-nowrap">
                                     <button class="btn btn-sm btn-outline-primary"

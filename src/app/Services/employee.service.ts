@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Employee } from '../models/employee';
 import { BulkUpdateEmployee } from '../models/bulkUpdateEmployee';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +10,9 @@ import { BulkUpdateEmployee } from '../models/bulkUpdateEmployee';
 export class EmployeeService {
   apiUrl = "https://localhost:7177/GetAllEmployees";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private authService: AuthService) { }
 
-  getEmployees(searchText: string = '', pageNumber: number = 0, pageSize: number = 0, SortColumn: string = '', SortOrder: string = '') {
+  getEmployees( searchText: string = '', pageNumber: number = 0, pageSize: number = 0, SortColumn: string = '', SortOrder: string = '') {
     return this.http.post(
       this.apiUrl,
       {
