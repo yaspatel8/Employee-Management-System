@@ -1,0 +1,267 @@
+/* --- Main Node Wrapper --- */
+.tree-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 20px;
+}
+
+/* --- Modern Employee Card --- */
+.employee-card {
+    width: 250px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e0e6ed;
+    padding: 24px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    /* Keeps card above lines */
+
+    &.has-children {
+        cursor: pointer;
+        border-bottom: 3px solid #1976d2;
+        /* Highlights managers */
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(25, 118, 210, 0.15);
+        }
+    }
+}
+
+.avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f5f7fb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+}
+
+.status {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border: 2px solid #fff;
+
+    &.active {
+        background: #2ecc71;
+    }
+
+    &.inactive {
+        background: #e74c3c;
+    }
+}
+
+.card-info {
+    .name {
+        margin: 0 0 4px 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .position {
+        margin: 0 0 8px 0;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #1976d2;
+    }
+
+    .department {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #7f8c8d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+}
+
+.expand-icon {
+    margin-top: 15px;
+
+    .icon {
+        display: inline-block;
+        font-size: 12px;
+        color: #1976d2;
+        transition: transform 0.3s ease;
+
+        &.expanded {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+/* --- Connecting Lines Logic (Desktop) --- */
+.children {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    position: relative;
+    gap: 20px;
+
+    /* Top vertical line from parent card down to the horizontal line */
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 20px;
+        background: #bcc3ce;
+    }
+}
+
+/* Angular wraps components in custom tags, so we style the wrapper */
+.child-node-wrapper {
+    position: relative;
+    padding-top: 20px;
+
+    /* Horizontal line connecting siblings */
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 50%;
+        border-top: 2px solid #bcc3ce;
+        width: 50%;
+        height: 20px;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-top: 2px solid #bcc3ce;
+        width: 50%;
+        height: 20px;
+    }
+
+    /* Vertical line dropping down to this specific child */
+    .tree-node::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 20px;
+        background: #bcc3ce;
+    }
+}
+
+/* Remove horizontal lines from first and last children to prevent overhangs */
+.child-node-wrapper:first-child::before,
+.child-node-wrapper:last-child::after {
+    display: none;
+}
+
+/* If there's only one child, remove the horizontal line completely */
+.child-node-wrapper:only-child::after,
+.child-node-wrapper:only-child::before {
+    display: none;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN (Mobile & Tablets)
+   ========================================= */
+@media screen and (max-width: 900px) {
+
+    /* Convert horizontal tree to vertical nested list for small screens */
+    .children {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 30px;
+        /* Indentation for children */
+        gap: 15px;
+
+        /* Remove desktop lines */
+        &::before {
+            display: none;
+        }
+    }
+
+    .child-node-wrapper {
+        padding-top: 0;
+        width: 100%;
+
+        /* Remove desktop horizontal lines */
+        &::before,
+        &::after {
+            display: none;
+        }
+
+        /* Create vertical drop line on the left side */
+        &::before {
+            display: block;
+            content: '';
+            position: absolute;
+            top: -15px;
+            /* Connects to parent */
+            left: -15px;
+            border-left: 2px solid #bcc3ce;
+            border-bottom: 2px solid #bcc3ce;
+            width: 15px;
+            height: 50px;
+            border-bottom-left-radius: 8px;
+            /* Smooth curve */
+        }
+    }
+
+    /* Hide the top vertical line on mobile */
+    .child-node-wrapper .tree-node::before {
+        display: none;
+    }
+
+    /* Adjust padding and width for mobile */
+    .tree-node {
+        padding-top: 0;
+        align-items: flex-start;
+    }
+
+    .employee-card {
+        width: 100%;
+        max-width: 300px;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        padding: 15px;
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 0;
+            margin-right: 15px;
+        }
+
+        .status {
+            right: 10px;
+            top: 10px;
+            width: 10px;
+            height: 10px;
+        }
+
+        .department {
+            justify-content: flex-start;
+        }
+
+        .expand-icon {
+            margin-top: 0;
+            margin-left: auto;
+            /* Pushes arrow to the right */
+        }
+    }
+}

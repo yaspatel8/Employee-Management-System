@@ -30,3 +30,15 @@ mat-nested-tree-node .mat-tree-node,
 mat-nested-tree-node>div>ng-container {
     padding-left: 40px;
 }
+
+.org-chart{
+
+display:flex;
+
+justify-content:center;
+
+padding:40px;
+
+overflow:auto;
+
+}

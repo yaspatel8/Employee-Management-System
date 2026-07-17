@@ -48,7 +48,7 @@ export class AddEmployeeComponent {
       ProfileImage: [''],
       updatedby: [null],
       positionId: [''],
-      ReportsToEmployeePositionId: [''],
+      ReportsToEmployeePositionId: [0],
       createdBy: Number(authService.getUserId())
     });
   }
@@ -254,6 +254,7 @@ export class AddEmployeeComponent {
 
           if (response.success) {
           
+            console.log('Employee saved successfully:', this.employeeForm.value);
             // this.authService.currentUser.set(response.data);
             Swal.fire({
               icon: 'success',
@@ -304,7 +305,7 @@ export class AddEmployeeComponent {
         if (employee.data && employee.data.length > 0) {
 
           const emps = employee.data[0];
-         
+          console.log('Employee data fetched:', emps);
           this.employeeForm.patchValue({
             employeeId: emps.employeeId,
             userId: emps.userId,
@@ -316,7 +317,7 @@ export class AddEmployeeComponent {
             roleId: emps.roleId,
             positionId: emps.positionId,
             ProfileImage: emps.profileImage,
-            ReportsToEmployeePositionId: emps.ReportsToEmployeePositionId,
+            ReportsToEmployeePositionId: emps.reportsToEmployeePositionId,
             updatedby: Number(this.authService.getUserId())
           });
         

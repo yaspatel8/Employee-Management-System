@@ -22,8 +22,8 @@ export class ProfileService {
     return this.http.post<Profile>(this.UpdateUrl, profile);
   }
 
-  getHierarchyTree(departmentId: number = 0) {
-    return this.http.post<HierarchyTree[]>(`${this.treeUrl}/${departmentId}`, { departmentId });
+  getHierarchyTree() {
+    return this.http.post<HierarchyTree[]>(`${this.treeUrl}`, {});
   }
 
 }
