@@ -10,6 +10,7 @@ import { AuthService } from '../../../Services/auth.service';
 import { RoleService } from '../../../Services/role.service';
 import { PositionService } from '../../../Services/position.service';
 import { Position } from '../../../models/position';
+import { environment } from '../../../../environments/environments';
 
 @Component({
   selector: 'app-add-employee',
@@ -322,7 +323,7 @@ export class AddEmployeeComponent {
           });
         
           if (emps.profileImage) {
-            const imageUrl = `https://localhost:7177/Documents/ProfileImage/${emps.profileImage}`;
+            const imageUrl = `${environment.imageUrl}${emps.profileImage}`;
             this.imagePreview.set(imageUrl);
             this.employeeForm.patchValue({
               ProfileImage: emps.profileImage

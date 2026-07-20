@@ -5,6 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
 import { CurrentProfile } from '../models/CurrentProfile';
 import { ProfileService } from './profile.service';
+import { environment } from '../../environments/environments';
 
 
 @Injectable({
@@ -22,10 +23,10 @@ export class AuthService {
 
   }
 
-  loginURL = "https://localhost:7177/Login";
-  registerURL = "https://localhost:7177/RegisterUser";
-  forgotPasswordURL = "https://localhost:7177/api/Login/ForgotPassword";
-  resetPasswordURL = "https://localhost:7177/api/Login/ResetPassword";
+  loginURL = `${environment.apiUrl}/Login`;
+  registerURL = `${environment.apiUrl}/RegisterUser`;
+  forgotPasswordURL = `${environment.apiUrl}/api/Login/ForgotPassword`;
+  resetPasswordURL = `${environment.apiUrl}/api/Login/ResetPassword`;
 
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 

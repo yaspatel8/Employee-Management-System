@@ -53,7 +53,7 @@
 <ng-template #userDropdown>
   <c-dropdown [popperOptions]="{ placement: 'bottom-start' }" variant="nav-item">
     <button [caret]="false" cDropdownToggle class="py-0 pe-0" aria-label="Open user menu">
-      <c-avatar shape="rounded-1" size="md" [src]="authService.currentUser()?.profileImage ? 'https://localhost:7177/Documents/ProfileImage/' + authService.currentUser()?.profileImage 
+      <c-avatar shape="rounded-1" size="md" [src]="authService.currentUser()?.profileImage ? 'https://localhost:7169/ProfileImage/' + authService.currentUser()?.profileImage 
                             : defaultImage" status=" success" textColor="primary" alt="User avatar" />
       <span class="ms-2 d-none d-md-inline fs-6 fw-medium">{{ authService.currentUser()?.fullName }}</span>
 

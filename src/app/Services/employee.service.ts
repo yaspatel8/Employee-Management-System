@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Employee } from '../models/employee';
 import { BulkUpdateEmployee } from '../models/bulkUpdateEmployee';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environments';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
-  apiUrl = "https://localhost:7177/GetAllEmployees";
+  apiUrl = `${environment.apiUrl}/GetAllEmployees`;
 
   constructor(private http: HttpClient,private authService: AuthService) { }
 
@@ -26,46 +28,46 @@ export class EmployeeService {
   }
 
   getEmployeeWithDepartment() {
-    return this.http.get("https://localhost:7177/GetEmployeesWithDepartment");
+    return this.http.get(`${environment.apiUrl}/GetEmployeesWithDepartment`);
   }
 
   // addEmployee(employee: Employee) {
-  //   return this.http.post("https://localhost:7177/CreateEmployee", employee);
+  //   return this.http.post(`${environment.apiUrl}/CreateEmployee`, employee);
   // }
   deleteEmployee(id: number) {
-    return this.http.delete(`https://localhost:7177/DeleteEmployee/${id}`);
+    return this.http.delete(`${environment.apiUrl}/DeleteEmployee/${id}`);
   }
 
   saveEmployee(employee: FormData) {
-    return this.http.post("https://localhost:7177/SaveEmployee", employee);
+    return this.http.post(`${environment.apiUrl}/SaveEmployee`, employee);
   }
 
   // getEmployeeById(id: number) {
-  //   return this.http.get(`https://localhost:7177/GetEmployeeById/${id}`);
+  //   return this.http.get(`${environment.apiUrl}/GetEmployeeById/${id}`);
   // }
 
   BulkUploadEmployees(employees: Employee[]) {
-    return this.http.post("https://localhost:7177/BulkSaveEmployees", employees);
+    return this.http.post(`${environment.apiUrl}/BulkSaveEmployees`, employees);
   }
 
   BulkDeleteEmployees(employeeIds: number[], deletedBy: number) {
-    return this.http.post("https://localhost:7177/BulkDeleteEmployees", { employeeIds, deletedBy });
+    return this.http.post(`${environment.apiUrl}/BulkDeleteEmployees`, { employeeIds, deletedBy });
   }
 
   ChangeEmployeeStatus(employeeId: number, isActive: boolean, updatedBy: number) {
-    return this.http.post(`https://localhost:7177/ChangeEmployeeStatus?employeeId=${employeeId}&isActive=${isActive}&updatedBy=${updatedBy}`,
+    return this.http.post(`${environment.apiUrl}/ChangeEmployeeStatus?employeeId=${employeeId}&isActive=${isActive}&updatedBy=${updatedBy}`,
       {});
   }
 
   BulkUpdateEmployees(employees: BulkUpdateEmployee[]) {
-    return this.http.post("https://localhost:7177/BulkUpdateEmployees", employees);
+    return this.http.post(`${environment.apiUrl}/BulkUpdateEmployees`, employees);
   }
 
   ExportEmployees(ids: number[]) {
-    return this.http.post("https://localhost:7177/ExportEmployees", ids, { responseType: 'blob' });
+    return this.http.post(`${environment.apiUrl}/ExportEmployees`, ids, { responseType: 'blob' });
   }
   getManagers(departmentId: number, positionId: number) {
-    return this.http.get(`https://localhost:7177/Managers?departmentId=${departmentId}&positionId=${positionId}`);
+    return this.http.get(`${environment.apiUrl}/Managers?departmentId=${departmentId}&positionId=${positionId}`);
   }
 
 }

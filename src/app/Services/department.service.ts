@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Department } from '../models/department';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Department } from '../models/department';
 export class DepartmentService {
   constructor(private http: HttpClient) { }
 
-  apiUrl = "https://localhost:7177/GetAllDepartment";
+  apiUrl = `${environment.apiUrl}/GetAllDepartment`;
 
   getDepartments(
     searchText: string = '', pageNumber: number = 0, pageSize: number = 0, SortColumn: string = '', SortOrder: string = '') {
@@ -26,21 +27,21 @@ export class DepartmentService {
 
 
   deleteDepartment(id: number) {
-    return this.http.delete(`https://localhost:7177/DeleteDepartment/${id}`);
+    return this.http.delete(`${environment.apiUrl}/DeleteDepartment/${id}`);
   }
 
   saveDepartment(department: Department) {
-    return this.http.post("https://localhost:7177/api /Department", department);
+    return this.http.post(`${environment.apiUrl}/api /Department`, department);
   }
 
   getAllDepartments() {
-    return this.http.get("https://localhost:7177/GetDepartment");
+    return this.http.get(`${environment.apiUrl}/GetDepartment`);
   }
   updateDepartmentStatus(departmentId: number, isActive: boolean, updatedBy: number) {
-    return this.http.post(`https://localhost:7177/UpdateDepartmentStatus?departmentId=${departmentId}&isActive=${isActive}&updatedBy=${updatedBy}`, {});
+    return this.http.post(`${environment.apiUrl}/UpdateDepartmentStatus?departmentId=${departmentId}&isActive=${isActive}&updatedBy=${updatedBy}`, {});
     
   }
   ExportDepartments(ids: number[]) {
-    return this.http.post("https://localhost:7177/ExportDepartment",  ids, { responseType: 'blob' });
+    return this.http.post(`${environment.apiUrl}/ExportDepartment`,  ids, { responseType: 'blob' });
   }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Position } from '../models/position';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Position } from '../models/position';
 export class PositionService {
   constructor(private http: HttpClient) { }
 
-  apiUrl = "https://localhost:7177/GetAllPosition";
+  apiUrl = `${environment.apiUrl}/GetAllPosition`;
 
   getPositions(
     searchText: string = '', pageNumber: number = 0, pageSize: number = 0, SortColumn: string = '', SortOrder: string = '') {
@@ -24,19 +25,19 @@ export class PositionService {
     );
   }
   savePosition(position: Position) {
-    return this.http.post("https://localhost:7177/SavePosition", position);
+    return this.http.post(`${environment.apiUrl}/SavePosition`, position);
   }
   getAllActivePositions() {
-    return this.http.get("https://localhost:7177/GetPositionActive");
+    return this.http.get(`${environment.apiUrl}/GetPositionActive`);
   }
 
   updatePositionStatus(positionId: number, isActive: boolean, updatedBy: number) {
-    return this.http.post(`https://localhost:7177/UpdatePositionStatus?positionId=${positionId}&isActive=${isActive}&updatedBy=${updatedBy}`, {});
+    return this.http.post(`${environment.apiUrl}/UpdatePositionStatus?positionId=${positionId}&isActive=${isActive}&updatedBy=${updatedBy}`, {});
     
   }
 
   deletePosition(id: number) {
-    return this.http.delete(`https://localhost:7177/DeletePosition/${id}`);
+    return this.http.delete(`${environment.apiUrl}/DeletePosition/${id}`);
   }
 
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Profile } from '../models/Profile';
 import { HierarchyTree } from '../models/HierarchyTree';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +10,9 @@ import { HierarchyTree } from '../models/HierarchyTree';
 export class ProfileService {
   constructor(private http: HttpClient) { }
 
-  ApiUrl = "https://localhost:7177/GetProfile";
-  UpdateUrl = "https://localhost:7177/UpdateProfile";
-  treeUrl = "https://localhost:7177/GetHierarchyTree";
+  ApiUrl = `${environment.apiUrl}/GetProfile`;
+  UpdateUrl = `${environment.apiUrl}/UpdateProfile`;
+  treeUrl = `${environment.apiUrl}/GetHierarchyTree`;
 
 
   getProfile(id: number) {

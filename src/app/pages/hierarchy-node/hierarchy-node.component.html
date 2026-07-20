@@ -2,7 +2,7 @@
     <div class="employee-card" [class.has-children]="node.children && node.children.length > 0" (click)="toggle()">
 
         <img class="avatar"
-            [src]="node.profileImage ? 'https://localhost:7177/Documents/ProfileImage/' + node.profileImage : defaultImage"
+            [src]="node.profileImage ? 'https://localhost:7169/ProfileImage/' + node.profileImage : defaultImage"
             [alt]="node.fullName || 'Profile Image'" (error)="node.profileImage = null">
         <div class="card-info">
             <h4 class="name">{{node.fullName | titlecase }}</h4>

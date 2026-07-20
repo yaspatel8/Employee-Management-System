@@ -14,7 +14,7 @@
                             first defalut image is shown and then if the user has uploaded a profile image, it will be shown instead of default image. -->
 
                         <div class="col-md-4 text-center mb-4">
-                            <img [src]="employee()?.profileImage ? 'https://localhost:7177/Documents/ProfileImage/' + employee()?.profileImage 
+                            <img [src]="employee()?.profileImage ? 'https://localhost:7169/ProfileImage/' + employee()?.profileImage 
                             : defaultImage" [alt]="employee()?.fullName || 'Profile Image'" class="img-fluid rounded-circle border"
                                 width="150" height="150" />
                         </div>
