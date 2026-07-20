@@ -58,9 +58,9 @@ export class AuthService {
     this.isLoggedInSubject.next(false);
     this.currentUser.set(null);
     this.userRole.set(null);
-    this.router.navigate(
-      ['/login']
-    );
+    if(localStorage.getItem('token') === null){
+      this.router.navigate(['/login']);
+    }
   }
 
   isLoggedIn(): boolean {
