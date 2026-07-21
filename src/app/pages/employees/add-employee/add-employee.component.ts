@@ -49,7 +49,7 @@ export class AddEmployeeComponent {
       ProfileImage: [''],
       updatedby: [null],
       positionId: [''],
-      ReportsToEmployeePositionId: [0],
+      ReportsToEmployeePositionId: [''],
       createdBy: Number(authService.getUserId())
     });
   }
@@ -107,6 +107,7 @@ export class AddEmployeeComponent {
       .subscribe((res: any) => {
 
         this.managers = res.data;
+        this.cdr.detectChanges();
        
       });
 
@@ -240,14 +241,14 @@ export class AddEmployeeComponent {
       );
     }
 
-    Swal.fire({
-      title: 'Saving...',
-      text: 'Please wait',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
-    });
+    // Swal.fire({
+    //   title: 'Saving...',
+    //   text: 'Please wait',
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   }
+    // });
 
     this.employeeService.saveEmployee(formData)
       .subscribe({
