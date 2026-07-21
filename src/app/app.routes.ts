@@ -115,5 +115,12 @@ export const routes: Routes = [
       title: 'Reset Password'
     }
   },
+  {
+    path:'verify-otp',
+    loadComponent: () => import('./views/pages/verify-otp/verify-otp.component').then(m => m.VerifyOtpComponent),
+    data: {
+      title: 'Verify OTP'
+    }
+  },
   { path: '**', redirectTo: '404' }
 ];

@@ -1,17 +1,17 @@
 .input-group {
     .form-control:focus {
-        border-color: #dee2e6 !important;
+        border-color: #dee2e6 !important; // Prevent breaking input outline block look
         box-shadow: none !important;
     }
 
     &:focus-within {
         border-radius: 0.375rem;
-        box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.15); // Dynamic unified focus treatment rings
+        box-shadow: 0 0 0 0.25rem rgba(50, 31, 219, 0.15);
 
         .input-group-text,
         .form-control,
         .btn {
-            border-color: var(--cui-success, #198754) !important;
+            border-color: var(--cui-primary, #321fdb) !important;
         }
     }
 }

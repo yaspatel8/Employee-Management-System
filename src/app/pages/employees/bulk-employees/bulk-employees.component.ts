@@ -15,6 +15,8 @@ import { AuthService } from '../../../Services/auth.service';
 import { EmployeeService } from '../../../Services/employee.service';
 import { Employee } from '../../../models/employee';
 import { Router } from '@angular/router';
+import { Position } from '../../../models/position';
+import { PositionService } from '../../../Services/position.service';
 
 
 @Component({
@@ -25,12 +27,11 @@ import { Router } from '@angular/router';
 })
 export class BulkEmployeesComponent {
 
-  constructor(private fb: FormBuilder, private departmentService: DepartmentService, private cdr: ChangeDetectorRef, private authService: AuthService, private employeeService: EmployeeService, private router: Router) { }
+  constructor(private fb: FormBuilder, private departmentService: DepartmentService, private cdr: ChangeDetectorRef, private authService: AuthService, private employeeService: EmployeeService, private positionService: PositionService, private router: Router) { }
 
   departments?: Department[] = [];
+  Positions?: Position[] = [];
   bulkForm!: FormGroup;
-
-
 
   get employees(): FormArray {
     return this.bulkForm.get('employees') as FormArray;
@@ -83,7 +84,9 @@ export class BulkEmployeesComponent {
       fullName: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(/^[a-zA-Z\s]+$/), Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email, this.uniqueEmailValidator(), Validators.maxLength(100), Validators.minLength(5)]],
       salary: [0],
-      departmentId: [0],
+      departmentId: [0, [Validators.required]],
+      position: ['', [Validators.required]],
+      reportsTo: [0, [Validators.required]],
       createdBy: Number(this.authService.getUserId())
     });
   }
@@ -109,6 +112,14 @@ export class BulkEmployeesComponent {
     });
   }
 
+  loadPositions() {
+    this.positionService.getAllActivePositions().subscribe((d: any) => {
+      this.Positions = d.data;
+      this.cdr.detectChanges();
+    });
+  }
+
+
   saveAll() {
     if (this.bulkForm.invalid) {
       this.bulkForm.markAllAsTouched();
@@ -130,7 +141,7 @@ export class BulkEmployeesComponent {
       }
 
       const employees = this.bulkForm.value.employees as Employee[];
-      
+
       Swal.fire({
         title: 'Saving...',
         text: 'Please wait',

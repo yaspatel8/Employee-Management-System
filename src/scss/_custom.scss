@@ -153,3 +153,151 @@
     margin-bottom: 0.5rem;
   }
 }
+
+/* ==========================================================================
+   GLOBAL AUTH & IDENTITY MANAGEMENT UTILITIES (Industry Standard)
+   ========================================================================== */
+
+// Variables for easy brand configuration
+$auth-card-max-width: 500px;
+$auth-border-radius: 1rem; // rounded-4 look
+$auth-focus-ring-alpha: 0.15;
+$auth-transition-speed: 0.2s;
+
+// Main full-screen background layout wrap
+.auth-screen-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background-color: var(--cui-light, #f8f9fa);
+  
+  // Dark mode compatibility support
+  .dark & {
+    background-color: transparent;
+  }
+}
+
+// Global Single-Card Container Styles
+.auth-premium-card {
+  width: 100%;
+  max-width: $auth-card-max-width;
+  border: none !important;
+  border-radius: $auth-border-radius !important;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.05) !important;
+  background-color: #ffffff;
+  transition: transform $auth-transition-speed ease, box-shadow $auth-transition-speed ease;
+
+  // Subtle hover effect for industry look
+  &:hover {
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.08) !important;
+  }
+}
+
+// Icon Wrapper Badges (Centered Icons at Top)
+.auth-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 1rem;
+
+  &.brand-primary { background-color: rgba(50, 31, 219, 0.1); color: #321fdb; }
+  &.brand-success { background-color: rgba(25, 135, 84, 0.1); color: #198754; }
+  &.brand-warning { background-color: rgba(255, 193, 7, 0.1); color: #ffc107; }
+  
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// ==========================================================================
+// UNIFIED FORM ELEMENT TREATMENTS (Cross-Input Focus State Management)
+// ==========================================================================
+
+.input-group {
+  // Prevent Angular focus outline breaks
+  .form-control:focus {
+    border-color: #dee2e6 !important;
+    box-shadow: none !important;
+  }
+
+  // Dynamic context color state tracking based on active child item fields
+  &:focus-within {
+    border-radius: 0.375rem;
+    outline: 0;
+    
+    // Default system focus treatment tint (Primary Theme)
+    box-shadow: 0 0 0 0.25rem rgba(50, 31, 219, $auth-focus-ring-alpha);
+    .input-group-text, .form-control, .btn {
+      border-color: var(--cui-primary, #321fdb) !important;
+    }
+
+    // Success focus tint variation wrapper (Used in Registration / Resets)
+    &.focus-success-wrap, &.has-success {
+      box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, $auth-focus-ring-alpha);
+      .input-group-text, .form-control, .btn {
+        border-color: var(--cui-success, #198754) !important;
+      }
+    }
+
+    // Warning gold focus tint variation wrapper (Used in Forgot Passwords)
+    &.focus-warning-wrap, &.has-warning {
+      box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, $auth-focus-ring-alpha);
+      .input-group-text, .form-control, .btn {
+        border-color: var(--cui-warning, #ffc107) !important;
+      }
+    }
+  }
+}
+
+// Custom Discrete OTP Boxes Configurations
+.otp-box-input {
+  width: 50px;
+  height: 56px;
+  border: 2px solid #dee2e6 !important;
+  border-radius: 0.5rem !important; // rounded-3 look
+  font-weight: 700;
+  font-size: 1.5rem; // fs-4 look
+  text-align: center;
+  transition: all $auth-transition-speed ease;
+
+  &:focus {
+    border-color: var(--cui-primary, #321fdb) !important;
+    box-shadow: 0 0 0 0.25rem rgba(50, 31, 219, $auth-focus-ring-alpha) !important;
+    outline: 0;
+  }
+
+  &[disabled] {
+    background-color: #f8f9fa;
+    border-color: #e9ecef !important;
+    color: #6c757d;
+    cursor: not-allowed;
+  }
+}
+
+// ==========================================================================
+// RESPONSIVE BREAKPOINTS (Mobile Optimization Rules)
+// ==========================================================================
+
+@media (max-width: 576px) {
+  .auth-premium-card {
+    padding: 1.5rem !important; // Shrink inner gutters on narrow portrait smartphones
+  }
+  
+  .otp-box-input {
+    // Shrink multi-box grid columns so they never overflow edge limits on old iPhones/Androids
+    width: 42px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+}
+
+// Letter spacing utilities for a premium corporate feel
+.tracking-wide {
+  letter-spacing: 0.5px;
+}

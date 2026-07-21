@@ -1,0 +1,54 @@
+<div class="auth-screen-wrapper">
+    <c-card class="auth-premium-card p-4 p-md-5">
+        <c-card-body class="p-0">
+
+            <div class="text-center mb-4">
+                <div class="auth-brand-badge brand-primary mx-auto">
+                    <svg cIcon name="cilLockLocked"></svg>
+                </div>
+                <h2 class="fw-bold text-dark mb-2">Two-Step Verification</h2>
+                <p class="text-secondary small px-3">We sent a 6-digit verification security code to your registered
+                    email address.</p>
+            </div>
+
+            <form [formGroup]="otpForm" (ngSubmit)="onVerifyOtp()">
+                <div class="d-flex justify-content-between gap-2 mb-4" dir="ltr">
+                    @for (control of otpInputs; track $index) {
+                    <input type="text" pattern="[0-9]*" inputmode="numeric" maxLength="1" class="otp-box-input"
+                        [attr.id]="'otp-' + $index" (input)="onInputChange($event, $index)"
+                        (keydown)="onKeyDown($event, $index)" (paste)="onPaste($event)" [disabled]="otpTimeout <= 0" />
+                    }
+                </div>
+
+                @if (isSubmitted && (otpForm.get('OtpCode')?.invalid || getCombinedOtpLength() !== 6)) {
+                <div class="alert alert-danger rounded-3 py-2 px-3 mb-4 small border-0">* Please enter a valid 6-digit
+                    code</div>
+                }
+
+                <div class="text-center mb-4">
+                    @if (otpTimeout > 0) {
+                    <span
+                        class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill fw-medium small">Code
+                        expires in: {{ formatTime(otpTimeout) }}</span>
+                    } @else {
+                    <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-medium small">OTP
+                        Expired. Please request a new code.</span>
+                    }
+                </div>
+
+                <div class="d-grid gap-3">
+                    <button cButton class="py-2.5 fw-semibold rounded-3 text-white shadow-sm" color="primary"
+                        type="submit" [disabled]="otpTimeout <= 0">Verify Account</button>
+                    <div class="text-center mt-2">
+                        <span class="text-secondary small">Didn't receive the email? </span>
+                        <button cButton class="px-0 fw-semibold text-decoration-none small" color="link" type="button"
+                            (click)="onResendOtp()" [disabled]="resendCountdown > 0">
+                            @if (resendCountdown > 0) { Resend in {{ resendCountdown }}s } @else { Resend Code }
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </c-card-body>
+    </c-card>
+</div>

@@ -1,0 +1,14 @@
+input.form-control {
+    &:focus {
+        border-color: var(--cui-primary, #321fdb) !important;
+        box-shadow: 0 0 0 0.25rem rgba(50, 31, 219, 0.15) !important;
+        outline: 0;
+    }
+
+    &[disabled] {
+        background-color: #f8f9fa;
+        border-color: #e9ecef !important;
+        color: #6c757d;
+        cursor: not-allowed;
+    }
+}

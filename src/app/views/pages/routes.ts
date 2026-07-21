@@ -28,5 +28,12 @@ export const routes: Routes = [
     data: {
       title: 'Register Page'
     }
+  },
+  {
+    path: 'verify-otp',
+    loadComponent: () => import('./verify-otp/verify-otp.component').then(m => m.VerifyOtpComponent),
+    data: {
+      title: 'Verify OTP'
+    }
   }
 ];

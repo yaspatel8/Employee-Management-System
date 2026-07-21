@@ -27,13 +27,22 @@ export class AuthService {
   registerURL = `${environment.apiUrl}/RegisterUser`;
   forgotPasswordURL = `${environment.apiUrl}/api/Login/ForgotPassword`;
   resetPasswordURL = `${environment.apiUrl}/api/Login/ResetPassword`;
-
+  VerifyOtpURL = `${environment.apiUrl}/VerifyOtp`;
+  ResendOtpURL = `${environment.apiUrl}/api/Login/ResendOTP`;
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
   login(data: any) {
     return this.http.post(this.loginURL, data);
+  }
+
+  verifyOtp(data: any) {
+    return this.http.post(this.VerifyOtpURL, data);
+  }
+
+  resendOtp(data: any) {
+    return this.http.post(this.ResendOtpURL, data);
   }
 
   currentUser = signal<CurrentProfile | null>(null);

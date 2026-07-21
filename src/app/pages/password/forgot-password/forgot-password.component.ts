@@ -1,48 +1,59 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
-  ButtonDirective,
-  CardBodyComponent,
-  CardComponent,
-  ColComponent,
-  ContainerComponent,
-  FormControlDirective,
-  FormDirective,
-  InputGroupComponent,
-  InputGroupTextDirective,
-  RowComponent
+  ButtonDirective, CardBodyComponent, CardComponent, ColComponent,
+  ContainerComponent, FormControlDirective, FormDirective, InputGroupComponent,
+  InputGroupTextDirective, RowComponent
 } from "@coreui/angular";
 import { IconDirective } from '@coreui/icons-angular';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../Services/auth.service';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [ContainerComponent, RowComponent, ColComponent, CardComponent, CardBodyComponent, FormDirective, FormControlDirective, InputGroupComponent, InputGroupTextDirective, ButtonDirective, IconDirective, RouterLink, ReactiveFormsModule],
+  standalone: true,
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
+  imports: [
+    ContainerComponent, RowComponent, ColComponent, CardComponent,
+    CardBodyComponent, FormDirective, FormControlDirective, InputGroupComponent,
+    InputGroupTextDirective, ButtonDirective, IconDirective, RouterLink,
+    ReactiveFormsModule, CommonModule
+  ],
 })
 export class ForgotPasswordComponent {
-  constructor(private router: Router, private authService: AuthService, private formBuilder: FormBuilder
-  ) { }
-
-  forgotPasswordForm = this.formBuilder.group({
-    Email: ['', [Validators.required, Validators.email]]
-  });
-
+  forgotPasswordForm: FormGroup;
   isSubmitted = false;
 
-  onSubmit() {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {
+    this.forgotPasswordForm = this.formBuilder.group({
+      Email: ['', [Validators.required, Validators.email]]
+    });
+  }
+
+  onSubmit(): void {
     this.isSubmitted = true;
+    this.forgotPasswordForm.markAllAsTouched();
+
+    // Clear dynamic notFound errors explicitly on new submit attempts
+    const emailControl = this.forgotPasswordForm.get('Email');
+    if (emailControl?.hasError('notFound')) {
+      emailControl.setErrors(null);
+    }
 
     if (this.forgotPasswordForm.invalid) {
       return;
     }
 
     Swal.fire({
-      title: 'Sending...',
-      text: 'Please wait',
+      title: 'Sending Request...',
+      text: 'Verifying user records, please wait.',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -54,30 +65,35 @@ export class ForgotPasswordComponent {
         if (response.success) {
           Swal.fire({
             icon: 'success',
-            title: 'Success',
-            text: response.message || 'Password reset request successful. Please check your email for further instructions.',
+            title: 'Reset Link Sent',
+            text: response.message || 'Check your inbox for password recovery instructions.',
+            timer: 3000,
+            showConfirmButton: false
           }).then(() => {
             this.forgotPasswordForm.reset();
             this.router.navigate(['/login']);
           });
-        }
-        else {
+        } else {
           Swal.fire({
             icon: 'error',
-            title: 'Failure',
-            text: response.message || 'Failed to request password reset. Please try again later.',
+            title: 'Request Failed',
+            text: response.message || 'Unable to register your request at this moment.',
           });
         }
       },
       error: (error: any) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: error.message || 'An error occurred while requesting password reset. Please try again later.'
-        });
+        // Automatically check if the backend returned an invalid user record error status
+        if (error.status === 404 || error.error?.message?.includes('not found') || error.error?.message?.includes('exist')) {
+          this.forgotPasswordForm.get('Email')?.setErrors({ notFound: true });
+          Swal.close();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Server Error',
+            text: error.error?.message || 'An error occurred while connecting to the system. Please try again later.'
+          });
+        }
       }
     });
-
   }
-
 }

@@ -20,6 +20,7 @@
         </h6>
         <ul class="mb-0">
             <li>Full Name is required.</li>
+            <li>Department is required.</li>
             <li>Email should be unique.</li>
         </ul>
 
@@ -40,6 +41,8 @@
                                     <th>Email</th>
                                     <th>Salary</th>
                                     <th>Department</th>
+                                    <th>Position</th>
+                                    <th>Reports To</th>
                                     <th>Action</th>
                                 </tr>
 
@@ -124,18 +127,57 @@
 
                                         </select>
 
+
+
                                         @if(employee.get('departmentId')?.touched &&
                                         employee.get('departmentId')?.invalid){
 
                                         <small class="text-danger">
-
+                                            @if(employee.get('departmentId')?.errors?.['required']){
                                             Department is required.
+                                            }
+                                            @if(employee.get('departmentId')?.touched &&
+                                            employee.get('departmentId')?.invalid){
+                                            Department is required.
+                                            }
 
                                         </small>
 
                                         }
 
                                     </td>
+
+                                    <!-- Position -->
+                                    <td>
+
+                                        <select class="form-select" formControlName="position">
+
+                                            <option value="" selected>
+                                                Select Position
+                                            </option>
+
+                                            @for(pos of Positions ?? []; track pos.positionId){
+
+                                            <option [value]="pos.positionName">
+
+                                                {{ pos.positionName | titlecase }}
+
+                                            </option>
+
+                                            }
+
+                                        </select>
+
+                                        @if(employee.get('position')?.touched &&
+                                        employee.get('position')?.invalid){
+
+                                        <small class="text-danger">
+                                            @if(employee.get('position')?.errors?.['required']){
+                                            Position is required.
+                                            }
+                                        </small>
+
+                                        }
 
                                     <!-- Delete -->
 
