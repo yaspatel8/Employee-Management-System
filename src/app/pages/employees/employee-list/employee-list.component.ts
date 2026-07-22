@@ -11,10 +11,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { DepartmentService } from '../../../Services/department.service';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {IconSetService,IconDirective } from '@coreui/icons-angular';
+import { cilPencil, cilTrash} from '@coreui/icons';
 
 @Component({
   selector: 'app-employee-list',
-  imports: [CommonModule, RouterLink, FormsModule, MatPaginatorModule, MatSortModule, ReactiveFormsModule,],
+  imports: [CommonModule, RouterLink, FormsModule, MatPaginatorModule, MatSortModule, ReactiveFormsModule, IconDirective],
+  providers: [IconSetService],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
 })
@@ -22,7 +25,9 @@ export class EmployeeListComponent {
   private searchSubject = new Subject<string>();
   selectedEmployeeIds: number[] = [];
 
-  constructor(private employeeService: EmployeeService, private authService: AuthService, private departmentService: DepartmentService, private fb: FormBuilder,) { }
+  constructor(private employeeService: EmployeeService, private authService: AuthService, private departmentService: DepartmentService, private fb: FormBuilder, private iconSetService: IconSetService) {
+    this.iconSetService.icons = { cilPencil, cilTrash };
+   }
 
   Employees = signal<Employee[]>([]);
   Departments = signal<any[]>([]);

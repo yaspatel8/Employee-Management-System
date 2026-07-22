@@ -1,7 +1,6 @@
 import { Component, effect } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NgScrollbar } from 'ngx-scrollbar';
-
 import { IconDirective } from '@coreui/icons-angular';
 import {
   ContainerComponent,
@@ -14,22 +13,15 @@ import {
   SidebarToggleDirective,
   SidebarTogglerDirective
 } from '@coreui/angular';
-
 import { DefaultFooterComponent, DefaultHeaderComponent } from './';
 import { navItems, AppNavItem } from './_nav';
 import { AuthService } from '../../Services/auth.service';
-
-function isOverflown(element: HTMLElement) {
-  return (
-    element.scrollHeight > element.clientHeight ||
-    element.scrollWidth > element.clientWidth
-  );
-}
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss'],
+  standalone: true,
   imports: [
     SidebarComponent,
     SidebarHeaderComponent,
@@ -49,16 +41,12 @@ function isOverflown(element: HTMLElement) {
   ]
 })
 export class DefaultLayoutComponent {
-  //public navItems = [...navItems];
-
   public navItems: AppNavItem[] = [];
 
   constructor(private authService: AuthService) {
-
+    // Dynamic Reactive Effect to filter and map user authorization matrices
     effect(() => {
-
       const role = this.authService.userRole();
-
       this.navItems = navItems
         .filter(item => !item.roles || item.roles.includes(role!))
         .map(item => ({
@@ -68,8 +56,6 @@ export class DefaultLayoutComponent {
             return !childRoles || childRoles.includes(role!);
           })
         }));
-
     });
-
   }
 }

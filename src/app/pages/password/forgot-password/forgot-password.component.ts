@@ -10,7 +10,6 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../Services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
@@ -32,6 +31,7 @@ export class ForgotPasswordComponent {
     private authService: AuthService,
     private formBuilder: FormBuilder
   ) {
+    
     this.forgotPasswordForm = this.formBuilder.group({
       Email: ['', [Validators.required, Validators.email]]
     });
@@ -51,14 +51,14 @@ export class ForgotPasswordComponent {
       return;
     }
 
-    Swal.fire({
-      title: 'Sending Request...',
-      text: 'Verifying user records, please wait.',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
-    });
+    // Swal.fire({
+    //   title: 'Sending Request...',
+    //   text: 'Verifying user records, please wait.',
+    //   allowOutsideClick: false,
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   }
+    // });
 
     this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe({
       next: (response: any) => {

@@ -1,175 +1,148 @@
-<form [formGroup]="employeeForm" (ngSubmit)="onSubmit($event)" autocomplete="off">
-    <div class="card mt-4">
-        <div class="card-header">
-            <h4>
-                {{ title }}
-            </h4>
-        </div>
-        <div class="card-body">
-            <div class="mb-3">
-                <label for="fullName" class="form-label">Name</label>
-                <input type="text" id="fullName" class="form-control" formControlName="fullName" required>
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit($event)" autocomplete="off" class="container-fluid py-3">
+  
+  <!-- Section Title Header Branding Panel -->
+  <div class="mb-4">
+    <h3 class="fw-bold text-dark m-0">{{ title }}</h3>
+    <p class="text-secondary small m-0">Provide precise background parameters to finalize the record updates.</p>
+  </div>
 
-                @if(employeeForm.get('fullName')
-                ?.touched &&
-                employeeForm.get('fullName')
-                ?.invalid){
-                <div class="text-danger mt-1">
-                    Name is required.
-                </div>
-                }
-
-            </div>
-            @if(hasRole('admin', 'manager')){
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-control" formControlName="email" required>
-
-                @if(employeeForm.get('email')
-                ?.touched &&
-                employeeForm.get('email')
-                ?.invalid){
-                <div class="text-danger mt-1">
-                    Email is required.
-                </div>
-                }
-
-            </div>
+  <!-- Primary Floating Panel Card Shell -->
+  <div class="card employee-modern-card border-0 shadow-sm rounded-4 overflow-hidden">
+    
+    <div class="card-body p-4 p-md-5">
+      
+      <!-- Premium Multi-Column Layout Grid -->
+      <div class="row g-4">
+        
+        <!-- Primary Credentials Info Cluster -->
+        <div class="col-md-6">
+          <div class="form-group-wrapper">
+            <label for="fullName" class="form-label-modern mb-2">Full Name</label>
+            <input type="text" id="fullName" class="form-control-modern" formControlName="fullName" required placeholder="John Doe">
+            @if(employeeForm.get('fullName')?.touched && employeeForm.get('fullName')?.invalid){
+              <div class="form-validation-error mt-1">* Name specification is required</div>
             }
-            <div class="mb-3">
-                <label for="phoneNumber" class="form-label">Phone Number</label>
-                <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber" required>
-
-                @if(employeeForm.get('phoneNumber')?.touched && employeeForm.get('phoneNumber')?.invalid){
-                <div class="text-danger mt-1">
-                    Phone Number must be Valid.
-                </div>
-                }
-
-            </div>
-
-
-            <div class="row align-items-center mb-3">
-                <div class="col-md-3 text-center">
-                    <img [src]="imagePreview() ? imagePreview() : defaultImage" class="img-thumbnail" width="150"
-                        height="150">
-                </div>
-
-                <div class="col-md-9 d-flex flex-column justify-content-center">
-                    <label class="form-label">Profile Image</label>
-
-                    <input type="file" class="form-control" accept=".jpg,.jpeg,.png"
-                        (change)="onFileSelected($event)  ">
-
-                    <small class="text-muted">
-                        Allowed: JPG, JPEG, PNG
-                    </small>
-                </div>
-            </div>
-
-
-            @if(hasRole('admin', 'manager')) {
-            <div class="mb-3">
-                <label for="salary" class="form-label">Salary</label>
-                <input type="number" id="salary" class="form-control" formControlName="salary" required>
-
-                @if(employeeForm.get('salary')
-                ?.touched && employeeForm.get('salary')
-                ?.invalid){
-
-                <div class="text-danger mt-1">
-                    Salary must be a positive number.
-                </div>
-                }
-            </div>
-            }
-            @if(hasRole('admin','manager')){
-            <div class="mb-3">
-                <label for="department" class="form-label">
-                    Department
-                </label>
-
-                <select id="department" class="form-select" formControlName="departmentId" (ngModelChange)="loadManagers()">
-
-                    <option value="" selected>
-                        Select Department
-                    </option>
-                    @for(dept of departments ?? [] ;track dept.departmentId) {
-                    <option [value]="dept.departmentId">
-                        {{ dept.departmentName | titlecase }}
-                    </option>
-                    }
-                </select>
-            </div>
-            }
-            @if(hasRole('admin','manager')){
-            <div class="mb-3">
-                <label for="department" class="form-label">
-                    Role
-                </label>
-
-                <select id="role" class="form-select" formControlName="roleId">
-
-                    <option value="" selected disabled>
-                        Select Role
-                    </option>
-                    @for(role of roles ?? [] ;track role.roleId) {
-                    <option [value]="role.roleId">
-                        {{ role.roleName | titlecase }}
-                    </option>
-
-                    }
-                </select>
-
-                @if(employeeForm.get('roleId')?.touched &&
-                employeeForm.get('roleId')?.invalid){
-
-                <div class="text-danger mt-1">
-                    Role is required.
-                </div>
-                }
-            </div>
-            <div class="mb-3">
-                <label for="position" class="form-label">
-                    Position
-                </label>
-
-                <select id="position" class="form-select" formControlName="positionId" (ngModelChange)="loadManagers()">
-
-                    <option value="" selected>
-                        Select Position
-                    </option>
-                    @for(position of positions ?? [] ;track position.positionId) {
-                    <option [value]="position.positionId">
-                        {{ position.positionName | titlecase }}
-                    </option>
-
-                    }
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="ReportsToEmployeePositionId" class="form-label">
-                    Manager
-                </label>
-
-                <select id="ReportsToEmployeePositionId" class="form-select" formControlName="ReportsToEmployeePositionId">
-
-                    <option value="" selected>
-                        Select Manager
-                    </option>
-                    @for(manager of managers ?? [] ;track manager.employeePositionId) {
-                    <option [value]="manager.employeePositionId">
-                        {{ manager.fullName | titlecase }} - {{ manager.email }}  ({{manager.positionName | titlecase}}) 
-                    </option>
-                    }
-                </select>
-            </div>
-            }
+          </div>
         </div>
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-success" [disabled]="employeeForm.invalid"> {{ title }} </button>
-            <button type="reset" class="btn btn-danger ms-2" (click)="resetForm()">Reset</button>
+        @if(hasRole('admin', 'manager')){
+          <div class="col-md-6">
+            <div class="form-group-wrapper">
+              <label for="email" class="form-label-modern mb-2">Corporate Email</label>
+              <input type="email" id="email" class="form-control-modern" formControlName="email" required placeholder="name@company.com">
+              @if(employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid){
+                <div class="form-validation-error mt-1">* Valid corporate identity email required</div>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="col-md-6">
+          <div class="form-group-wrapper">
+            <label for="phoneNumber" class="form-label-modern mb-2">Phone Number</label>
+            <input type="text" id="phoneNumber" class="form-control-modern" formControlName="phoneNumber" required placeholder="+1 (555) 000-0000">
+            @if(employeeForm.get('phoneNumber')?.touched && employeeForm.get('phoneNumber')?.invalid){
+              <div class="form-validation-error mt-1">* Phone configuration pattern must be valid</div>
+            }
+          </div>
         </div>
+
+        @if(hasRole('admin', 'manager')) {
+          <div class="col-md-6">
+            <div class="form-group-wrapper">
+              <label for="salary" class="form-label-modern mb-2">Annual Base Salary</label>
+              <input type="number" id="salary" class="form-control-modern" formControlName="salary" required placeholder="0.00">
+              @if(employeeForm.get('salary')?.touched && employeeForm.get('salary')?.invalid){
+                <div class="form-validation-error mt-1">* Salary matrix value allocation must be positive</div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Interactive Profile Media Upload Block -->
+        <div class="col-12 my-2">
+          <div class="media-upload-dropzone p-4 rounded-3 d-flex flex-column flex-md-row align-items-center gap-4">
+            <div class="avatar-preview-wrapper position-relative">
+              <img [src]="imagePreview() ? imagePreview() : defaultImage" class="rounded-circle object-fit-cover shadow-sm border" width="100" height="100" alt="Avatar upload canvas">
+            </div>
+            <div class="flex-grow-1 w-100 text-center text-md-start">
+              <label class="form-label-modern mb-2 d-block">Profile Media Identity</label>
+              <input type="file" class="form-control file-input-modern mb-1" accept=".jpg,.jpeg,.png" (change)="onFileSelected($event)">
+              <span class="text-secondary small d-block">Allowed file asset targets: <strong class="text-dark">JPG, JPEG, PNG</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role & Corporate Organization Hierarchies -->
+        @if(hasRole('admin','manager')){
+          
+          <div class="col-md-4">
+            <div class="form-group-wrapper">
+              <label for="department" class="form-label-modern mb-2">Department Segment</label>
+              <select id="department" class="form-select-modern" formControlName="departmentId" (ngModelChange)="loadManagers()">
+                <option value="" selected>Select Department</option>
+                @for(dept of departments ?? []; track dept.departmentId) {
+                  <option [value]="dept.departmentId">{{ dept.departmentName | titlecase }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group-wrapper">
+              <label for="role" class="form-label-modern mb-2">Access Control Role</label>
+              <select id="role" class="form-select-modern" formControlName="roleId">
+                <option value="" selected disabled>Select Role</option>
+                @for(role of roles ?? []; track role.roleId) {
+                  <option [value]="role.roleId">{{ role.roleName | titlecase }}</option>
+                }
+              </select>
+              @if(employeeForm.get('roleId')?.touched && employeeForm.get('roleId')?.invalid){
+                <div class="form-validation-error mt-1">* Permission profile target role required</div>
+              }
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group-wrapper">
+              <label for="position" class="form-label-modern mb-2">Designation Position</label>
+              <select id="position" class="form-select-modern" formControlName="positionId" (ngModelChange)="loadManagers()">
+                <option value="" selected>Select Position</option>
+                @for(position of positions ?? []; track position.positionId) {
+                  <option [value]="position.positionId">{{ position.positionName | titlecase }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group-wrapper">
+              <label for="ReportsToEmployeePositionId" class="form-label-modern mb-2">Reporting Direct Manager</label>
+              <select id="ReportsToEmployeePositionId" class="form-select-modern" formControlName="ReportsToEmployeePositionId">
+                <option value="" selected>Select Manager</option>
+                @for(manager of managers ?? []; track manager.employeePositionId) {
+                  <option [value]="manager.employeePositionId">
+                    {{ manager.fullName | titlecase }} — {{ manager.email }} ({{ manager.positionName | titlecase }})
+                  </option>
+                }
+              </select>
+            </div>
+          </div>
+
+        }
+
+      </div>
     </div>
+
+    <!-- Right-Aligned Action Control Footer Strip -->
+    <div class="card-footer form-action-strip p-4 border-0 d-flex justify-content-end align-items-center gap-2">
+      <button type="button" class="btn form-btn-secondary" (click)="resetForm()">
+        Reset 
+      </button>
+      <button type="submit" class="btn form-btn-primary" [disabled]="employeeForm.invalid">
+        {{ title }}
+      </button>
+    </div>
+
+  </div>
 </form>

@@ -1,0 +1,196 @@
+// ====================================================================
+// 📊 POSITION LIST WRAPPER CONFIGURATIONS (Encapsulated Layer)
+// ====================================================================
+
+.position-premium-grid {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.015) !important;
+
+  .grid-header-strip {
+    background-color: #fafbfc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .grid-paginator-strip {
+    background-color: #fafbfc;
+  }
+
+  // 🌙 Dark Theme Interface Rules Context Override
+  html[data-coreui-theme='dark'] & {
+    background: #141521;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+
+    .grid-header-strip {
+      background-color: #1a1b26;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .grid-paginator-strip {
+      background-color: #141521;
+    }
+  }
+}
+
+// 1. Direct Table Element Structural Cleanups
+table.grid-app-core-table {
+  thead tr {
+    background-color: #f8fafc !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+
+    html[data-coreui-theme='dark'] & {
+      background-color: #1a1b26 !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+  }
+
+  th {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: #64748b !important;
+    padding: 14px 16px !important;
+    border-bottom: none !important;
+
+    html[data-coreui-theme='dark'] & {
+      color: #a0aec0 !important;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+    transition: background-color 0.15s ease-in-out !important;
+
+    &:hover {
+      background-color: rgba(50, 31, 219, 0.015) !important;
+    }
+
+    &:last-child {
+      border-bottom: none !important;
+    }
+
+    html[data-coreui-theme='dark'] & {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+
+      &:hover {
+        background-color: rgba(56, 189, 248, 0.01) !important;
+      }
+    }
+  }
+
+  td {
+    padding: 14px 16px !important;
+    font-size: 0.875rem !important;
+    color: #2d3748 !important;
+
+    html[data-coreui-theme='dark'] & {
+      color: #cbd5e1;
+    }
+  }
+}
+
+// 2. Status Interactive Pill Toggles
+.grid-pill-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  .status-indicator-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  &.is-active {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.15);
+    .status-indicator-dot { background-color: #10b981; }
+    &:hover { background-color: rgba(16, 185, 129, 0.16); }
+  }
+
+  &.is-inactive {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.15);
+    .status-indicator-dot { background-color: #ef4444; }
+    &:hover { background-color: rgba(239, 68, 68, 0.16); }
+  }
+}
+
+// Minimal Badge Fallback Option
+.grid-read-only-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 0.725rem;
+  font-weight: 600;
+  border-radius: 6px;
+
+  &.active-badge { background-color: #ecfdf5; color: #059669; }
+  &.inactive-badge { background-color: #fef2f2; color: #dc2626; }
+}
+
+// 3. Compact Cell Action Icon Operations Triggers
+.grid-action-icon-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  svg { width: 14px; height: 14px; }
+
+  &.edit-btn:hover {
+    color: #321fdb;
+    background-color: rgba(50, 31, 219, 0.06);
+  }
+
+  &.delete-btn:hover {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.06);
+  }
+
+  html[data-coreui-theme='dark'] & {
+    color: #64748b;
+    &.edit-btn:hover { color: #38bdf8; background-color: rgba(56, 189, 248, 0.1); }
+    &.delete-btn:hover { color: #f87171; background-color: rgba(239, 68, 68, 0.12); }
+  }
+}
+
+// 4. Utility Search Inputs & Checking Fields
+.inline-grid-search-field {
+  max-width: 240px;
+  border-radius: 8px !important;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+
+  &:focus {
+    border-color: var(--cui-primary, #321fdb) !important;
+    box-shadow: 0 0 0 3px rgba(50, 31, 219, 0.1) !important;
+  }
+
+  html[data-coreui-theme='dark'] & {
+    background-color: #1c1d2d !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #fff !important;
+    &:focus { border-color: #38bdf8 !important; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15) !important; }
+  }
+}

@@ -1,36 +1,64 @@
-<!--sidebar-->
-<c-sidebar #sidebar1="cSidebar" class="d-print-none sidebar sidebar-fixed border-end" colorScheme="dark" id="sidebar1"
-  visible>
-  <c-sidebar-header class="border-bottom">
-    <c-sidebar-brand [routerLink]="[]">
-      <svg [class]="{icon: false}" cIcon class="sidebar-brand-full" height="32" name="logo" title="CoreUI Logo"></svg>
-      <svg cIcon class="sidebar-brand-narrow" height="32" name="signet" title="CoreUI Logo"></svg>
+<!-- Modern Sidebar with Premium Translucent Styling -->
+<!-- Added permanent dark tracking parameters -->
+<c-sidebar #sidebar1="cSidebar" class="d-print-none modern-glass-sidebar border-end shadow-sm" id="sidebar1"
+  colorScheme="dark" visible>
+
+  <!-- Sidebar Header Brand Block -->
+  <c-sidebar-header class="border-bottom-0 py-3 px-3 d-flex align-items-center">
+    <c-sidebar-brand [routerLink]="['/dashboard']" class="text-decoration-none d-flex align-items-center gap-2">
+      <!-- Replaced placeholder logo with modern layout brand context -->
+      <div
+        class="brand-icon-box rounded-3 overflow-hidden d-flex align-items-center justify-content-center bg-transparent">
+        <img
+          src="https://sitopsliveapi.shaligraminfotech.com/General/Documents/GeneralDocuments/shaligram-logo-only20250806_07334920250825_062807.svg"
+          alt="Shaligram Brand Mark" class="brand-logo-icon">
+      </div>
+
+
+      <!-- <svg cIcon name="cilLayers" size="md"></svg> -->
+
+      <img
+        src="https://sitopsliveapi.shaligraminfotech.com/General/Documents/GeneralDocuments/shaligram-logo-right-part20250806_07334920250825_062807.svg"
+        alt="Shaligram Infotech" class="brand-logo-text-svg">
+      <!-- <span class="brand-text-full fw-bold text-white fs-5 tracking-tight m-0">
+      Shaligram
+    </span> -->
     </c-sidebar-brand>
   </c-sidebar-header>
 
-  <ng-scrollbar pointerEventsMethod="scrollbar" visibility="hover">
-    <c-sidebar-nav [navItems]="navItems" dropdownMode="close" compact />
+  <!-- Content Scroller for Nav Items -->
+  <ng-scrollbar pointerEventsMethod="scrollbar" visibility="hover" class="flex-grow-1 px-2">
+    <c-sidebar-nav [navItems]="navItems" dropdownMode="close" compact class="modern-sidebar-nav-links py-2" />
   </ng-scrollbar>
 
+  <!-- Clean Minimal Footer Toggle Action -->
   @if (!sidebar1.narrow) {
-  <c-sidebar-footer cSidebarToggle="sidebar1" class="border-top d-none d-lg-flex" toggle="unfoldable"
+  <c-sidebar-footer cSidebarToggle="sidebar1"
+    class="border-top-0 py-2 d-none d-lg-flex justify-content-center align-items-center" toggle="unfoldable"
     style="cursor: pointer;">
-    <button cSidebarToggler aria-label="Toggle sidebar fold"></button>
+    <button cSidebarToggler aria-label="Toggle sidebar fold" class="modern-toggler-btn"></button>
   </c-sidebar-footer>
   }
 </c-sidebar>
 
-<!--main-->
-<div class="wrapper d-flex flex-column min-vh-100">
-  <!--app-header-->
-  <app-default-header [cShadowOnScroll]="'sm'" class="mb-4 d-print-none header header-sticky p-0 shadow-sm"
-    position="sticky" sidebarId="sidebar1" />
-  <!--app-body-->
-  <div class="body flex-grow-1">
-    <c-container breakpoint="lg" class="h-auto px-4">
-      <router-outlet />
+<!-- Main Master Viewport Wrapper Frame -->
+<div class="wrapper d-flex flex-column min-vh-100 layout-app-bg">
+
+  <!-- App Top Navigation Header Component Layer -->
+  <app-default-header [cShadowOnScroll]="'sm'" class="mb-4 d-print-none header-sticky p-0" position="sticky"
+    sidebarId="sidebar1" />
+
+  <!-- App Main Router Display Canvas -->
+  <main class="body flex-grow-1 d-flex flex-column mb-4">
+    <c-container breakpoint="lg" class="h-auto px-3 px-md-4 flex-grow-1">
+      <!-- Animated Content Entry Target -->
+      <div class="route-view-fade-entry h-100">
+        <router-outlet />
+      </div>
     </c-container>
-  </div>
-  <!--app footer-->
+  </main>
+
+  <!-- App Global Branding Base Footer -->
   <app-default-footer />
+
 </div>

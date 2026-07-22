@@ -1,99 +1,132 @@
-<div class="container-fluid">
-    <div class="animated fadeIn mb-4 d-flex justify-content-between align-items-center">
-        <h1 class="card-title">Department List</h1>
-        @if (hasRole('admin','manager')) {
-        <button class="btn btn-primary" routerLink="/departments/add-department">Add Department</button>
-        <button class="btn btn-secondary" (click)="exportSelected()">
-            Export Excel ({{SelectedDepartmentIds.length}})
+<div class="container-fluid py-3">
+  
+  <!-- Header Control Bar Section -->
+  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
+    <div>
+      <h3 class="fw-bold text-dark m-0">Department Workspace</h3>
+      <p class="text-secondary small m-0">Monitor enterprise corporate structures, assign workflows, and manage branches.</p>
+    </div>
+    
+    @if (hasRole('admin','manager')) {
+      <div class="d-flex align-items-center gap-2 w-100 w-sm-auto">
+        <button class="btn btn-primary px-3 py-2 btn-sm rounded-3 fw-medium text-nowrap" (click)="exportSelected()">
+           ({{SelectedDepartmentIds.length}}) <svg cIcon name="cilCloudDownload" class="text-light" title="Export to Excel"></svg> 
         </button>
-        }
-    </div>
-</div>
+        
+        <button class="btn btn-primary px-3 py-2 btn-sm rounded-3 fw-medium text-nowrap" routerLink="/departments/add-department">
+          + Add Department
+        </button>
+      </div>
+    }
+  </div>
 
-<div class="card mb-4 accordion mt-4">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>Department List</h5>
-        <div class="float-end">
-            <input type="text" class="form-control" placeholder="Search Department" [(ngModel)]="searchText"
-                (input)="onSearch()">
-        </div>
+  <!-- Primary Wrapped Card Panel Component -->
+  <div class="card department-premium-grid border-0 shadow-sm rounded-4 overflow-hidden">
+    
+    <!-- Action Search Header -->
+    <div class="card-header grid-header-strip p-3 px-4 border-0 d-flex flex-row justify-content-between align-items-center">
+      <h6 class="m-0 fw-bold text-dark">Department Records</h6>
+      <div>
+        <input 
+          type="text" 
+          class="form-control inline-grid-search-field" 
+          placeholder="Search Department..." 
+          [(ngModel)]="searchText" 
+          (input)="onSearch()"
+        />
+      </div>
     </div>
 
-    <div class="card-body">
-        @if(Departments().length > 0) {
+    <!-- Data Table Canvas Area -->
+    <div class="card-body p-0">
+      @if(Departments().length > 0) {
         <div class="table-responsive">
-            <table class="table table-striped neon-table" matSort (matSortChange)="sortData($event)">
-                <thead>
-                    <tr>
-                        @if (hasRole('admin','manager')) {
-                        <th width="50">
-                            <input type="checkbox" (change)="toggleSelectAll($event)"
-                                [checked]="SelectedDepartmentIds.length === Departments().length && Departments().length > 0">
-                        </th>
-                        }
-                        <th mat-sort-header="departmentId">ID</th>
-                        <th mat-sort-header="departmentName">Name</th>
-                        <th mat-sort-header="createdAt">Created At</th>
-                        <th>Available</th>
-                        @if (hasRole('admin','manager')) {
-                        <th>Action</th>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let department of Departments(); let i = index">
-                        @if (hasRole('admin','manager')) {
-                        <td>
-
-                            <input type="checkbox" [checked]="isSelected(department.departmentId)"
-                                (change)="toggleSelection(department.departmentId,$event)">
-
-                        </td>
-                        }
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ department.departmentName | titlecase }}</td>
-                        <td>{{ department.createdAt | date }}</td>
-
-                        <td>
-                            @if (hasRole('admin', 'manager')) {
-
-                            <button class="btn btn-sm" [ngClass]="department.isActive ? 'btn-success' : 'btn-danger'"
-                                (click)="changeStatus(department.departmentId, !department.isActive)">
-
-                                {{ department.isActive ? 'Active' : 'Inactive' }}
-
-                            </button>
-
-                            } @else {
-
-                            <span class="badge" [ngClass]="department.isActive ? 'bg-success' : 'bg-danger'">
-                                {{ department.isActive ? 'Active' : 'Inactive' }}
-                            </span>
-
-                            }
-                        </td>
-
-                        @if (hasRole('admin','manager')) {
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary"
-                                [routerLink]="['/departments/edit-department', department.departmentId]">Edit</button>
-                            <button class="btn btn-sm btn-outline-danger ms-2"
-                                (click)="deleteDepartment(department.departmentId)">Delete</button>
-                        </td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
+          <table class="table grid-app-core-table align-middle m-0" matSort (matSortChange)="sortData($event)">
+            <thead>
+              <tr>
+                @if (hasRole('admin','manager')) {
+                  <th width="50" class="text-center">
+                    <div class="grid-checkbox-wrapper">
+                      <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="SelectedDepartmentIds.length === Departments().length && Departments().length > 0">
+                    </div>
+                  </th>
+                }
+                <th mat-sort-header="departmentId" width="80">ID</th>
+                <th mat-sort-header="departmentName">Department Name</th>
+                <th mat-sort-header="createdAt">Created Date</th>
+                <th width="120">Availability</th>
+                @if (hasRole('admin','manager')) {
+                  <th width="140" class="text-end pe-4">Action</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let department of Departments(); let i = index">
+                
+                @if (hasRole('admin','manager')) {
+                  <td class="text-center">
+                    <div class="grid-checkbox-wrapper">
+                      <input type="checkbox" [checked]="isSelected(department.departmentId)" (change)="toggleSelection(department.departmentId,$event)">
+                    </div>
+                  </td>
+                }
+                
+                <td class="text-secondary fw-semibold">#{{ i + 1 }}</td>
+                <td class="fw-medium text-dark">{{ department.departmentName | titlecase }}</td>
+                <td class="text-secondary small">{{ department.createdAt | date:'mediumDate' }}</td>
+                
+                <!-- Status Toggle Capsule -->
+                <td>
+                  @if (hasRole('admin', 'manager')) {
+                    <button 
+                      class="grid-pill-toggle-btn" 
+                      [ngClass]="department.isActive ? 'is-active' : 'is-inactive'" 
+                      (click)="changeStatus(department.departmentId, !department.isActive)"
+                    >
+                      <span class="status-indicator-dot"></span>
+                      {{ department.isActive ? 'Active' : 'Inactive' }}
+                    </button>
+                  } @else {
+                    <span class="grid-read-only-badge" [ngClass]="department.isActive ? 'active-badge' : 'inactive-badge'">
+                      {{ department.isActive ? 'Active' : 'Inactive' }}
+                    </span>
+                  }
+                </td>
+                
+                <!-- Action Buttons Controls -->
+                @if (hasRole('admin','manager')) {
+                  <td class="text-end pe-4">
+                    <div class="d-inline-flex gap-1">
+                      <button class="grid-action-icon-btn edit-btn" [routerLink]="['/departments/edit-department', department.departmentId]" title="Edit">
+                        <svg cIcon name="cilPencil" size="sm"></svg>
+                      </button>
+                      <button class="grid-action-icon-btn delete-btn" (click)="deleteDepartment(department.departmentId)" title="Delete">
+                        <svg cIcon name="cilTrash" size="sm"></svg>
+                      </button>
+                    </div>
+                  </td>
+                }
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Paginator Footer Segment Wrapper -->
+        <div class="p-2 border-top grid-paginator-strip">
+          <mat-paginator [length]="totalRecords" [pageSize]="pageSize" [pageSizeOptions]="[3,5,10,20]" showFirstLastButtons (page)="pageChanged($event)"></mat-paginator>
         </div>
 
-        <mat-paginator [length]="totalRecords" [pageSize]="pageSize" [pageSizeOptions]="[3,5,10,20]"
-            showFirstLastButtons (page)="pageChanged($event)"></mat-paginator>
-
+  
+        <!-- Empty Grid Context Fallback Frame -->
         } @else {
-        <div class="alert alert-info text-center m-4" role="alert">
-            <h3>No Departments Found</h3>
-            <p>There are no department records available.</p>
-        </div>
-        }
+            <div class="alert alert-info text-center m-4" role="alert">
+                <h3>No Departments Found</h3>
+                <p>There are no department records available.</p>
+            </div>
+            }
+      
     </div>
+
+  </div>
 </div>

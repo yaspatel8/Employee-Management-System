@@ -31,7 +31,7 @@ export class DepartmentService {
   }
 
   saveDepartment(department: Department) {
-    return this.http.post(`${environment.apiUrl}/api /Department`, department);
+    return this.http.post(`${environment.apiUrl}/api/Department`, department);
   }
 
   getAllDepartments() {

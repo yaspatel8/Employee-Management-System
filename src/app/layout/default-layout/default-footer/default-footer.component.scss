@@ -1,0 +1,52 @@
+// Premium Floating Footer Styling Layer
+.modern-glass-footer {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.01);
+    transition: all 0.3s ease;
+    min-height: 50px;
+
+    // Responsive Typography Sizing Controls
+    .brand-link,
+    .engine-link {
+        font-size: 0.875rem;
+        color: var(--cui-primary, #321fdb) !important;
+        transition: color 0.15s ease-in-out;
+
+        &:hover {
+            color: #1a0dab !important;
+            text-decoration: underline !important;
+        }
+    }
+
+    .copyright-text,
+    .powered-text {
+        font-size: 0.85rem;
+    }
+
+    // Dark Theme Integration Rules
+    html[data-coreui-theme='dark'] & {
+        background: rgba(26, 27, 38, 0.75) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+
+        .brand-link,
+        .engine-link {
+            color: #38bdf8 !important;
+
+            &:hover {
+                color: #7dd3fc !important;
+            }
+        }
+    }
+}
+
+// Media Query For Micro Mobile Layout Adjustments
+@media (max-width: 575.98px) {
+    .footer-content-wrapper {
+        text-align: center;
+        padding: 4px 0;
+    }
+}

@@ -1,0 +1,127 @@
+// ====================================================================
+// 👤 CORPORATE PROFILE PRESENTATION CANVAS LOOK (Encapsulated Layer)
+// ====================================================================
+
+.profile-modern-panel-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+
+  .border-end-md {
+    @media (min-width: 768px) {
+      border-right: 1px solid rgba(0, 0, 0, 0.06) !important;
+    }
+  }
+
+  .profile-footer-action-strip {
+    background-color: #fafbfc;
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+  }
+
+  // 🌙 Dark Theme Interface Rules Mapping
+  html[data-coreui-theme='dark'] & {
+    background: #141521;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+
+    .border-end-md {
+      @media (min-width: 768px) {
+        border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+      }
+    }
+
+    .profile-footer-action-strip {
+      background-color: #1a1b26;
+      border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+  }
+}
+
+// 1. Profile Interactive Avatar Rings
+.profile-avatar-premium-ring {
+  display: inline-block;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 3px solid rgba(50, 31, 219, 0.15);
+    border-radius: 50%;
+  }
+
+  html[data-coreui-theme='dark'] &::after {
+    border-color: rgba(56, 189, 248, 0.25);
+  }
+}
+
+.position-matrix-badge {
+  background-color: rgba(50, 31, 219, 0.06);
+  color: var(--cui-primary, #321fdb);
+  font-size: 0.775rem;
+  font-weight: 600;
+
+  html[data-coreui-theme='dark'] & {
+    background-color: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+  }
+}
+
+// 2. High Density Metric Grid Tiles Layout
+.profile-metric-data-tile {
+  background-color: #f8fafc;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f1f5f9;
+  }
+
+  .metric-label {
+    font-size: 0.725rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #718096;
+  }
+
+  .metric-value {
+    font-size: 0.95rem;
+  }
+
+  .text-success-premium {
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .text-secondary-premium {
+    color: #4a5568;
+  }
+
+  html[data-coreui-theme='dark'] & {
+    background-color: #1a1b26;
+    border-color: rgba(255, 255, 255, 0.02);
+
+    &:hover { background-color: #222334; }
+    .metric-label { color: #a0aec0; }
+    .text-success-premium { color: #34d399; }
+    .text-secondary-premium { color: #cbd5e1; }
+  }
+}
+
+// 3. Operational Master Action Push Trigger Controls
+.profile-action-btn-primary {
+  background-color: #321fdb;
+  color: #ffffff;
+  border: none;
+  font-size: 0.85rem;
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    background-color: #2214b5;
+    color: #fff;
+  }
+
+  html[data-coreui-theme='dark'] & {
+    background-color: #38bdf8;
+    color: #000000;
+    &:hover { background-color: #0ea5e9; color: #000; }
+  }
+}

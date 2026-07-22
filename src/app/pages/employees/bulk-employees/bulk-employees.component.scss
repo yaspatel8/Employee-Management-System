@@ -1,72 +1,210 @@
-.card {
-    overflow: hidden;
-}
+// ====================================================================
+// 📊 BATCH MASS TRANSACTION MATRIX DESIGN UTILITIES (Encapsulated Layer)
+// ====================================================================
 
-.card-header {
+.bulk-modern-card {
     background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+
+    .bulk-form-action-strip {
+        background-color: #fafbfc;
+        border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
+
+    html[data-coreui-theme='dark'] & {
+        background: #141521;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+
+        .bulk-form-action-strip {
+            background-color: #1a1b26;
+            border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+    }
 }
 
-.table {
-    margin-bottom: 0;
+// 1. Dynamic Inline Row Input Compression
+.form-control-modern,
+.form-select-modern {
+    display: block;
+    width: 100%;
+    padding: 6px 10px !important; // Compressed cell layout structure tracking
+    font-size: 0.85rem !important;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #2d3748;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+    transition: all 0.15s ease-in-out;
+
+    &:focus {
+        color: #1a202c;
+        border-color: var(--cui-primary, #321fdb);
+        outline: 0;
+        box-shadow: 0 0 0 3px rgba(50, 31, 219, 0.12);
+    }
+
+    html[data-coreui-theme='dark'] & {
+        color: #e2e8f0;
+        background-color: #1c1d2d;
+        border-color: rgba(255, 255, 255, 0.08);
+
+        &:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+        }
+
+        option {
+            background-color: #141521;
+            color: #e2e8f0;
+        }
+    }
 }
 
-.table th {
-    white-space: nowrap;
-    text-align: center;
-    vertical-align: middle;
+.form-select-modern {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://w3.org' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23718096' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 10px;
+    padding-right: 28px !important;
+
+    html[data-coreui-theme='dark'] & {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://w3.org' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23a0aec0' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    }
+}
+
+// 2. High Density Row Mini Command Utility Buttons 
+.bulk-row-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    &.add {
+        color: #10b981;
+        background-color: rgba(16, 185, 129, 0.06);
+
+        &:hover {
+            background-color: rgba(16, 185, 129, 0.15);
+        }
+    }
+
+    &.delete {
+        color: #ef4444;
+        background-color: rgba(239, 68, 68, 0.06);
+
+        &:hover:not(:disabled) {
+            background-color: rgba(239, 68, 68, 0.15);
+        }
+
+        &:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            color: #718096;
+            background: transparent;
+        }
+    }
+
+    html[data-coreui-theme='dark'] & {
+        &.add:hover {
+            background-color: rgba(16, 185, 129, 0.22);
+        }
+
+        &.delete:hover:not(:disabled) {
+            background-color: rgba(239, 68, 68, 0.22);
+        }
+    }
+}
+
+// 3. Compliance Warnings Structural Skins
+.bulk-instruction-alert {
+    background-color: rgba(239, 68, 68, 0.04) !important;
+    border: 1px solid rgba(239, 68, 68, 0.15) !important;
+    color: #b91c1c;
+
+    .alert-icon-wrap svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    html[data-coreui-theme='dark'] & {
+        background-color: rgba(239, 68, 68, 0.02) !important;
+        border-color: rgba(239, 68, 68, 0.1) !important;
+        color: #ef4444;
+    }
+}
+
+.form-validation-error {
+    font-size: 0.7rem;
+    color: #ef4444;
+    font-weight: 500;
+    display: block;
+}
+
+// 4. Primary Master Execution Trigger Layout Push Controls
+.form-btn-primary,
+.form-btn-secondary {
+    padding: 8px 18px;
+    font-size: 0.85rem;
     font-weight: 600;
-}
-
-.table td {
-    vertical-align: top;
-}
-
-.form-control,
-.form-select {
-
-    min-width: 180px;
     border-radius: 8px;
+    transition: all 0.15s ease-in-out;
 }
 
-.form-control:focus,
-.form-select:focus {
+.form-btn-primary {
+    background-color: #321fdb;
+    color: #ffffff;
+    border: none;
 
-    box-shadow: none;
-    border-color: #0d6efd;
-}
-
-.text-danger {
-
-    font-size: 12px;
-}
-
-.btn {
-
-    border-radius: 8px;
-}
-
-.card-footer {
-
-    padding: 20px;
-}
-
-@media (max-width: 992px) {
-
-    .table {
-        min-width: 1100px;
+    &:hover:not(:disabled) {
+        background-color: #2214b5;
     }
 
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    html[data-coreui-theme='dark'] & {
+        background-color: #38bdf8;
+        color: #000000;
+
+        &:hover:not(:disabled) {
+            background-color: #0ea5e9;
+        }
+    }
 }
 
-@media (max-width: 768px) {
+.form-btn-secondary {
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #4a5568;
 
-    .card-header,
-    .card-footer {
-        padding: 16px;
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
     }
 
-    .btn {
-        width: 100%;
-    }
+    html[data-coreui-theme='dark'] & {
+        border-color: rgba(255, 255, 255, 0.12);
+        color: #a0aec0;
 
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: #fff;
+        }
+    }
 }

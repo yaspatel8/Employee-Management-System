@@ -1,72 +1,54 @@
+<form [formGroup]="departmentForm" (ngSubmit)="onSubmit()" autocomplete="off" class="container-fluid py-3">
 
-<form [formGroup]="departmentForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <!-- Section Title Header -->
+    <div class="mb-4">
+        <h3 class="fw-bold text-dark m-0">{{ editMode ? 'Edit Department' : 'Add New Department' }}</h3>
+        <p class="text-secondary small m-0">Establish or modify organizational team structures within the enterprise
+            matrix.</p>
+    </div>
 
-    <div class="card mt-4">
+    <!-- Primary Floating Panel Card Shell -->
+    <div class="card department-modern-card border-0 shadow-sm rounded-4 overflow-hidden">
 
-        <h4 class="card-header">
-            {{ editMode ? 'Edit Department' : 'Add New Department' }}
-        </h4>
+        <div class="card-body p-4 p-md-5">
+            <div class="row g-4">
 
-        <div class="card-body glass-card">
-
-            <div class="mb-3">
-
-                <label for="departmentName" class="form-label">
-                    Department Name
-                </label>
-
-                <input type="text" id="departmentName" class="form-control custom-input" formControlName="departmentName">
-
-                @if (
-                departmentForm.get('departmentName')?.invalid &&
-                (departmentForm.get('departmentName')?.dirty ||
-                departmentForm.get('departmentName')?.touched)
-                ) {
-
-                <div class="text-danger mt-1">
-
-                    @if (departmentForm.get('departmentName')?.errors?.['required']) {
-                    <div>
-                        Department Name is required.
+                <!-- Department Name Field Block -->
+                <div class="col-12">
+                    <div class="form-group-wrapper">
+                        <label for="departmentName" class="form-label-modern mb-2">Department Segment Name</label>
+                        <input type="text" id="departmentName" class="form-control-modern"
+                            formControlName="departmentName" placeholder="e.g., Human Resources, Engineering">
+                        @if (departmentForm.get('departmentName')?.invalid &&
+                        (departmentForm.get('departmentName')?.dirty || departmentForm.get('departmentName')?.touched))
+                        {
+                        <div class="form-validation-error mt-1">
+                            @if (departmentForm.get('departmentName')?.errors?.['required']) {
+                            <div>* Corporate department name registration is required.</div>
+                            }
+                            @if (departmentForm.get('departmentName')?.errors?.['minlength']) {
+                            <div>* Name must be at least 2 characters long.</div>
+                            }
+                            @if (departmentForm.get('departmentName')?.errors?.['maxlength']) {
+                            <div>* Structural string threshold constraint cannot exceed 50 characters.</div>
+                            }
+                        </div>
+                        }
                     </div>
-                    }
-
-                    @if (departmentForm.get('departmentName')?.errors?.['minlength']) {
-                    <div>
-                        Department Name must be at least 2 characters long.
-                    </div>
-                    }
-
-                    @if (departmentForm.get('departmentName')?.errors?.['maxlength']) {
-                    <div>
-                        Department Name cannot exceed 50 characters.
-                    </div>
-                    }
-
                 </div>
 
-                }
-
             </div>
-
         </div>
 
-        <div class="card-footer">
-
-            <button type="submit" class="btn btn-success" [disabled]="departmentForm.invalid">
-
-                {{ editMode ? 'Update' : 'Add' }}
-
-            </button>
-
-            <button type="button" class="btn btn-danger ms-2" (click)="departmentForm.reset()">
-
+        <!-- Right-Aligned Action Control Footer Strip -->
+        <div class="card-footer form-action-strip p-4 border-0 d-flex justify-content-end align-items-center gap-2">
+            <button type="button" class="btn form-btn-secondary" (click)="departmentForm.reset()">
                 Reset
-
             </button>
-
+            <button type="submit" class="btn form-btn-primary" [disabled]="departmentForm.invalid">
+                {{ editMode ? 'Update Department' : 'Create Department' }}
+            </button>
         </div>
 
     </div>
-
 </form>

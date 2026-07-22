@@ -9,10 +9,13 @@ import { Position } from '../../../models/position';
 import { AuthService } from '../../../Services/auth.service';
 import { PositionService } from '../../../Services/position.service';
 import Swal from 'sweetalert2';
+import { IconSetService,IconDirective } from '@coreui/icons-angular';
+import { cilPencil, cilTrash} from '@coreui/icons';
 
 @Component({
   selector: 'app-positions-list',
-  imports: [CommonModule, RouterLink, MatPaginatorModule, MatSortModule,FormsModule],
+  imports: [CommonModule, RouterLink, MatPaginatorModule, MatSortModule,FormsModule, IconDirective],
+  providers: [IconSetService],
   templateUrl: './positions-list.component.html',
   styleUrl: './positions-list.component.scss',
 })
@@ -20,7 +23,9 @@ export class PositionsListComponent {
 private searchSubject = new Subject<string>();
   SelectedPositionIds: number[] = []
 
-  constructor(private positionService: PositionService, private router: Router, private authService: AuthService) { }
+  constructor(private iconSetService: IconSetService, private positionService: PositionService, private router: Router, private authService: AuthService) { 
+    this.iconSetService.icons = { cilPencil, cilTrash };
+  }
 
   Positions = signal<Position[]>([]);
 

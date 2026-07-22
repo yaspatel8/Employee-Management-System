@@ -10,10 +10,13 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { AuthService } from '../../../Services/auth.service';
+import { IconSetService,IconDirective } from '@coreui/icons-angular';
+import { cilPencil, cilTrash ,cilCloudDownload} from '@coreui/icons';
 
 @Component({
   selector: 'app-department-list',
-  imports: [CommonModule, RouterLink, FormsModule, MatPaginatorModule, MatSortModule],
+  imports: [CommonModule, RouterLink, FormsModule, MatPaginatorModule, MatSortModule, IconDirective],
+  providers: [IconSetService],
   templateUrl: './department-list.component.html',
   styleUrl: './department-list.component.scss',
 })
@@ -22,7 +25,9 @@ export class DepartmentListComponent {
   private searchSubject = new Subject<string>();
   SelectedDepartmentIds: number[] = []
 
-  constructor(private departmentService: DepartmentService, private router: Router, private authService: AuthService) { }
+  constructor(private departmentService: DepartmentService, private router: Router, private authService: AuthService, private iconSetService: IconSetService) { 
+    this.iconSetService.icons = { cilPencil, cilTrash, cilCloudDownload };
+  }
 
   Departments = signal<Department[]>([]);
 

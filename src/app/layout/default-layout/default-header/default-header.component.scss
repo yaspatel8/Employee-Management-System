@@ -1,0 +1,221 @@
+// Glassmorphic Premium Floating Navbar Layout Effect
+.modern-glass-header {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+
+    html[data-coreui-theme='dark'] & {
+        background: rgba(26, 27, 38, 0.75) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.header-main-container {
+    height: 64px;
+    display: flex;
+    align-items: center;
+}
+
+// Flat Action Icons Mechanics
+.action-icon-btn {
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
+        color: #1a0dab;
+    }
+
+    html[data-coreui-theme='dark'] & {
+        color: #a0aec0;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: #38bdf8;
+        }
+    }
+}
+
+// Clean Minimal Navigation Links
+.modern-nav-links {
+    .nav-link-item {
+        font-size: 0.925rem;
+        font-weight: 500;
+        color: #4a5568 !important;
+        padding: 8px 16px !important;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.03);
+            color: #000 !important;
+        }
+
+        &.active {
+            color: var(--cui-primary, #321fdb) !important;
+            background: rgba(50, 31, 219, 0.06) !important;
+            font-weight: 600;
+        }
+
+        html[data-coreui-theme='dark'] & {
+            color: #a0aec0 !important;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.04);
+                color: #fff !important;
+            }
+
+            &.active {
+                color: #38bdf8 !important;
+                background: rgba(56, 189, 248, 0.1) !important;
+            }
+        }
+    }
+}
+
+// Modern User Dropdown Pill Trigger 
+.profile-trigger-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.03);
+    }
+
+    .avatar-ring {
+        &::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border: 2px solid rgba(50, 31, 219, 0.2);
+            border-radius: 50%;
+        }
+    }
+
+    html[data-coreui-theme='dark'] & {
+        span {
+            color: #e2e8f0 !important;
+        }
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+    }
+}
+
+// Fixed Dropdown Layout Settings
+.dropdown-menu-modern {
+    border-radius: 14px !important;
+    min-width: 230px;
+    overflow: hidden;
+    padding: 6px !important;
+    // top: 100% !important;
+    /* Forces the box to align strictly downwards */
+    bottom: auto !important;
+    /* Cancels upward dynamic changes */
+    animation: dropdownFadeOnly 0.15s ease-out;
+    /* Pure opacity fade entry */
+
+    .dropdown-item-modern {
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #4a5568;
+        transition: all 0.15s ease;
+        cursor: pointer;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        &:hover,
+        &.active {
+            background-color: rgba(50, 31, 219, 0.06);
+            color: var(--cui-primary, #321fdb);
+        }
+
+        &.logout-btn {
+            color: #dc3545;
+
+            &:hover {
+                background-color: rgba(220, 53, 69, 0.08);
+                color: #dc3545;
+            }
+        }
+    }
+
+    html[data-coreui-theme='dark'] & {
+        background: #1f202e !important;
+
+        .dropdown-premium-header {
+            background: #1a1b26 !important;
+        }
+
+        .dropdown-item-modern {
+            color: #a0aec0;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.05);
+                color: #fff;
+            }
+
+            &.logout-btn:hover {
+                background-color: rgba(220, 53, 69, 0.15);
+            }
+        }
+    }
+}
+
+// Breadcrumb Modern Microspacing strip
+.header-breadcrumb-container {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.01);
+    border-top: 1px solid rgba(0, 0, 0, 0.02);
+
+    .modern-breadcrumbs {
+        font-size: 0.8rem;
+        --cui-breadcrumb-margin-bottom: 0;
+    }
+
+    html[data-coreui-theme='dark'] & {
+        background: rgba(0, 0, 0, 0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.02);
+    }
+}
+
+// CANCELLED vertical transform animations to prevent jumping movements completely
+@keyframes dropdownFadeOnly {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

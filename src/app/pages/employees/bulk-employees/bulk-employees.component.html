@@ -1,274 +1,170 @@
-<div class="container-fluid">
+<div class="container-fluid py-3">
+  
+  <!-- Header Title Section -->
+  <div class="mb-4">
+    <h3 class="fw-bold text-dark m-0">Bulk Employee Upload</h3>
+    <p class="text-secondary small m-0">Batch-register multiple staff records into the corporate index seamlessly.</p>
+  </div>
 
-  <div class="animated fadeIn mb-4 d-flex justify-content-between align-items-center">
-
-    <div>
-      <h2 class="card-title mb-0">
-        Bulk Employee Upload
-      </h2>
-      <p class="text-muted mb-0">
-        Add multiple employees in one request.
-      </p>
+  <!-- Operational Requirements Notice Alert Box -->
+  <div class="alert bulk-instruction-alert d-flex align-items-start gap-3 p-3 rounded-4 border-0 mb-4 shadow-sm">
+    <div class="alert-icon-wrap text-danger">
+      <svg cIcon name="cilInfo" size="lg"></svg>
     </div>
-
+    <div>
+      <h6 class="fw-bold m-0 mb-1">Upload Compliance Directives</h6>
+      <ul class="mb-0 text-secondary small ps-3">
+        <li><strong>Unique Identity:</strong> Email metrics cannot duplicate inside this current working list.</li>
+        <li><strong>Structural Anchors:</strong> Full Name, Department segments, Roles, and Manager metrics are required.</li>
+      </ul>
+    </div>
   </div>
 
-  <!-- Instructions -->
-  <div class="alert alert-danger rounded-4 border-1 shadow-sm mb-4">
-    <h6 class="fw-bold mb-2">
-      Instructions
-    </h6>
-    <ul class="mb-0">
-      <li>Full Name is required.</li>
-      <li>Department is required.</li>
-      <li>Email should be unique.</li>
-      <li>Position is required.</li>
-      <li>Report To is required.</li>
-    </ul>
-
-  </div>
-
-  <!-- Card -->
-  <div class="card shadow rounded-4 border-2 mb-4">
+  <!-- Primary Dynamic Batch Grid Canvas Panel -->
+  <div class="card bulk-modern-card border-0 shadow-sm rounded-4 overflow-hidden">
     <div class="card-body p-0">
-      <form [formGroup]="bulkForm">
+      
+      <form [formGroup]="bulkForm" autocomplete="off">
         <div formArrayName="employees">
-          <div class="table-responsive">
-            <table class="table table-bordered rounded-2 table-hover align-middle">
-              <thead class="table-primary">
-
+          <div class="table-responsive app-custom-table-container">
+            
+            <!-- Global Shared Target Class 'modern-app-table' Added -->
+            <table class="table modern-app-table align-middle">
+              <thead>
                 <tr>
-                  <th>No.</th>
-                  <th>Full Name</th>
-                  <th>Email</th>
-                  <th>Salary</th>
-                  <th>Department</th>
-                  <th>Position</th>
-                  <th>Reports To</th>
-                  <th>Action</th>
+                  <th width="50" class="text-center">No.</th>
+                  <th width="200">Full Name</th>
+                  <th width="200">Corporate Email</th>
+                  <th width="120">Salary</th>
+                  <th width="180">Department</th>
+                  <th width="180">Position</th>
+                  <th width="220">Reports To (Manager)</th>
+                  <th width="140" class="text-center">Action</th>
                 </tr>
-
               </thead>
               <tbody>
                 @for(employee of employees.controls; track employee; let i = $index){
-                <tr [formGroupName]="i">
-                  <td class="text-center">{{i + 1}}</td>
-                  <!-- Full Name -->
-                  <td>
-                    <input class="form-control" placeholder="Enter Full Name" formControlName="fullName">
-                    @if(employee.get('fullName')?.touched && employee.get('fullName')?.invalid){
-                    <small class="text-danger">
-                      @if(employee.get('fullName')?.errors?.['required']){
-                      Full Name is required.
+                  <tr [formGroupName]="i" class="bulk-form-row">
+                    
+                    <!-- Serial Index -->
+                    <td class="text-center fw-semibold text-secondary">{{ i + 1 }}</td>
+                    
+                    <!-- Full Name -->
+                    <td>
+                      <input class="form-control-modern m-0" placeholder="Enter Full Name" formControlName="fullName">
+                      @if(employee.get('fullName')?.touched && employee.get('fullName')?.invalid){
+                        <div class="form-validation-error mt-1">
+                          @if(employee.get('fullName')?.errors?.['required']){ * Required }
+                          @if(employee.get('fullName')?.errors?.['pattern']){ * Letters only }
+                          @if(employee.get('fullName')?.errors?.['minlength']){ * Min 2 chars }
+                        </div>
                       }
-                      @if(employee.get('fullName')?.errors?.['pattern']){
-                      Full Name must contain only letters and spaces.
+                    </td>
+                    
+                    <!-- Email -->
+                    <td>
+                      <input class="form-control-modern m-0" placeholder="Enter Email" formControlName="email">
+                      @if(employee.get('email')?.touched && employee.get('email')?.invalid){
+                        <div class="form-validation-error mt-1">
+                          @if(employee.get('email')?.errors?.['required']){ * Required }
+                          @if(employee.get('email')?.errors?.['email']){ * Invalid format }
+                          @if(employee.get('email')?.errors?.['duplicateEmail']){ * Duplicate item }
+                        </div>
                       }
-                      @if(employee.get('fullName')?.errors?.['minlength']){
-                      Full Name must be at least 2 characters long.
+                    </td>
+                    
+                    <!-- Salary -->
+                    <td>
+                      <input type="number" class="form-control-modern m-0" placeholder="Salary" formControlName="salary">
+                      @if(employee.get('salary')?.touched && employee.get('salary')?.invalid){
+                        <div class="form-validation-error mt-1">
+                          @if(employee.get('salary')?.errors?.['required']){ * Required }
+                          @if(employee.get('salary')?.errors?.['min']){ * Must be > 0 }
+                        </div>
                       }
-                    </small>
-                    }
-                  </td>
-                  <!-- Email -->
-                  <td>
-                    <input class="form-control" placeholder="Enter Email" formControlName="email">
-                    @if(employee.get('email')?.touched && employee.get('email')?.invalid){
-                    <small class="text-danger">
-                      @if(employee.get('email')?.errors?.['required']){
-                      Email is required.
+                    </td>
+                    
+                    <!-- Department -->
+                    <td>
+                      <select class="form-select-modern m-0" formControlName="departmentId">
+                        <option [value]="0" selected disabled>Select Dept</option>
+                        @for(dept of departments ?? []; track dept.departmentId){
+                          <option [value]="dept.departmentId">{{ dept.departmentName | titlecase }}</option>
+                        }
+                      </select>
+                      @if(employee.get('departmentId')?.touched && employee.get('departmentId')?.invalid){
+                        <div class="form-validation-error mt-1">* Required</div>
                       }
-                      @if(employee.get('email')?.errors?.['email']){
-                      Invalid Email.
+                    </td>
+                    
+                    <!-- Position -->
+                    <td>
+                      <select class="form-select-modern m-0" formControlName="positionId">
+                        <option value="" selected disabled>Select Position</option>
+                        @for(pos of Positions ?? []; track pos.positionId){
+                          <option [value]="pos.positionId">{{ pos.positionName | titlecase }}</option>
+                        }
+                      </select>
+                      @if(employee.get('positionId')?.touched && employee.get('positionId')?.invalid){
+                        <div class="form-validation-error mt-1">* Required</div>
                       }
-                      @if(employee.get('email')?.touched &&
-                      employee.get('email')?.errors?.['duplicateEmail']){
-                      Email already exists in this list.
+                    </td>
+                    
+                    <!-- Report To -->
+                    <td>
+                      <select class="form-select-modern m-0" formControlName="reportsToEmployeePositionId">
+                        <option value="" selected disabled>Select Manager</option>
+                        @for(manager of managerLists[i] ?? []; track manager.employeePositionId){
+                          <option [value]="manager.employeePositionId">
+                            {{ manager.fullName | titlecase }} ({{ manager.positionName | titlecase }})
+                          </option>
+                        }
+                      </select>
+                      @if(employee.get('reportsToEmployeePositionId')?.touched && employee.get('reportsToEmployeePositionId')?.invalid){
+                        <div class="form-validation-error mt-1">* Required</div>
                       }
-                    </small>
-                    }
-                  </td>
-                  <!-- Salary -->
+                    </td>
+                    
+                    <!-- Inline List Row Control Actions -->
+                    <td>
+                      <div class="d-flex justify-content-center align-items-center gap-1">
+                        <button type="button" class="bulk-row-btn add" (click)="addRow()" title="Add Row Above">
+                          <svg cIcon name="cilPlus"></svg>
+                        </button>
+                        <button type="button" class="bulk-row-btn delete" (click)="deleteRow(i)" [disabled]="employees.length === 1" title="Delete Row">
+                          <svg cIcon name="cilTrash"></svg>
+                        </button>
+                      </div>
+                    </td>
 
-                  <td>
-                    <input type="number" class="form-control" placeholder="Salary" formControlName="salary">
-                    @if(employee.get('salary')?.touched &&
-                    employee.get('salary')?.invalid){
-                    <small class="text-danger">
-                      @if(employee.get('salary')?.errors?.['required']){
-                      Salary is required.
-                      }
-                      @if(employee.get('salary')?.errors?.['min']){
-                      Salary must be greater than 0.
-                      }
-                    </small>
-                    }
-                  </td>
-
-                  <!-- Department -->
-
-                  <td>
-
-                    <select class="form-select" formControlName="departmentId">
-
-                      <option [value]=0 selected>
-                        Select Department
-                      </option>
-
-                      @for(dept of departments ?? []; track dept.departmentId){
-
-                      <option [value]="dept.departmentId">
-
-                        {{ dept.departmentName | titlecase }}
-
-                      </option>
-
-                      }
-
-                    </select>
-
-                    <small class="text-danger">
-                      @if(employee.get('departmentId')?.errors?.['required']){
-                      Department is required.
-                      }
-                      @if(employee.get('departmentId')?.touched &&
-                      employee.get('departmentId')?.invalid){
-                      Department is required.
-                      }
-
-                    </small>
-
-
-
-                  </td>
-
-                  <!-- Position -->
-                  <td>
-
-                    <select class="form-select" formControlName="positionId">
-
-                      <option value="" selected>
-                        Select Position
-                      </option>
-
-                      @for(pos of Positions ?? []; track pos.positionId){
-
-                      <option [value]="pos.positionId">
-
-                        {{ pos.positionName | titlecase }}
-
-                      </option>
-
-                      }
-
-                    </select>
-
-                    @if(employee.get('positionId')?.touched &&
-                    employee.get('positionId')?.invalid){
-
-                    <small class="text-danger">
-                      @if(employee.get('positionId')?.errors?.['required']){
-                      Position is required.
-                      }
-                    </small>
-
-                    }
-                  </td>
-
-                  <!-- Report To -->
-                  <td>
-                    <select class="form-select" formControlName="reportsToEmployeePositionId">
-
-                      <option value="" selected>
-                        Select Manager
-                      </option>
-
-                      @for(manager of managerLists[i] ?? []; track manager.employeePositionId){
-
-                      <option [value]="manager.employeePositionId">
-
-                        {{ manager.fullName | titlecase }} - {{ manager.email }}  ({{manager.positionName | titlecase}})
-
-                      </option>
-
-                      }
-                    </select>
-                    @if(employee.get('reportsToEmployeePositionId')?.touched &&
-                    employee.get('reportsToEmployeePositionId')?.invalid){
-                    <small class="text-danger">
-                      @if(employee.get('reportsToEmployeePositionId')?.errors?.['required']){
-                      Report To is required.
-                      }
-                    </small>
-                    }
-
-                    <!-- Delete -->
-                  <td>
-
-                    <div class="d-flex justify-content-center gap-2">
-
-                      <button type="button" class="btn btn-success btn-sm" (click)="addRow()">
-
-                        Add Row
-                      </button>
-
-                      <button type="button" class="btn btn-danger btn-sm" (click)="deleteRow(i)"
-                        [disabled]="employees.length===1">
-
-                        Delete Row
-
-                      </button>
-
-                    </div>
-
-                  </td>
-
-                </tr>
-
+                  </tr>
                 }
-
               </tbody>
-
             </table>
 
           </div>
-
         </div>
-
       </form>
 
     </div>
 
-    <div class="card-footer bg-light border-top">
-
-      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-
-        <div class="d-flex align-items-center">
-          <span class="fw-semibold text-secondary">
-            Total Employees :
-          </span>
-
-          <span class="ms-1 accordion-header-badge badge rounded-pill bg-primary">
-            {{ employees.length }}
-          </span>
-        </div>
-
-        <div class="d-flex gap-2">
-
-          <button type="button" class="btn btn-outline-danger px-4" (click)="resetForm()">
-            Cancel
-          </button>
-
-          <button type="button" class="btn btn-success px-4" (click)="saveAll()">
-            Save All Employees
-          </button>
-
-        </div>
-
+    <!-- Sticky Operations Aggregator Summary Footer Toolbar -->
+    <div class="card-footer bulk-form-action-strip p-4 border-0 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <span class="fw-semibold text-secondary small text-uppercase tracking-wider">Payload Size:</span>
+        <span class="badge batch-count-pill px-3 py-2 border rounded-pill text-dark fw-bold bg-light">
+          {{ employees.length }} Batch Rows
+        </span>
       </div>
-
+      <div class="d-flex gap-2">
+        <button type="button" class="btn form-btn-secondary px-4" (click)="resetForm()">
+          Clear Queue
+        </button>
+        <button type="button" class="btn form-btn-primary px-4" (click)="saveAll()" [disabled]="bulkForm.invalid">
+          Save All Employees
+        </button>
+      </div>
     </div>
 
   </div>
-
 </div>

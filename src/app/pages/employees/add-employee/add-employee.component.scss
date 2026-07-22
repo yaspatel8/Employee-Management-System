@@ -1,0 +1,187 @@
+// ====================================================================
+// 📝 PREMIUM FORM CONTROLS & MEDIA INPUT DESIGNS (Encapsulated Layer)
+// ====================================================================
+
+.employee-modern-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+
+  .form-action-strip {
+    background-color: #fafbfc;
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+  }
+
+  // 🌙 Dark Theme Interface Rules Mapping
+  html[data-coreui-theme='dark'] & {
+    background: #141521;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+
+    .form-action-strip {
+      background-color: #1a1b26;
+      border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+  }
+}
+
+// 1. Text Inputs and Selections Fields Skin Mapping
+.form-control-modern, .form-select-modern {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #2d3748;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+
+  &:focus {
+    color: #1a202c;
+    background-color: #fff;
+    border-color: var(--cui-primary, #321fdb);
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(50, 31, 219, 0.12);
+  }
+
+  &::placeholder {
+    color: #a0aec0;
+    opacity: 0.8;
+  }
+
+  html[data-coreui-theme='dark'] & {
+    color: #e2e8f0;
+    background-color: #1c1d2d;
+    border-color: rgba(255, 255, 255, 0.08);
+
+    &:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+      color: #fff;
+    }
+
+    option {
+      background-color: #141521;
+      color: #e2e8f0;
+    }
+  }
+}
+
+.form-select-modern {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://w3.org' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23718096' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 12px;
+  padding-right: 40px;
+
+  html[data-coreui-theme='dark'] & {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://w3.org' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23a0aec0' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  }
+}
+
+// 2. Media Identity Upload Segment Target Area
+.media-upload-dropzone {
+  background-color: #f8fafc;
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  
+  .file-input-modern {
+    font-size: 0.8rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #fff;
+    
+    &::file-selector-button {
+      background-color: #edf2f7;
+      border: none;
+      padding: 6px 12px;
+      margin-inline-start: -12px;
+      margin-inline-end: 12px;
+      border-radius: 4px;
+      color: #4a5568;
+      font-weight: 500;
+      cursor: pointer;
+      &:hover { background-color: #e2e8f0; }
+    }
+  }
+
+  html[data-coreui-theme='dark'] & {
+    background-color: #1a1b26;
+    border-dash-color: rgba(255, 255, 255, 0.08);
+
+    .file-input-modern {
+      background-color: #141521;
+      border-color: rgba(255, 255, 255, 0.05);
+      color: #a0aec0;
+
+      &::file-selector-button {
+        background-color: #2d3748;
+        color: #e2e8f0;
+        &:hover { background-color: #4a5568; }
+      }
+    }
+    
+    span strong { color: #fff !important; }
+  }
+}
+
+// 3. Typographical Headers Label Structural Accents
+.form-label-modern {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #718096;
+
+  html[data-coreui-theme='dark'] & {
+    color: #a0aec0;
+  }
+}
+
+.form-validation-error {
+  font-size: 0.775rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+// 4. Action Command Trigger Push Buttons 
+.form-btn-primary, .form-btn-secondary {
+  padding: 10px 22px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+}
+
+.form-btn-primary {
+  background-color: #0027ff;
+  color: #ffffff;
+  border: none;
+
+  &:hover:not(:disabled) { background-color: #2214b5; }
+  &:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  html[data-coreui-theme='dark'] & {
+    background-color: #38bdf8;
+    color: #000000;
+    &:hover:not(:disabled) { background-color: #0ea5e9; }
+  }
+}
+
+.form-btn-secondary {
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #4a5568;
+
+  &:hover { background-color: rgba(0, 0, 0, 0.03); color: #1a202c; }
+
+  html[data-coreui-theme='dark'] & {
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #a0aec0;
+    &:hover { background-color: rgba(255, 255, 255, 0.03); color: #fff; }
+  }
+}

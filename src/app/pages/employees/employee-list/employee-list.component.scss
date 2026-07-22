@@ -1,22 +1,367 @@
-.table td,
-.table th {
-    vertical-align: middle;
-    white-space: nowrap;
+.grid-premium-panel-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.015) !important;
+
+    .grid-header-strip {
+        background-color: #fafbfc;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .grid-paginator-strip {
+        background-color: #fafbfc;
+    }
+
+    // 🌙 Dark Theme Interface Integration Overrides
+    html[data-coreui-theme='dark'] & {
+        background: #141521;
+        border-color: rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+
+        .grid-header-strip {
+            background-color: #1a1b26;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .grid-paginator-strip {
+            background-color: #141521;
+        }
+    }
 }
 
-td:last-child {
-    min-width: 170px;
+// 1. Direct Table Element Structural Cleanups
+table.grid-app-core-table {
+    thead tr {
+        background-color: #f8fafc !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+
+        html[data-coreui-theme='dark'] & {
+            background-color: #1a1b26 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+    }
+
+    th {
+        font-size: 0.725rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        color: #64748b !important;
+        padding: 12px 14px !important; // High density micro-spacing layout
+        border-bottom: none !important;
+
+        html[data-coreui-theme='dark'] & {
+            color: #a0aec0 !important;
+        }
+    }
+
+    tbody tr {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+        transition: background-color 0.15s ease-in-out !important;
+
+        &:hover {
+            background-color: rgba(50, 31, 219, 0.015) !important;
+        }
+
+        &:last-child {
+            border-bottom: none !important;
+        }
+
+        html[data-coreui-theme='dark'] & {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+
+            &:hover {
+                background-color: rgba(56, 189, 248, 0.01) !important;
+            }
+        }
+    }
+
+    td {
+        padding: 10px 14px !important;
+        font-size: 0.85rem !important;
+        color: #2d3748 !important;
+
+        html[data-coreui-theme='dark'] & {
+            color: #cbd5e1;
+        }
+    }
 }
 
-td:last-child .btn {
-    margin-right: 5px;
+// 2. High-Density Compressed Grid Inline Form Input Field Controls
+.form-control-grid-inline,
+.form-select-grid-inline {
+    display: block;
+    width: 100%;
+    padding: 4px 8px !important;
+    font-size: 0.8rem !important;
+    border-radius: 6px !important;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+    color: #1a202c;
+
+    &:focus {
+        border-color: var(--cui-primary, #321fdb);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(50, 31, 219, 0.1);
+    }
+
+    html[data-coreui-theme='dark'] & {
+        background-color: #1c1d2d !important;
+        border-color: rgba(255, 255, 255, 0.08);
+        color: #fff;
+
+        &:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+        }
+    }
 }
 
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+.dept-matrix-pill {
+    font-size: 0.725rem;
+    font-weight: 600;
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 4px 8px;
+    border-radius: 6px;
+
+    html[data-coreui-theme='dark'] & {
+        background-color: #1a1b26;
+        color: #94a3b8;
+    }
 }
 
-.neon-table {
-    min-width: 1300px;
+.text-primary-premium {
+    color: var(--cui-primary, #321fdb);
+    font-weight: 600;
+
+    html[data-coreui-theme='dark'] & {
+        color: #38bdf8;
+    }
+}
+
+// 3. Status Badge Pillar Controls
+.grid-pill-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.725rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    .status-indicator-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    &.is-active {
+        background-color: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        border-color: rgba(16, 185, 129, 0.15);
+
+        .status-indicator-dot {
+            background-color: #10b981;
+        }
+    }
+
+    &.is-inactive {
+        background-color: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border-color: rgba(239, 68, 68, 0.15);
+
+        .status-indicator-dot {
+            background-color: #ef4444;
+        }
+    }
+}
+
+.grid-read-only-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    border-radius: 4px;
+
+    &.active-badge {
+        background-color: #ecfdf5;
+        color: #059669;
+    }
+
+    &.inactive-badge {
+        background-color: #fef2f2;
+        color: #dc2626;
+    }
+}
+
+// 4. Utility Action Header Command Buttons Layout Tokens
+.btn-primary-action,
+.btn-secondary-action,
+.btn-danger-action,
+.btn-success-action {
+    font-weight: 600;
+    font-size: 0.825rem;
+    padding: 6px 14px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.btn-primary-action {
+    background-color: #321fdb;
+    color: white;
+
+    &:hover:not(:disabled) {
+        background-color: #2214b5;
+    }
+
+    html[data-coreui-theme='dark'] & {
+        background-color: #38bdf8;
+        color: #000;
+        font-weight: 600;
+
+        &:hover:not(:disabled) {
+            background-color: #0ea5e9;
+        }
+    }
+}
+
+.btn-secondary-action {
+    background-color: #fff;
+    border-color: rgba(0, 0, 0, 0.15);
+    color: #4a5568;
+
+    &:hover:not(:disabled) {
+        background-color: #f7fafc;
+    }
+
+    html[data-coreui-theme='dark'] & {
+        background-color: #1c1d2d;
+        border-color: rgba(255, 255, 255, 0.08);
+        color: #a0aec0;
+
+        &:hover:not(:disabled) {
+            background-color: #24263b;
+            color: #fff;
+        }
+    }
+}
+
+.btn-danger-action {
+    background-color: #dc3545;
+    color: white;
+
+    &:hover:not(:disabled) {
+        background-color: #bb2d3b;
+    }
+}
+
+.btn-success-action {
+    background-color: #198754;
+    color: white;
+
+    &:hover:not(:disabled) {
+        background-color: #157347;
+    }
+}
+
+// 5. Icons Actions & Tooling Layout Elements
+.grid-action-icon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+
+    svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    &.edit-btn:hover {
+        color: #321fdb;
+        background-color: rgba(50, 31, 219, 0.06);
+    }
+
+    &.delete-btn:hover {
+        color: #ef4444;
+        background-color: rgba(239, 68, 68, 0.06);
+    }
+
+    html[data-coreui-theme='dark'] & {
+        color: #64748b;
+
+        &.edit-btn:hover {
+            color: #38bdf8;
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        &.delete-btn:hover {
+            color: #f87171;
+            background-color: rgba(239, 68, 68, 0.12);
+        }
+    }
+}
+
+.inline-grid-search-field {
+    max-width: 220px;
+    border-radius: 8px !important;
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+
+    &:focus {
+        border-color: var(--cui-primary, #321fdb) !important;
+        box-shadow: 0 0 0 3px rgba(50, 31, 219, 0.1) !important;
+    }
+
+    html[data-coreui-theme='dark'] & {
+        background-color: #1c1d2d !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+        color: #fff !important;
+
+        &:focus {
+            border-color: #38bdf8 !important;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15) !important;
+        }
+    }
+}
+
+.grid-checkbox-wrapper input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    accent-color: var(--cui-primary, #321fdb);
+
+    html[data-coreui-theme='dark'] & {
+        accent-color: #38bdf8;
+    }
+}
+
+.grid-validation-error {
+    font-size: 0.725rem;
+    color: #ef4444;
+    font-weight: 500;
+}
+
+.max-w-150 {
+    max-width: 150px;
 }

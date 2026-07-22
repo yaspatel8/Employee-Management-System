@@ -1,77 +1,102 @@
-<div class="container-fluid">
+<div class="container-fluid py-3">
+
+    <!-- Top Welcome Title Bar Section -->
+    <div class="mb-4">
+        <h3 class="fw-bold text-dark m-0">My Identity Profile</h3>
+        <p class="text-secondary small m-0">Review your designated access clearance and operational organizational
+            tracking parameters.</p>
+    </div>
+
     <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="col-xl-9 col-lg-10">
 
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">{{ employee()?.fullName | titlecase }}</h4>
-                </div>
+            <!-- Primary Glassmorphic Profile Card Canvas Wrapper -->
+            <div class="card profile-modern-panel-card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-md-5">
 
-                <div class="card-body">
+                    <div class="row g-4 align-items-center align-items-md-start">
 
-                    <div class="row">
-                        <!-- Profile Image
-                            first defalut image is shown and then if the user has uploaded a profile image, it will be shown instead of default image. -->
-
-                        <div class="col-md-4 text-center mb-4">
-                            <img [src]="employee()?.profileImage ? 'https://localhost:7169/ProfileImage/' + employee()?.profileImage 
-                            : defaultImage" [alt]="employee()?.fullName || 'Profile Image'" class="img-fluid rounded-circle border"
-                                width="150" height="150" />
+                        <!-- Left Panel Column: Premium Interactive Photo Node -->
+                        <div
+                            class="col-md-4 col-lg-3 text-center d-flex flex-column align-items-center border-end-md pb-4 pb-md-0 px-md-4">
+                            <div class="profile-avatar-premium-ring position-relative mb-3">
+                                <img [src]="employee()?.profileImage ? 'https://localhost:7169/ProfileImage/' + employee()?.profileImage : defaultImage"
+                                    [alt]="employee()?.fullName || 'Profile avatar graphic'"
+                                    class="img-fluid rounded-circle object-fit-cover shadow border" width="140"
+                                    height="140" />
+                            </div>
+                            <h5 class="fw-bold text-dark m-0 text-truncate max-w-full">
+                                {{ employee()?.fullName | titlecase }}
+                            </h5>
+                            <span class="badge position-matrix-badge mt-2 px-3 py-1.5 rounded-pill">
+                                {{ employee()?.positionName | titlecase }}
+                            </span>
                         </div>
 
-                        <!-- Profile Details -->
-                        <div class="col-md-8">
-                            <div class="row">
+                        <!-- Right Panel Column: High-Density Structured Profile Metrics Grid -->
+                        <div class="col-md-8 col-lg-9 ps-md-4">
+                            <div class="row g-4">
 
-                                <div class="col-sm-6 mb-3">
-                                    <label class="fw-bold">Employee ID</label>
-                                    <p>{{ employee()?.employeeId }}</p>
+                                <!-- Individual Metric Block Frame Entry -->
+                                <div class="col-sm-6">
+                                    <div class="profile-metric-data-tile p-3 rounded-3">
+                                        <span class="metric-label d-block text-uppercase mb-1">Corporate Index ID</span>
+                                        <span class="metric-value fw-bold text-dark text-monospace">
+                                            #{{ employee()?.employeeId || '00000' }}
+                                        </span>
+                                    </div>
                                 </div>
 
-                                <div class="col-sm-6 mb-3">
-                                    <label class="fw-bold">Email</label>
-                                    <p>{{ employee()?.email }}</p>
+                                <div class="col-sm-6">
+                                    <div class="profile-metric-data-tile p-3 rounded-3">
+                                        <span class="metric-label d-block text-uppercase mb-1">Corporate Email
+                                            Address</span>
+                                        <span class="metric-value fw-semibold text-dark text-truncate d-block">
+                                            {{ employee()?.email || 'unassigned@shaligram.com' }}
+                                        </span>
+                                    </div>
                                 </div>
 
-                                <div class="col-sm-6 mb-3">
-                                    <label class="fw-bold">Phone</label>
-                                    <p>{{ employee()?.phoneNumber }}</p>
+                                <div class="col-sm-6">
+                                    <div class="profile-metric-data-tile p-3 rounded-3">
+                                        <span class="metric-label d-block text-uppercase mb-1">Primary Phone
+                                            Number</span>
+                                        <span class="metric-value fw-medium text-dark">
+                                            {{ employee()?.phoneNumber || 'N/A' }}
+                                        </span>
+                                    </div>
                                 </div>
 
-                                <div class="col-sm-6 mb-3">
-                                    <label class="fw-bold">Department</label>
-                                    <p>{{ employee()?.departmentName | titlecase }}</p>
+                                <div class="col-sm-6">
+                                    <div class="profile-metric-data-tile p-3 rounded-3">
+                                        <span class="metric-label d-block text-uppercase mb-1">Assigned
+                                            Department</span>
+                                        <span class="metric-value fw-semibold text-dark text-truncate d-block">
+                                            {{ employee()?.departmentName || 'N/A' | titlecase }}
+                                        </span>
+                                    </div>
                                 </div>
 
-                                <div class="col-sm-6 mb-3">
-                                    <label class="fw-bold">Position</label>
-                                    <p>{{ employee()?.positionName | titlecase }}</p>
+                                <div class="col-sm-6">
+                                    <div class="profile-metric-data-tile p-3 rounded-3">
+                                        <span class="metric-label d-block text-uppercase mb-1">Compensation
+                                            Matrix</span>
+                                        <span class="metric-value fw-bold text-success-premium">
+                                            {{ employee()?.salary | currency:'INR':'symbol':'1.0-0' }}
+                                        </span>
+                                    </div>
                                 </div>
 
-                                <div class="col-sm-6 mb-3">
-                                    <label class="fw-bold">Salary</label>
-                                    <p>{{ employee()?.salary | currency:'INR':'symbol':'1.0-0'  }}</p>
+                                <div class="col-sm-6">
+                                    <div class="profile-metric-data-tile p-3 rounded-3">
+                                        <span class="metric-label d-block text-uppercase mb-1">Supervising Direct
+                                            Manager</span>
+                                        <span
+                                            class="metric-value fw-medium text-secondary-premium text-truncate d-block">
+                                            {{ employee()?.managerEmail || 'ECO' }}
+                                        </span>
+                                    </div>
                                 </div>
-
-                                <div class="col-sm-6 mb-3">
-                                    <label class="fw-bold">Manager Email</label>
-                                    <p>{{ employee()?.managerEmail || 'N/A' }}</p>
-                                </div>
-
-                                <!-- <div class="col-sm-6 mb-3">
-                                    <label class="fw-bold">Gender</label>
-                                    <p>{{ employee()?.gender }}</p>
-                                </div>
-
-                                <div class="col-sm-6 mb-3">
-                                    <label class="fw-bold">Date of Birth</label>
-                                    <p>{{ employee()?.dob | date:'dd/MM/yyyy' }}</p>
-                                </div>
-
-                                <div class="col-12 mb-3">
-                                    <label class="fw-bold">Address</label>
-                                    <p>{{ employee()?.address }}</p>
-                                </div> -->
 
                             </div>
                         </div>
@@ -80,12 +105,15 @@
 
                 </div>
 
-                <div class="card-footer text-end">
-                    <button class="btn btn-primary" [routerLink]="['/profile/edit-profile', employee()?.employeeId]">
-                        Edit Profile
+                <!-- System Trigger Footer Action Command Bar -->
+                <div
+                    class="card-footer profile-footer-action-strip p-3 border-0 d-flex justify-content-end align-items-center">
+                    <button
+                        class="btn profile-action-btn-primary px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1.5 rounded-3 btn-sm"
+                        [routerLink]="['/profile/edit-profile', employee()?.employeeId]">
+                        <span class="fs-sm">Edit Profile</span>
                     </button>
                 </div>
-
             </div>
 
         </div>

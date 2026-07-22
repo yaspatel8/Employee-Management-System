@@ -110,6 +110,9 @@
     position: relative;
     gap: 20px;
 
+     width: max-content; 
+  min-width: 100%;
+
     /* Top vertical line from parent card down to the horizontal line */
     &::before {
         content: '';
@@ -127,6 +130,9 @@
 .child-node-wrapper {
     position: relative;
     padding-top: 20px;
+
+      flex: 0 0 auto; 
+  display: inline-block;
 
     /* Horizontal line connecting siblings */
     &::before {

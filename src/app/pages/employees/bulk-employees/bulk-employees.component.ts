@@ -6,6 +6,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
+import { cilPlus, cilTrash, cilInfo } from '@coreui/icons';
 import { CommonModule } from '@angular/common';
 import { DepartmentService } from '../../../Services/department.service';
 import { Department } from '../../../models/department';
@@ -17,15 +19,18 @@ import { Employee } from '../../../models/employee';
 import { Router } from '@angular/router';
 import { Position } from '../../../models/position';
 import { PositionService } from '../../../Services/position.service';
+import { IconSetService,IconDirective } from '@coreui/icons-angular';
 
 @Component({
   selector: 'app-bulk-employees',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,IconDirective],
+  providers: [IconSetService],
   templateUrl: './bulk-employees.component.html',
   styleUrl: './bulk-employees.component.scss',
 })
 export class BulkEmployeesComponent {
   constructor(
+    public iconSet: IconSetService,
     private fb: FormBuilder,
     private departmentService: DepartmentService,
     private cdr: ChangeDetectorRef,
@@ -33,7 +38,10 @@ export class BulkEmployeesComponent {
     private employeeService: EmployeeService,
     private positionService: PositionService,
     private router: Router,
-  ) {}
+  ) {
+
+    this.iconSet.icons = { cilPlus, cilTrash, cilInfo };
+  }
 
   departments?: Department[] = [];
   Positions?: Position[] = [];
