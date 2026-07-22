@@ -18,7 +18,7 @@ import { ProfileService } from '../../../Services/profile.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   imports: [
-    ContainerComponent, RowComponent, ColComponent, CardGroupComponent, 
+    //ContainerComponent, RowComponent, ColComponent, CardGroupComponent, 
     CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, 
     InputGroupTextDirective, IconDirective, FormControlDirective, 
     ButtonDirective, ReactiveFormsModule, CommonModule, RouterLink

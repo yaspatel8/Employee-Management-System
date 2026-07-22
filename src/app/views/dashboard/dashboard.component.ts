@@ -1,6 +1,9 @@
 import { Component, DestroyRef, DOCUMENT, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ChartOptions } from 'chart.js';
+import { cilPeople, cilUserFollow, cilTask, cilSitemap, cilLayers, cilArrowRight } from '@coreui/icons';
+
+
 import {
   AvatarComponent,
   ButtonDirective,
@@ -14,11 +17,16 @@ import {
   GutterDirective,
   ProgressComponent,
   RowComponent,
-  TableDirective
+  TableDirective, TemplateIdDirective, WidgetStatFComponent 
 } from '@coreui/angular';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { IconDirective } from '@coreui/icons-angular';
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
+import { CommonModule } from '@angular/common';
+import { DashboardService } from '../../Services/dashboard.service';
+import { DashboardSummary } from '../../models/DashboardSummary ';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../../Services/auth.service';
 
 interface IUser {
   name: string;
@@ -37,14 +45,21 @@ interface IUser {
 @Component({
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss'],
-  imports: [CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, CardFooterComponent, GutterDirective, ProgressComponent, CardHeaderComponent, TableDirective, AvatarComponent]
+  imports: [CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, CardFooterComponent, GutterDirective, ProgressComponent, CardHeaderComponent, TableDirective, AvatarComponent, CommonModule, TemplateIdDirective, WidgetStatFComponent,RouterLink],
+  providers: [DashboardChartsData, DashboardService]
 })
 export class DashboardComponent implements OnInit {
 
+  icons = { cilPeople, cilUserFollow, cilTask, cilSitemap, cilLayers, cilArrowRight };
+  
+  readonly authService = inject(AuthService);
+  readonly #dashboardService: DashboardService = inject(DashboardService);
   readonly #destroyRef: DestroyRef = inject(DestroyRef);
   readonly #document: Document = inject(DOCUMENT);
   readonly #renderer: Renderer2 = inject(Renderer2);
   readonly #chartsData: DashboardChartsData = inject(DashboardChartsData);
+
+  public dashboardSummary!: DashboardSummary;
 
   public users: IUser[] = [
     {
@@ -142,6 +157,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.initCharts();
     this.updateChartOnColorModeChange();
+    this.loadSummary();
   }
 
   initCharts(): void {
@@ -181,4 +197,16 @@ export class DashboardComponent implements OnInit {
       });
     }
   }
+
+  loadSummary() {
+    this.#dashboardService.getDashboardSummary().subscribe((summary: any) => {
+      this.dashboardSummary = summary.data;
+    });
+  }
+
+  hasRole(...roles: string[]): boolean {
+    const userRole = this.authService.getUserRole();
+    return roles.includes(userRole ?? '');
+  }
+
 }

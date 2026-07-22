@@ -33,7 +33,7 @@ import { AuthService } from '../../Services/auth.service';
     ContainerComponent,
     DefaultFooterComponent,
     DefaultHeaderComponent,
-    IconDirective,
+    // IconDirective,
     NgScrollbar,
     RouterOutlet,
     RouterLink,

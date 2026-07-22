@@ -11,7 +11,7 @@ export const routes: Routes = [
     path: '',
     loadComponent: () => import('./layout').then(m => m.DefaultLayoutComponent),
     data: {
-      title: 'Home'
+      title: 'Login'
     },
     children: [
       {

@@ -16,7 +16,8 @@ import Swal from 'sweetalert2';
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
   imports: [
-    ContainerComponent, RowComponent, ColComponent, CardComponent,
+    //ContainerComponent, RowComponent, ColComponent, 
+    CardComponent,
     CardBodyComponent, FormDirective, FormControlDirective, InputGroupComponent,
     InputGroupTextDirective, ButtonDirective, IconDirective, RouterLink,
     ReactiveFormsModule, CommonModule

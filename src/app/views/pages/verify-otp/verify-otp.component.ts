@@ -17,10 +17,10 @@ import { interval, Subscription } from 'rxjs';
   selector: 'app-verify-otp',
   standalone: true,
   imports: [
-    ContainerComponent, RowComponent, ColComponent, CardGroupComponent,
-    CardComponent, CardBodyComponent, FormDirective, InputGroupComponent,
-    InputGroupTextDirective, IconDirective, FormControlDirective,
-    ButtonDirective, ReactiveFormsModule, CommonModule, RouterLink
+    //ContainerComponent, RowComponent, ColComponent, CardGroupComponent,
+    CardComponent, CardBodyComponent, 
+    //FormDirective, InputGroupComponent,FormControlDirective,RouterLink,InputGroupTextDirective, 
+    IconDirective, ButtonDirective, ReactiveFormsModule, CommonModule
   ],
   templateUrl: './verify-otp.component.html',
   styleUrl: './verify-otp.component.scss',

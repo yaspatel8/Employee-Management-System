@@ -114,7 +114,7 @@
                     <td>
                       <select class="form-select-modern m-0" formControlName="reportsToEmployeePositionId">
                         <option value="" selected disabled>Select Manager</option>
-                        @for(manager of managerLists[i] ?? []; track manager.employeePositionId){
+                        @for(manager of managerLists[i]; track manager.employeePositionId){
                           <option [value]="manager.employeePositionId">
                             {{ manager.fullName | titlecase }} ({{ manager.positionName | titlecase }})
                           </option>

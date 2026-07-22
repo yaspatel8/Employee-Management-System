@@ -18,7 +18,8 @@ import { passwordValidator } from '../../../Validator/password.validator';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   imports: [
-    ContainerComponent, RowComponent, ColComponent, CardComponent, 
+    //ContainerComponent, RowComponent, ColComponent, 
+    CardComponent, 
     CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, 
     IconDirective, FormControlDirective, ButtonDirective, ReactiveFormsModule, 
     CommonModule, RouterLink

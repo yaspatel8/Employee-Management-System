@@ -30,7 +30,7 @@ import { AuthService } from '../../../Services/auth.service';
   standalone: true,
   imports: [
     CommonModule,
-    HeaderComponent,
+    //HeaderComponent,
     ContainerComponent, 
     HeaderTogglerDirective, 
     SidebarToggleDirective, 
@@ -46,9 +46,9 @@ import { AuthService } from '../../../Services/auth.service';
     DropdownToggleDirective, 
     AvatarComponent, 
     DropdownMenuDirective, 
-    DropdownHeaderDirective, 
+    //DropdownHeaderDirective, 
     DropdownItemDirective, 
-    BadgeComponent, 
+    //BadgeComponent, 
     DropdownDividerDirective
   ]
 })

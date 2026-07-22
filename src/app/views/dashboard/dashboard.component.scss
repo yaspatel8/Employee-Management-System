@@ -5,3 +5,94 @@
     }
   }
 }
+
+// ====================================================================
+// 📊 INDUSTRY PREMIUM ANALYTICS MATRIX LOOK (Encapsulated Layer)
+// ====================================================================
+
+
+@media (min-width: 1200px) {
+  .col-xl-2\.4 {
+    flex: 0 0 20% !important;
+    max-width: 20% !important;
+  }
+}
+
+
+.modern-analytics-widget {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease !important;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03) !important;
+  }
+
+  .card-body {
+    padding: 1.25rem !important;
+  }
+
+
+  .widget-icon-accent {
+    opacity: 0.9;
+  }
+
+
+  .card-footer {
+    background: rgba(0, 0, 0, 0.01) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.03) !important;
+    padding: 0.6rem 1.25rem !important;
+  }
+
+  html[data-coreui-theme='dark'] & {
+    background: #141521 !important;
+    border-color: rgba(255, 255, 255, 0.04) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+
+    &:hover {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .card-footer {
+      background: rgba(255, 255, 255, 0.01) !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.03) !important;
+    }
+  }
+}
+
+.widget-interactive-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #718096 !important;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--cui-primary, #321fdb) !important;
+    cursor: pointer;
+  }
+
+  html[data-coreui-theme='dark'] & {
+    color: #a0aec0 !important;
+    &:hover { color: #38bdf8 !important; }
+  }
+}
+
+.widget-static-metric {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: #718096 !important;
+
+  html[data-coreui-theme='dark'] & {
+    color: #a0aec0 !important;
+  }
+}
+
+@keyframes pulseBlink {
+  0% { opacity: 0.3; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.3; transform: scale(0.95); }
+}

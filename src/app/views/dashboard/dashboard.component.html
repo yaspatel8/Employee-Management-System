@@ -1,5 +1,114 @@
+<c-row>
+
+  <div class="container-fluid py-2">
+
+    <!-- 📊 INDUSTRY-STANDARD ANALYTICS WIDGETS GRID -->
+    <div class="row g-4 mb-4">
+
+      @if(hasRole('admin', 'manager')) {
+      
+      <!-- 1. Total Registered Employees -->
+      <div class="col-xl-2.4 col-lg-4 col-sm-6">
+        <c-widget-stat-f [title]="(dashboardSummary?.totalEmployees || 0).toString()"
+          class="modern-analytics-widget border-0 shadow-sm rounded-4" color="primary" padding value="Total Employees">
+          <ng-template cTemplateId="widgetIconTemplate">
+            <svg [cIcon]="icons.cilPeople" size="xl" width="24" class="widget-icon-accent"></svg>
+          </ng-template>
+          <ng-template cTemplateId="widgetFooterTemplate">
+            <a class="widget-interactive-link text-decoration-none" routerLink="/employees">
+              <div class="d-flex align-items-center justify-content-between">
+                <span>View</span>
+                <svg [cIcon]="icons.cilArrowRight" width="14"></svg>
+              </div>
+            </a>
+          </ng-template>
+        </c-widget-stat-f>
+      </div>
+
+      <!-- 2. Total Active Status Employees -->
+      <div class="col-xl-2.4 col-lg-4 col-sm-6">
+        <c-widget-stat-f [title]="(dashboardSummary?.totalActiveEmployees || 0).toString()"
+          class="modern-analytics-widget border-0 shadow-sm rounded-4" color="success" padding value="Active Employees">
+          <ng-template cTemplateId="widgetIconTemplate">
+            <svg [cIcon]="icons.cilUserFollow" size="xl" width="24" class="widget-icon-accent"></svg>
+          </ng-template>
+          <ng-template cTemplateId="widgetFooterTemplate">
+            <a class="widget-interactive-link text-decoration-none" routerLink="/employees">
+              <div class="d-flex align-items-center justify-content-between">
+                <span>View</span>
+                <svg [cIcon]="icons.cilArrowRight" width="14"></svg>
+              </div>
+            </a>
+          </ng-template>
+        </c-widget-stat-f>
+      </div>
+    
+      <!-- 3. Total Active Working Employees -->
+      <div class="col-xl-2.4 col-lg-4 col-sm-6">
+        <c-widget-stat-f [title]="(dashboardSummary?.totalWorkingEmployees || 0).toString()"
+          class="modern-analytics-widget border-0 shadow-sm rounded-4" color="info" padding value="Working Employees">
+          <ng-template cTemplateId="widgetIconTemplate">
+            <svg [cIcon]="icons.cilTask" size="xl" width="24" class="widget-icon-accent"></svg>
+          </ng-template>
+          <ng-template cTemplateId="widgetFooterTemplate">
+            <a cNavLink class="widget-interactive-link text-decoration-none" routerLink="/employees/employee-list">
+              <div class="d-flex align-items-center justify-content-between">
+                <span>View</span>
+                <svg [cIcon]="icons.cilArrowRight" width="14"></svg>
+              </div>
+            </a>
+          </ng-template>
+        </c-widget-stat-f>
+      </div>
+    }
+
+      <!-- 4. Total Business Departments -->
+      <div class="col-xl-2.4 col-lg-4 col-sm-6">
+        <c-widget-stat-f [title]="(dashboardSummary?.totalDepartments || 0).toString()"
+          class="modern-analytics-widget border-0 shadow-sm rounded-4" color="warning" padding
+          value="Total Departments">
+          <ng-template cTemplateId="widgetIconTemplate">
+            <svg [cIcon]="icons.cilSitemap" size="xl" width="24" class="widget-icon-accent"></svg>
+          </ng-template>
+          <ng-template cTemplateId="widgetFooterTemplate">
+            <a class="widget-interactive-link text-decoration-none" routerLink="/departments/department-list">
+              <div class="d-flex align-items-center justify-content-between">
+                <span>View</span>
+                <svg [cIcon]="icons.cilArrowRight" width="14"></svg>
+              </div>
+            </a>
+          </ng-template>
+        </c-widget-stat-f>
+      </div>
+
+      @if(hasRole('admin')) {
+      <!-- 5. Total Role Positions -->
+      <div class="col-xl-2.4 col-lg-4 col-sm-6">
+        <c-widget-stat-f [title]="(dashboardSummary?.totalPositions || 0).toString()"
+          class="modern-analytics-widget border-0 shadow-sm rounded-4" color="danger" padding
+          value="Hierarchy Positions">
+          <ng-template cTemplateId="widgetIconTemplate">
+            <svg [cIcon]="icons.cilLayers" size="xl" width="24" class="widget-icon-accent"></svg>
+          </ng-template>
+          <ng-template cTemplateId="widgetFooterTemplate">
+            <a class="widget-interactive-link text-decoration-none" routerLink="/positions/positions-list">
+              <div class="d-flex align-items-center justify-content-between">
+                <span>View</span>
+                <svg [cIcon]="icons.cilArrowRight" width="14"></svg>
+              </div>
+            </a>
+          </ng-template>
+        </c-widget-stat-f>
+      </div>
+    }
+    </div>
+  </div>
+
+</c-row>
+
+
 <c-card class="my-4">
-  
+
   <c-card-body>
     <c-row>
       <c-col sm="5">
@@ -36,6 +145,7 @@
       Main chart
     </c-chart>
   </c-card-body>
+
   <c-card-footer>
     <c-row class="text-center mb-2" [xl]="5" [lg]="4" [sm]="2" [xs]="1" [gutter]="4">
       <c-col>
@@ -65,6 +175,7 @@
       </c-col>
     </c-row>
   </c-card-footer>
+
 </c-card>
 
 <c-row class="mt-4">
@@ -268,6 +379,7 @@
     </c-card>
   </c-col>
 </c-row>
+
 <c-row>
   <c-col xs>
     <c-card class="mb-4">
