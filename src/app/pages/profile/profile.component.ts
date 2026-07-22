@@ -5,20 +5,20 @@ import { Profile } from '../../models/Profile';
 import { AuthService } from '../../Services/auth.service';
 import { ProfileService } from '../../Services/profile.service';
 import { IconSetService,IconDirective } from '@coreui/icons-angular';
-import { cilPencil } from '@coreui/icons';
+// import { cilPencil } from '@coreui/icons';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule,RouterLink,IconDirective],
-  providers: [IconSetService],
+  imports: [CommonModule,RouterLink],
+  // providers: [IconSetService],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
 
-  constructor(private profileService: ProfileService, private authService: AuthService, private iconSetService: IconSetService) { 
-    this.iconSetService.icons = { cilPencil };
+  constructor(private profileService: ProfileService, private authService: AuthService) { 
+    // this.iconSetService.icons = { cilPencil };
   }
 
   defaultImage = "/assets/images/default-image.jpg";
